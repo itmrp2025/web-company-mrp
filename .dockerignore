@@ -1,0 +1,17 @@
+.dockerignore
+.git
+node_modules
+npm-debug.log
+.DS_Store
+
+*.log
+*.tmp
+*.bak
+*.swp
+
+temp/
+build/
+.next/
+
+.env.local
+.env.local.save

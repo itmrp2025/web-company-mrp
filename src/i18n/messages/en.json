@@ -1,0 +1,37 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "team": "Our Team",
+    "articles": "Articles",
+    "tanyaHakim": "Ask a Judge",
+    "career": "Career",
+    "contact": "Contact Us"
+  },
+  "common": {
+    "readMore": "Read More",
+    "contactUs": "Contact Us",
+    "learnMore": "Learn More",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "error": "An error occurred"
+  },
+  "hero": {
+    "badge": "Trusted Law Firm",
+    "heading": "Strategic Legal Solutions for a Global Future",
+    "cta_primary": "Free Consultation",
+    "cta_secondary": "Our Services"
+  },
+  "admin": {
+    "login": {
+      "title": "Admin Login",
+      "subtitle": "Sign in to manage website content",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign In",
+      "invalidCredentials": "Invalid email or password"
+    }
+  }
+}
