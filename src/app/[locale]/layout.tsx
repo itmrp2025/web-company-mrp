@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { inter, playfair } from "@/lib/fonts";
+import { outfit } from "@/lib/fonts";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "sonner";
-import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "MRP Law Office",
+  title: { default: "MRP Law Office", template: "%s — MRP Law Office" },
   description: "Solusi Hukum Strategis untuk Masa Depan Global",
+  icons: {
+    icon: [{ url: "/favicon.ico", sizes: "any" }],
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export function generateStaticParams() {
@@ -31,8 +35,8 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfair.variable} antialiased`}>
-        <NextIntlClientProvider>
+      <body className={`${outfit.variable} font-sans antialiased`}>
+        <NextIntlClientProvider locale={locale}>
           <QueryProvider>
             {children}
             <Toaster richColors position="top-right" />

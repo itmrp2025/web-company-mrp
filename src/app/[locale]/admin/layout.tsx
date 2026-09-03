@@ -1,7 +1,13 @@
-export default function AdminLayout({
+import { AdminLayout } from "@/components/admin/layout/AdminLayout";
+
+export default async function AdminSectionLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
-  return <div className="min-h-screen bg-neutral-50">{children}</div>;
+  const { locale } = await params;
+
+  return <AdminLayout locale={locale}>{children}</AdminLayout>;
 }

@@ -13,31 +13,38 @@ function stripLocale(pathname: string): string {
   return pathname;
 }
 
-export function proxy(request: NextRequest) {
-  const response = handleI18nRouting(request);
+function getLocale(pathname: string): string {
+  const segment = pathname.split("/")[1];
+  return routing.locales.includes(segment as (typeof routing.locales)[number])
+    ? segment
+    : routing.defaultLocale;
+}
 
-  const pathWithoutLocale = stripLocale(request.nextUrl.pathname);
+export default function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const pathWithoutLocale = stripLocale(pathname);
   const isAdminRoute = pathWithoutLocale.startsWith("/admin");
-  const isLoginRoute = pathWithoutLocale.startsWith("/admin/login");
-
+  const isLoginRoute =
+    pathWithoutLocale === "/admin/login" ||
+    pathWithoutLocale.startsWith("/admin/login/");
   const hasSession = request.cookies.has("access_token");
+  const locale = getLocale(pathname);
 
+  // Protect admin routes — redirect to login if no session cookie
   if (isAdminRoute && !isLoginRoute && !hasSession) {
-    const locale = request.nextUrl.pathname.split("/")[1];
     const loginUrl = new URL(`/${locale}/admin/login`, request.url);
-    loginUrl.searchParams.set("returnURL", request.nextUrl.pathname);
+    loginUrl.searchParams.set("returnURL", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
+  // Already logged in — bounce away from login page
   if (isLoginRoute && hasSession) {
-    const locale = request.nextUrl.pathname.split("/")[1];
     return NextResponse.redirect(new URL(`/${locale}/admin`, request.url));
   }
 
-  return response;
+  // Let next-intl handle locale routing for everything else
+  return handleI18nRouting(request);
 }
-
-export const middleware = proxy;
 
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],

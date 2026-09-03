@@ -5,9 +5,25 @@
     "services": "Services",
     "team": "Our Team",
     "articles": "Articles",
-    "tanyaHakim": "Ask a Judge",
+    "tanyaHakim": "Tanya Hakim",
     "career": "Career",
-    "contact": "Contact Us"
+    "contact": "Contact Us",
+    "topBarText": "Professional legal consultation since 2008 · Jakarta, Indonesia",
+    "footerNav": "Navigation",
+    "footerMore": "More",
+    "footerContact": "Contact",
+    "footerPrivacy": "Privacy Policy",
+    "footerTerms": "Terms & Conditions",
+    "footerAddress": "District 8, Prosperity Tower 5th Fl. Unit E & F, SCBD Lot 28, South Jakarta",
+    "footerHours": "Monday – Friday, 08:00 – 17:00 WIB",
+    "footerTagline": "Strategic legal solutions for personal, corporate, and international needs.",
+    "gallery": "Gallery"
+  },
+  "stats": {
+    "years": "Years of Experience",
+    "clients": "Clients Served",
+    "cases": "Cases Completed",
+    "areas": "Practice Areas"
   },
   "common": {
     "readMore": "Read More",
@@ -16,13 +32,456 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "loading": "Loading...",
-    "error": "An error occurred"
+    "error": "An error occurred",
+    "viewAll": "View All",
+    "backTo": "Back to",
+    "notFound": "Page not found",
+    "published": "Published"
   },
   "hero": {
-    "badge": "Trusted Law Firm",
+    "badge": "Trusted Law Firm since 2008",
     "heading": "Strategic Legal Solutions for a Global Future",
+    "subheading": "MRP Law Office stands as your trusted legal partner with over 15 years of experience. We handle complex legal matters with a strategic, personal, and results-oriented approach.",
     "cta_primary": "Free Consultation",
-    "cta_secondary": "Our Services"
+    "cta_secondary": "Our Services",
+    "phone": "Available for consultation: (+62) 21 50300825"
+  },
+  "whyChoose": {
+    "badge": "Why MRP?",
+    "heading": "Excellence That Sets Us Apart",
+    "subheading": "MRP Law Office serves as a strategic legal partner that understands not just regulations, but also the business context and comprehensive needs of each client.",
+    "statYears": "Years of Service",
+    "statClients": "Satisfied Clients",
+    "statCases": "Cases Completed",
+    "statLawyers": "Expert Attorneys",
+    "statAreas": "Practice Areas",
+    "reasons": {
+      "0": "Experienced legal team with over 15 years in practice",
+      "1": "Expertise across 13 major areas of law",
+      "2": "Personalized and strategic approach for every client",
+      "3": "Strong international network",
+      "4": "Full transparency throughout every legal process",
+      "5": "Solid track record of case victories",
+      "6": "24/7 consultation services for urgent matters",
+      "7": "Modern legal technology for efficient work"
+    },
+    "reasons_v2": {
+      "0": {
+        "title": "15+ Years Experience",
+        "desc": "Proven track record handling thousands of cases across various areas of law."
+      },
+      "1": {
+        "title": "Multidisciplinary Team",
+        "desc": "Specialist attorneys in every field of law for targeted and precise solutions."
+      },
+      "2": {
+        "title": "Personal Approach",
+        "desc": "Every client receives full attention and direct communication with senior attorneys."
+      },
+      "3": {
+        "title": "International Network",
+        "desc": "Partnerships with global law firms to handle cross-border matters."
+      },
+      "4": {
+        "title": "Data-Driven Strategy",
+        "desc": "In-depth analysis and precedent research for solid, accountable strategies."
+      },
+      "5": {
+        "title": "Full Transparency",
+        "desc": "Regular progress reports, clear fees, no hidden charges."
+      }
+    }
+  },
+  "cta": {
+    "badge": "Legal Consultation",
+    "heading": "Need Legal Assistance?",
+    "subheading": "Our team is ready to help you navigate legal challenges with appropriate, efficient, and structured solutions.",
+    "primary": "Free Consultation",
+    "office_info": "Office Information",
+    "label_address": "Address",
+    "label_phone": "Phone",
+    "label_hours": "Office Hours",
+    "address_value": "District 8, Prosperity Tower 5th Fl. Unit E & F\nSCBD Lot 28, Jl. Jend Sudirman Kav. 52-53, South Jakarta",
+    "hours_value": "Monday – Friday: 08:00 – 17:00 WIB\nSaturday: 09:00 – 13:00 WIB"
+  },
+  "about": {
+    "badge": "About Us",
+    "heading": "Indonesia's Leading Law Firm",
+    "intro": "MRP Law Office has been standing since 2008 with a commitment to providing high-quality legal services for domestic and international clients.",
+    "story_heading": "Our Story",
+    "story_title": "More Than 15 Years of Service",
+    "story_p1": "MRP Law Office was founded by Dr. Dodi S Abdulkadir in 2008 with a vision to become a law firm that provides strategic and comprehensive solutions for clients in Indonesia and the international arena.",
+    "story_p2": "Over more than 15 years, we have handled over 1,000 cases across various areas of law, from corporate litigation and family law to international disputes.",
+    "story_p3": "With a team of 9 experienced attorneys and a global network of partners, we are ready to accompany you through every legal challenge.",
+    "stat_founded": "Year Founded",
+    "stat_years": "Years of Experience",
+    "stat_cases": "Cases Completed",
+    "stat_clients": "Satisfied Clients",
+    "vision_heading": "Vision",
+    "vision_text": "To become a leading law firm in Southeast Asia known for excellence, integrity, and the ability to provide innovative legal solutions for domestic and international clients.",
+    "mission_heading": "Mission",
+    "mission_text": "To provide high-quality legal services with a personalized, strategic, and results-oriented approach — protecting client interests with the highest ethical standards.",
+    "values_heading": "Our Values",
+    "values_title": "Principles That Guide Us",
+    "values": {
+      "integrity": {
+        "label": "Integrity",
+        "desc": "We uphold honesty and ethics in every aspect of our work."
+      },
+      "collaboration": {
+        "label": "Collaboration",
+        "desc": "Working together with clients and team to achieve the best outcomes."
+      },
+      "innovation": {
+        "label": "Innovation",
+        "desc": "Adopting creative approaches and modern legal solutions."
+      },
+      "commitment": {
+        "label": "Commitment",
+        "desc": "Full dedication to the interests and success of our clients."
+      }
+    },
+    "team_cta": "Meet Our Team",
+    "cta_heading": "Ready to Work Together?",
+    "cta_sub": "Contact us for a free, no-obligation initial consultation.",
+    "cta_btn": "Contact Us Now"
+  },
+  "servicesSection": {
+    "badge": "Practice Areas",
+    "heading": "Our Legal Services",
+    "viewAll": "View All",
+    "detail": "Learn more",
+    "items": {
+      "litigation": {
+        "name": "Litigation & Dispute Resolution",
+        "desc": "Legal representation in court and arbitration for various types of commercial disputes."
+      },
+      "corporate": {
+        "name": "Corporate Law",
+        "desc": "Comprehensive legal assistance for business, company establishment, and corporate transactions."
+      },
+      "regulatory": {
+        "name": "Regulatory & Compliance",
+        "desc": "Navigating regulations and compliance across industries including banking and energy."
+      },
+      "professional": {
+        "name": "Professional Legal Services",
+        "desc": "Personalized and professional legal solutions tailored to each client's specific needs."
+      },
+      "digital": {
+        "name": "Digital Consultation",
+        "desc": "Modern legal consultation via digital platforms, available anytime and anywhere."
+      },
+      "ecommerce": {
+        "name": "E-Commerce Legal",
+        "desc": "Comprehensive legal protection for e-commerce businesses, marketplaces, and digital platforms."
+      },
+      "property": {
+        "name": "Property & Land Law",
+        "desc": "Legal assistance for property transactions, land disputes, and certification."
+      },
+      "family": {
+        "name": "Family & Inheritance Law",
+        "desc": "Handling of divorce, custody, inheritance, and other family law matters."
+      },
+      "employment": {
+        "name": "Employment Law",
+        "desc": "Legal solutions for layoffs, industrial relations, and employment compliance."
+      }
+    },
+    "subheading": "We provide comprehensive legal solutions across 13 practice areas with an experienced and dedicated team of attorneys."
+  },
+  "services": {
+    "badge": "Practice Areas",
+    "heading": "Our Legal Services",
+    "subheading": "We provide comprehensive legal services across multiple disciplines, backed by a team of experienced and dedicated attorneys.",
+    "cta_consult": "Learn more",
+    "cta_contact": "Contact Us",
+    "cta_title": "Can't find the right service?",
+    "cta_sub": "Contact us directly and our team will help determine the right service for your needs.",
+    "all_services": "All Services",
+    "featured": "Featured Services",
+    "items": {
+      "litigation": {
+        "name": "Litigation & Dispute Resolution",
+        "desc": "Legal representation in court and arbitration for various types of commercial disputes."
+      },
+      "corporate": {
+        "name": "Corporate Law",
+        "desc": "Comprehensive legal assistance for business, company establishment, and corporate transactions."
+      },
+      "regulatory": {
+        "name": "Regulatory & Compliance",
+        "desc": "Navigating regulations and compliance across industries including banking and energy."
+      },
+      "professional": {
+        "name": "Professional Legal Services",
+        "desc": "Personalized and professional legal solutions tailored to each client's specific needs."
+      },
+      "digital": {
+        "name": "Digital Consultation",
+        "desc": "Modern legal consultation via digital platforms, available anytime and anywhere."
+      },
+      "ecommerce": {
+        "name": "E-Commerce Legal",
+        "desc": "Comprehensive legal protection for e-commerce businesses, marketplaces, and digital platforms."
+      },
+      "property": {
+        "name": "Property Law",
+        "desc": "Legal assistance for property transactions, land disputes, building rights, and construction permits."
+      },
+      "family": {
+        "name": "Family Law",
+        "desc": "Handling divorce cases, child custody, inheritance, and prenuptial agreements."
+      },
+      "employment": {
+        "name": "Employment Law",
+        "desc": "Assistance with industrial relations, termination, employment agreements, and labor compliance."
+      },
+      "intellectual": {
+        "name": "Intellectual Property",
+        "desc": "Protection of trademarks, patents, copyrights, and trade secrets for your business."
+      },
+      "immigration": {
+        "name": "Immigration & Citizenship",
+        "desc": "Processing visas, residence permits, KITAS, KITAP, and citizenship for expatriates."
+      },
+      "environmental": {
+        "name": "Environmental Law",
+        "desc": "Environmental compliance, AMDAL permits, and handling environmental disputes."
+      },
+      "criminal": {
+        "name": "Criminal Law",
+        "desc": "Criminal legal assistance from investigation through trial at all levels."
+      }
+    },
+    "detail_overview_label": "Service Overview",
+    "detail_what_we_do": "What We Do",
+    "detail_coverage": "Service Coverage",
+    "detail_our_process": "Our Process",
+    "detail_consult_label": "Consultation",
+    "detail_consult_heading": "Ready to help you",
+    "detail_consult_sub": "Discuss your legal needs with our team.",
+    "detail_explore": "Explore our other services"
+  },
+  "teamSection": {
+    "badge": "Our Team",
+    "heading": "Experienced Attorneys",
+    "viewAll": "View All Team",
+    "role_founder": "Founder & Managing Partner",
+    "role_senior": "Senior Associate",
+    "role_associate": "Associate",
+    "subheading": "Backed by a multidisciplinary team of experienced attorneys dedicated to excellence in every case."
+  },
+  "team": {
+    "badge": "Legal Team",
+    "heading": "Our Experienced Attorneys",
+    "subheading": "Our team consists of experienced legal professionals with deep expertise across various areas of law.",
+    "founder_label": "Founding Partner",
+    "founder_badge": "Founding Partner",
+    "associates_label": "Attorney Team",
+    "view_profile": "View Profile",
+    "role_founder": "Founder & Managing Partner",
+    "role_senior": "Senior Associate",
+    "role_associate": "Associate",
+    "role_junior": "Junior Associate",
+    "career_cta": "Join Our Team",
+    "career_sub": "We are always looking for talented individuals to strengthen our team.",
+    "career_btn": "View Career Openings",
+    "dodi_name": "Dr. Dodi S Abdulkadir",
+    "dodi_title": "S.H., M.H., Ph.D",
+    "dodi_bio": "Founder and Managing Partner of MRP Law Office with over 20 years of experience in corporate and international law. He has handled hundreds of major cases in commercial courts and international arbitration, and serves as legal counsel to various multinational companies operating in Indonesia.",
+    "tabrani_name": "Tabrani Abby",
+    "tabrani_title": "S.H.",
+    "tabrani_bio": "Senior Associate with deep expertise in advocacy, mediation, and bankruptcy administration. He is an experienced curator in major bankruptcy cases and a Supreme Court-certified mediator.",
+    "purwadi_name": "Purwadi",
+    "purwadi_title": "S.H., M.H.",
+    "purwadi_bio": "Specialist in banking law and bankruptcy with a strong track record in complex financial cases. He has assisted major banks in credit restructuring processes and banking dispute resolution.",
+    "ahmad_name": "Ahmad Budi Jatmiko",
+    "ahmad_title": "S.H.",
+    "ahmad_bio": "Associate focused on banking law and commercial litigation. Actively handles banking cases and business disputes in Jakarta district and commercial courts.",
+    "zefanya_name": "Zefanya Christian Loupatty",
+    "zefanya_title": "S.H.",
+    "zefanya_bio": "Associate with expertise in criminal and civil law. Experienced in representing corporate and individual clients in economic crime cases and complex civil disputes.",
+    "evert_name": "Evert Raldi Kolibonso",
+    "evert_title": "S.H.",
+    "evert_bio": "Associate specializing in property and land law. Experienced in land certification, ownership disputes, and assistance in large-scale commercial property transactions.",
+    "galih_name": "Galih Wahyu Wicaksono",
+    "galih_title": "S.H.",
+    "galih_bio": "Associate focused on employment and corporate law. Actively assists companies in resolving industrial relations disputes and drafting internal company regulations.",
+    "rahma_name": "Rahma Dini",
+    "rahma_title": "S.H.",
+    "rahma_bio": "Junior Associate specializing in family and civil law. Provides legal assistance in divorce, inheritance, and family disputes with a sensitive and empathetic approach.",
+    "raisha_name": "Raisha Kamila Yasmin",
+    "raisha_title": "S.H.",
+    "raisha_bio": "Junior Associate with a focus on digital law and intellectual property. Actively assists startup clients with brand protection, technology contracts, and digital regulatory compliance.",
+    "socials_label": "Social Media",
+    "view_profile": "View full profile",
+    "view_profile_short": "View profile"
+  },
+  "articles": {
+    "badge": "Legal Insights",
+    "heading": "Articles & Analysis",
+    "subheading": "Discover articles, analysis, and legal guides from our experts.",
+    "all_categories": "All",
+    "published_on": "Published on",
+    "by": "by",
+    "no_articles": "No articles yet",
+    "no_results": "No articles found",
+    "read_time": "min read",
+    "categories": {
+      "corporate": "Corporate Law",
+      "litigation": "Litigation",
+      "regulatory": "Regulatory",
+      "family": "Family Law",
+      "property": "Property",
+      "digital": "Digital Law"
+    },
+    "articleTitles": {
+      "memahami-kontrak-bisnis-yang-sah": "Understanding the Elements of a Valid Business Contract in Indonesia",
+      "perlindungan-merek-dagang": "Trademark Protection Strategies in the Digital Era",
+      "prosedur-kepailitan-indonesia": "Complete Guide to Bankruptcy Procedures in Indonesia",
+      "hak-pekerja-phk-pandemi": "Employee Rights in Termination: What You Need to Know",
+      "sengketa-tanah-solusi-hukum": "Land Disputes: Legal Channels and Available Solutions",
+      "perceraian-hak-asuh-anak": "Divorce and Child Custody: Family Law Guide"
+    },
+    "articleExcerpts": {
+      "memahami-kontrak-bisnis-yang-sah": "Business contracts are the foundation of every commercial transaction. Learn the key elements that make a contract valid and legally enforceable.",
+      "perlindungan-merek-dagang": "Trademarks are valuable business assets. Discover the best strategies to protect your brand from infringement on digital platforms.",
+      "prosedur-kepailitan-indonesia": "Bankruptcy is a complex legal process. This guide explains the steps of bankruptcy procedures based on Law No. 37 of 2004.",
+      "hak-pekerja-phk-pandemi": "Termination is a situation that requires a deep understanding of the rights and obligations of both parties. Learn about legally protected employee rights.",
+      "sengketa-tanah-solusi-hukum": "Land ownership disputes are among the most common cases in Indonesia. This article outlines the various resolution pathways available.",
+      "perceraian-hak-asuh-anak": "Divorce is a process that is complex emotionally and legally. Understand the legal procedures and how courts determine child custody."
+    },
+    "consult_prompt": "Need Consultation?",
+    "consult_sub": "Our attorney team is ready to help you with the legal issues you face.",
+    "consult_cta": "Contact Us"
+  },
+  "career": {
+    "badge": "Career",
+    "heading": "Join Our Team",
+    "subheading": "We are looking for talented individuals who are passionate about law and want to make a real impact.",
+    "open_positions": "Open Positions",
+    "no_positions": "No open positions at this time",
+    "no_openings": "No open positions at this time. Stay tuned for future opportunities.",
+    "apply_now": "Apply Now",
+    "deadline": "Application Deadline",
+    "requirements": "Requirements",
+    "responsibilities": "Responsibilities",
+    "types": {
+      "full_time": "Full Time",
+      "part_time": "Part Time",
+      "contract": "Contract",
+      "intern": "Internship"
+    },
+    "perks": {
+      "competitive": "Competitive Salary & Benefits",
+      "collaborative": "Collaborative Work Environment",
+      "international": "International Case Exposure",
+      "career_dev": "Structured Career Development"
+    },
+    "location_south_jakarta": "South Jakarta",
+    "location_hybrid": "Jakarta (Hybrid)",
+    "job1_title": "Junior Associate — Corporate Law",
+    "job1_req1": "Bachelor of Law (LL.B.) from a grade A accredited university",
+    "job1_req2": "GPA minimum 3.25",
+    "job1_req3": "Proficient in English (spoken and written)",
+    "job1_req4": "Internship experience at a law firm is a plus",
+    "job1_req5": "Able to work in a team and under pressure",
+    "job1_resp1": "Conduct legal research and document analysis",
+    "job1_resp2": "Support senior associates in case handling",
+    "job1_resp3": "Draft legal memos and reports",
+    "job1_resp4": "Interact directly with clients under supervision",
+    "job2_title": "Legal Researcher & Content Writer",
+    "job2_req1": "Bachelor of Law or Communications",
+    "job2_req2": "Strong and systematic writing skills",
+    "job2_req3": "Familiar with current legal issues",
+    "job2_req4": "Experience writing legal content is a plus",
+    "job2_resp1": "Write legal articles and analysis for the website",
+    "job2_resp2": "Research current regulations",
+    "job2_resp3": "Support the marketing team with quality content",
+    "job2_resp4": "Manage and update website content",
+    "job3_title": "Legal Internship",
+    "job3_req1": "Law student from 6th semester onwards",
+    "job3_req2": "GPA minimum 3.00",
+    "job3_req3": "Willing to intern for at least 3 months",
+    "job3_req4": "Interested in corporate law or litigation",
+    "job3_resp1": "Assist with legal research",
+    "job3_resp2": "Support attorneys in case preparation",
+    "job3_resp3": "Attend hearings and mediations",
+    "job3_resp4": "Prepare reports and documentation"
+  },
+  "contact": {
+    "badge": "Contact Us",
+    "heading": "We're Here to Help",
+    "subheading": "Discuss your legal needs with our expert team. We will respond within 24 business hours.",
+    "form_heading": "Send a Message",
+    "name": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "subject": "Subject",
+    "message": "Message",
+    "service": "Service Needed",
+    "submit": "Send Message",
+    "success": "Message sent successfully! We will contact you soon.",
+    "error": "Failed to send message. Please try again.",
+    "office_hours": "Office Hours",
+    "address": "Address",
+    "address_value": "District 8, Prosperity Tower 5th Fl. Unit E & F, SCBD Lot 28, Jl. Jend Sudirman Kav. 52-53, South Jakarta",
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "whatsapp": "WhatsApp"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "Frequently Asked Questions",
+    "subheading": "Find answers to common questions about our legal services.",
+    "all_categories": "All",
+    "no_results": "No questions found",
+    "contact_prompt": "Can't find what you're looking for?",
+    "contact_desc": "Contact our team directly to get answers to your specific questions.",
+    "contact_cta": "Contact Us",
+    "categories": {
+      "general": "General",
+      "consultation": "Consultation",
+      "fees": "Fees",
+      "process": "Process",
+      "confidentiality": "Confidentiality"
+    },
+    "items": {
+      "1": {
+        "q": "What sets MRP Law Office apart from other law firms?",
+        "a": "MRP Law Office has advantages including over 15 years of experience, a dedicated attorney team, a personalized approach for each client, and a strong international network. We don't just focus on legal aspects but also understand the business context of our clients to provide the most effective solutions."
+      },
+      "2": {
+        "q": "How do I start a consultation with MRP Law Office?",
+        "a": "You can contact us through the contact form on the website, email at info@mrplawoffice.com, or phone at (+62) 21 50300825. Our team will respond within 24 business hours to schedule an initial consultation session."
+      },
+      "3": {
+        "q": "Is the first consultation paid?",
+        "a": "The initial consultation (30-60 minutes) at MRP Law Office is free and without obligation. This allows us to understand your needs and for you to evaluate whether we are the right legal partner."
+      },
+      "4": {
+        "q": "What is the fee structure for legal services at MRP Law Office?",
+        "a": "Our fee structure varies depending on the type and complexity of the case. We offer several models: hourly rate, flat fee for certain services, or retainer for ongoing legal needs. Fee transparency is our commitment — no hidden costs."
+      },
+      "5": {
+        "q": "How long does it typically take to resolve a legal case?",
+        "a": "The duration of case resolution depends greatly on the type and complexity of the case. Simple legal consultations can be resolved in hours, while court litigation can last several months to years. We always provide realistic time estimates at the beginning of case handling."
+      },
+      "6": {
+        "q": "Does MRP Law Office handle international cases?",
+        "a": "Yes, we have the experience and network to handle international legal cases, including international arbitration, cross-border contracts, and international trade disputes. We work with partner law firms in various countries."
+      },
+      "7": {
+        "q": "How does MRP Law Office maintain client information confidentiality?",
+        "a": "Client confidentiality is our top priority. All information you provide is protected by professional confidentiality obligations (attorney-client privilege) and our strict privacy policy. We use sophisticated data security systems to protect your information."
+      },
+      "8": {
+        "q": "Are pro bono legal services available?",
+        "a": "MRP Law Office has a limited pro bono program for cases that meet certain criteria — particularly for financially disadvantaged individuals facing significant legal issues. Contact us for more information about eligibility."
+      }
+    }
   },
   "admin": {
     "login": {
@@ -31,7 +490,261 @@
       "email": "Email",
       "password": "Password",
       "submit": "Sign In",
-      "invalidCredentials": "Invalid email or password"
+      "invalidCredentials": "Incorrect email or password. Please try again."
     }
+  },
+  "serviceDetail": {
+    "litigation": {
+      "benefit_count": "5",
+      "process_count": "5",
+      "benefit_1": "Representation at all court levels — District Court, High Court, and Supreme Court",
+      "benefit_2": "Drafting of complaints, responses, replications, duplications, and appeal briefs",
+      "benefit_3": "Out-of-court dispute settlement negotiation for time and cost efficiency",
+      "benefit_4": "Handling of civil, administrative court, and commercial disputes",
+      "benefit_5": "Enforcement of judgments and post-judgment legal assistance",
+      "process_1": "Initial consultation and legal case fact analysis",
+      "process_2": "Litigation strategy development and legal review",
+      "process_3": "Document preparation, evidence gathering, and expert witnesses",
+      "process_4": "Active court attendance at every hearing",
+      "process_5": "Judgment enforcement and post-judgment follow-up"
+    },
+    "corporate": {
+      "benefit_count": "5",
+      "process_count": "4",
+      "benefit_1": "Establishment and structuring of business entities — PT, CV, Cooperative, Foundation",
+      "benefit_2": "Drafting of company deeds, articles of association, and corporate documents",
+      "benefit_3": "Mergers, acquisitions, due diligence, and corporate restructuring",
+      "benefit_4": "Investment agreements, shareholder agreements, and term sheets",
+      "benefit_5": "GCG (Good Corporate Governance) compliance and shareholder meetings",
+      "process_1": "Consultation on business structure needs and corporate objectives",
+      "process_2": "Due diligence and legal document preparation",
+      "process_3": "Processing OSS licenses, NIB, and ministerial approvals",
+      "process_4": "Implementation support and compliance monitoring"
+    },
+    "regulatory": {
+      "benefit_count": "5",
+      "process_count": "5",
+      "benefit_1": "Regulatory compliance audits in finance, healthcare, mining, and technology sectors",
+      "benefit_2": "Processing of business licenses, SIUP, TDP, and mandatory sectoral certifications",
+      "benefit_3": "Support during OJK, BI, Ministry of Trade, and BKPM inspections",
+      "benefit_4": "Drafting compliance SOPs and whistleblowing systems",
+      "benefit_5": "Advisory on regulatory changes and their impact on business operations",
+      "process_1": "Gap analysis of applicable regulatory compliance",
+      "process_2": "Compliance roadmap development and risk prioritization",
+      "process_3": "Implementation of internal compliance programs",
+      "process_4": "Processing licenses and communicating with regulators",
+      "process_5": "Monitoring and periodic updates on regulatory changes"
+    },
+    "professional": {
+      "benefit_count": "4",
+      "process_count": "4",
+      "benefit_1": "Defense of doctors, accountants, notaries, and architects in malpractice disputes",
+      "benefit_2": "Drafting professional liability insurance policies",
+      "benefit_3": "Professional ethics and standard of care consultations",
+      "benefit_4": "Representation before professional ethics committees and courts",
+      "process_1": "Evaluation of facts and documents related to alleged malpractice",
+      "process_2": "Expert consultation and review of professional standards",
+      "process_3": "Defense strategy — mediation or litigation",
+      "process_4": "Representation at ethics committee hearings or court proceedings"
+    },
+    "digital": {
+      "benefit_count": "5",
+      "process_count": "4",
+      "benefit_1": "Compliance with Indonesian Personal Data Protection Law and GDPR for cross-border operations",
+      "benefit_2": "Legally compliant privacy policies, terms of service, and cookie policies",
+      "benefit_3": "SaaS contracts, software licenses, and technology development agreements",
+      "benefit_4": "Data breach response and mandatory notification to Ministry of Communication",
+      "benefit_5": "Advisory on Fintech, Artificial Intelligence, and digital platform regulations",
+      "process_1": "Personal data processing audit and privacy risk mapping",
+      "process_2": "Drafting of policy documents and data processing agreements",
+      "process_3": "Implementation of consent mechanisms and data subject rights",
+      "process_4": "Internal team training and ongoing compliance monitoring"
+    },
+    "ecommerce": {
+      "benefit_count": "5",
+      "process_count": "4",
+      "benefit_1": "Drafting of marketplace terms, refund policies, and service SLAs",
+      "benefit_2": "Regulatory compliance with BPOM, Ministry of Trade, and Kominfo for online sales",
+      "benefit_3": "Trademark protection and counterfeit product handling on digital platforms",
+      "benefit_4": "Merchant partnership contracts, affiliate agreements, and logistics contracts",
+      "benefit_5": "Legal advisory for startups at seed, Series A, and tech IPO stages",
+      "process_1": "Business model review and legal risk identification",
+      "process_2": "Drafting core legal documents (ToS, PP, contracts)",
+      "process_3": "Processing PSE (Electronic System Provider) registration and certifications",
+      "process_4": "Fundraising and investor due diligence support"
+    },
+    "property": {
+      "benefit_count": "5",
+      "process_count": "5",
+      "benefit_1": "Certificate verification, PPJB, AJB, and clean & clear land ownership analysis",
+      "benefit_2": "Processing HGB, HGU, HP, and land rights conversion",
+      "benefit_3": "Land ownership disputes, duplicate certificates, and property inheritance cases",
+      "benefit_4": "Sale-purchase contracts, commercial leases, and BOT agreements",
+      "benefit_5": "Property due diligence for investment and project development purposes",
+      "process_1": "Document review and ownership legality verification",
+      "process_2": "Clean & clear analysis — identifying encumbrances and disputes",
+      "process_3": "Drafting and reviewing transaction contracts",
+      "process_4": "Assistance before PPAT and BPN",
+      "process_5": "Handover and post-transaction monitoring"
+    },
+    "family": {
+      "benefit_count": "5",
+      "process_count": "4",
+      "benefit_1": "Consultation and divorce proceedings at Religious Court",
+      "benefit_2": "Child custody, alimony, and post-divorce parenting plan agreements",
+      "benefit_3": "Drafting wills, establishing heirs, and inheritance distribution",
+      "benefit_4": "Prenuptial agreements in accordance with Indonesian law",
+      "benefit_5": "Child adoption, guardianship, and family civil administration",
+      "process_1": "Initial consultation — family situation evaluation and legal options",
+      "process_2": "Mediation and non-litigation settlement attempts",
+      "process_3": "Court hearing support if mediation is unsuccessful",
+      "process_4": "Judgment implementation and family document administration"
+    },
+    "employment": {
+      "benefit_count": "5",
+      "process_count": "4",
+      "benefit_1": "Drafting of PKWT/PKWTT employment contracts, outsourcing agreements, and NDAs",
+      "benefit_2": "Handling mass layoffs, severance, and labor dispute resolution",
+      "benefit_3": "Job Creation Law compliance — minimum wages, leave, working hours, and BPJS",
+      "benefit_4": "Representation at Industrial Relations Courts and Disnaker mediation",
+      "benefit_5": "Drafting company regulations and Collective Labor Agreements (PKB)",
+      "process_1": "Employment compliance audit and risk identification",
+      "process_2": "Drafting or revising employment relationship documents",
+      "process_3": "Internal or Disnaker mediation before litigation",
+      "process_4": "ILC representation and judgment enforcement"
+    },
+    "intellectual": {
+      "benefit_count": "5",
+      "process_count": "5",
+      "benefit_1": "Registration of trademarks, patents, copyrights, and industrial designs at DJKI",
+      "benefit_2": "Handling IP infringement — piracy, counterfeiting, and passing off",
+      "benefit_3": "License agreements, franchise, and cross-border technology transfer",
+      "benefit_4": "Trademark cancellation and invalidation of third-party IP registrations",
+      "benefit_5": "International IP protection advisory — Madrid Protocol, PCT",
+      "process_1": "IP portfolio audit and intellectual asset mapping",
+      "process_2": "Drafting and filing registration applications",
+      "process_3": "Responding to office actions and objections",
+      "process_4": "Market monitoring and infringement detection",
+      "process_5": "Rights enforcement through cease & desist, mediation, or litigation"
+    },
+    "immigration": {
+      "benefit_count": "4",
+      "process_count": "4",
+      "benefit_1": "Processing KITAS, KITAP, business visas, and work permits for foreign workers",
+      "benefit_2": "Visa sponsorship for expatriate employees and their families",
+      "benefit_3": "Extension and conversion of residence permit status",
+      "benefit_4": "Immigration consultations for PMA and BUMN companies with foreign staff",
+      "process_1": "Consultation on appropriate permit type and required documents",
+      "process_2": "Application file preparation and completeness review",
+      "process_3": "Filing with Directorate General of Immigration and process monitoring",
+      "process_4": "Document collection and permit usage briefing"
+    },
+    "environmental": {
+      "benefit_count": "4",
+      "process_count": "4",
+      "benefit_1": "Drafting and review of EIA (Amdal), UKL-UPL, and mandatory environmental documents",
+      "benefit_2": "Environmental pollution dispute resolution and ecological damage compensation",
+      "benefit_3": "Environmental permit compliance, PROPER, and environmental monitoring reports",
+      "benefit_4": "Legal advisory for infrastructure projects and renewable energy",
+      "process_1": "Identification of environmental obligations based on business activity type",
+      "process_2": "Environmental document preparation and coordination with EIA consultants",
+      "process_3": "Environmental permit processing at KLHK/DPMPTSP",
+      "process_4": "Environmental audit support and administrative sanction response"
+    },
+    "criminal": {
+      "benefit_count": "5",
+      "process_count": "5",
+      "benefit_1": "Client accompaniment during police examination as witness or suspect",
+      "benefit_2": "Applications for detention suspension, pretrial hearings, and pre-trial legal remedies",
+      "benefit_3": "Defense in corruption, fraud, embezzlement, and corporate criminal cases",
+      "benefit_4": "Appeal, cassation, and judicial review at the Supreme Court",
+      "benefit_5": "Criminal law consultations for companies facing corporate liability risks",
+      "process_1": "Immediate consultation after summons or detention",
+      "process_2": "Case file review and indictment analysis",
+      "process_3": "Defense strategy formulation and evidence collection",
+      "process_4": "Full court proceedings accompaniment at every hearing",
+      "process_5": "Appeal, cassation, or judicial review if necessary"
+    }
+  },
+  "gallery": {
+    "badge": "Activity Documentation",
+    "heading": "Firm Gallery",
+    "subheading": "Moments from MRP Law Office activities in legal handling, training, and community events.",
+    "all_categories": "All",
+    "categories": {
+      "litigation": "Court Proceedings",
+      "consultation": "Consultation",
+      "training": "Training & Seminars",
+      "award": "Awards",
+      "community": "Community Events"
+    },
+    "photo_count": "photos",
+    "no_photos": "No photos in this category yet."
+  },
+  "process": {
+    "badge": "How We Work",
+    "heading": "A Transparent Process You Can Trust",
+    "subheading": "We ensure every client fully understands every stage of their case handling transparently.",
+    "steps": {
+      "1": {
+        "title": "Initial Consultation",
+        "desc": "In-depth discussion about your legal issues. We listen, analyze, and provide an initial overview of solutions."
+      },
+      "2": {
+        "title": "Review & Strategy",
+        "desc": "Our team conducts thorough legal review to design the most effective and efficient legal strategy."
+      },
+      "3": {
+        "title": "Execution",
+        "desc": "Strategy implementation with full accompaniment at every stage — negotiation, mediation, or court proceedings."
+      },
+      "4": {
+        "title": "Report & Follow-up",
+        "desc": "Periodic progress reports and post-settlement assistance to ensure your interests remain protected."
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Client Trust",
+    "heading": "What Our Clients Say",
+    "subheading": "Client satisfaction and trust are our measure of success.",
+    "items": {
+      "1": {
+        "quote": "MRP Law Office handled our company acquisition very professionally. Their thorough due diligence and skilled negotiation resulted in the best deal for us.",
+        "name": "Budi Santoso",
+        "position": "President Director of PT Nusantara Makmur"
+      },
+      "2": {
+        "quote": "The MRP team was very responsive and competent. They guided us through a complex litigation process clearly and confidently. The results exceeded our expectations.",
+        "name": "Dewi Rahayu",
+        "position": "CFO of PT Teknologi Andalan"
+      },
+      "3": {
+        "quote": "I was very impressed by the deep knowledge and dedication of MRP Law Office's team in handling our property dispute. They are truly a trusted legal partner.",
+        "name": "Hendro Wibowo",
+        "position": "Owner of Wibowo Property Group"
+      }
+    }
+  },
+  "recentArticles": {
+    "badge": "Legal Insights",
+    "heading": "Latest Articles & Publications",
+    "subheading": "Latest legal thinking and analysis from our attorneys.",
+    "readMore": "Read Article",
+    "viewAll": "View All Articles",
+    "minRead": "min read"
+  },
+  "meetLeaders": {
+    "badge": "Firm Leadership",
+    "heading": "Meet the Leaders",
+    "subheading": "Led by legal professionals who have built decades-long reputations in their fields.",
+    "founder_role": "Founder & Managing Partner",
+    "founder_name": "Dr. Dodi S Abdulkadir, B.Sc., S.E., S.H., M.H.",
+    "founder_bio": "Dr. Dodi S Abdulkadir is the founder and Managing Partner of MRP Law Office. With multidisciplinary academic credentials and over 20 years of experience, he has led the handling of hundreds of corporate and international law cases, and serves as a trusted legal counsel to various multinational companies operating in Indonesia.",
+    "founder_credential_1": "Doctor of International Law",
+    "founder_credential_2": "Registered Advocate PERADI",
+    "founder_credential_3": "MA-RI Certified Mediator",
+    "view_team": "View Full Team",
+    "senior_label": "Senior Partner"
   }
 }

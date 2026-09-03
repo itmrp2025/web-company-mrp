@@ -1,23 +1,44 @@
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/custom-ui/Button";
+import { HeroSection } from "@/components/public/sections/home/HeroSection";
+import { StatsSection } from "@/components/public/sections/home/StatsSection";
+import { ServicesSection } from "@/components/public/sections/home/ServicesSection";
+import { MeetLeadersSection } from "@/components/public/sections/home/MeetLeadersSection";
+import { RecentArticlesSection } from "@/components/public/sections/home/RecentArticlesSection";
+import { ConsultationCTASection } from "@/components/public/sections/home/ConsultationCTASection";
+import { WhyChooseSection } from "@/components/public/sections/home/WhyChooseSection";
+import { ProcessSection } from "@/components/public/sections/home/ProcessSection";
+import { TestimonialsSection } from "@/components/public/sections/home/TestimonialsSection";
+import { fetchCmsPage, getSectionContent } from "@/utils/helpers/fetchCmsPage";
 
-export default function HomePage() {
-  const t = useTranslations("hero");
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const cmsData = await fetchCmsPage("home");
+  const sections = cmsData?.sections;
+
+  const hero = getSectionContent(sections, "hero");
+  const stats = getSectionContent(sections, "stats");
+  const servicesSection = getSectionContent(sections, "services_section");
+  const meetLeaders = getSectionContent(sections, "meet_leaders");
+  const recentArticles = getSectionContent(sections, "recent_articles");
+  const cta = getSectionContent(sections, "cta");
+  const whyChoose = getSectionContent(sections, "why_choose");
+  const process = getSectionContent(sections, "process");
+  const testimonials = getSectionContent(sections, "testimonials");
 
   return (
-    <section className="flex min-h-[80vh] flex-col items-center justify-center gap-6 bg-gradient-to-b from-primary-50 to-white px-6 text-center">
-      <span className="rounded-full bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
-        {t("badge")}
-      </span>
-      <h1 className="max-w-3xl text-4xl md:text-5xl">{t("heading")}</h1>
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        <Button variant="contained" size="lg">
-          {t("cta_primary")}
-        </Button>
-        <Button variant="outlined" size="lg">
-          {t("cta_secondary")}
-        </Button>
-      </div>
-    </section>
+    <>
+      <HeroSection content={hero} locale={locale} />
+      <StatsSection content={stats} locale={locale} />
+      <WhyChooseSection content={whyChoose} locale={locale} />
+      <ServicesSection content={servicesSection} locale={locale} />
+      <ProcessSection content={process} locale={locale} />
+      <MeetLeadersSection content={meetLeaders} locale={locale} />
+      <RecentArticlesSection content={recentArticles} />
+      <TestimonialsSection content={testimonials} />
+      <ConsultationCTASection content={cta} locale={locale} />
+    </>
   );
 }

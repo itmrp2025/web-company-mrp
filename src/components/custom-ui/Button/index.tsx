@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Loader2 } from "lucide-react";
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
@@ -60,6 +61,7 @@ export interface ButtonProps
   loading?: boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
+  href?: string;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -74,24 +76,36 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       endIcon,
       children,
       disabled,
+      href,
       ...props
     },
     ref,
   ) => {
+    const cls = cn(buttonVariants({ variant, color, size }), className);
+    const content = (
+      <>
+        {loading ? <Loader2 className="size-4 animate-spin" /> : startIcon}
+        {children}
+        {!loading && endIcon}
+      </>
+    );
+
+    if (href) {
+      return (
+        <Link href={href as Parameters<typeof Link>[0]["href"]} className={cls}>
+          {content}
+        </Link>
+      );
+    }
+
     return (
       <button
         ref={ref}
-        className={cn(buttonVariants({ variant, color, size }), className)}
+        className={cls}
         disabled={disabled || loading}
         {...props}
       >
-        {loading ? (
-          <Loader2 className="size-4 animate-spin" />
-        ) : (
-          startIcon
-        )}
-        {children}
-        {!loading && endIcon}
+        {content}
       </button>
     );
   },
