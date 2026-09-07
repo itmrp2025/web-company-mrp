@@ -14,7 +14,7 @@ async function handler(req: NextRequest) {
   const init: RequestInit = {
     method: req.method,
     headers,
-    body: ["GET", "HEAD"].includes(req.method) ? undefined : await req.text(),
+    body: ["GET", "HEAD"].includes(req.method) ? undefined : await req.arrayBuffer(),
     redirect: "manual",
   };
 
