@@ -39,7 +39,6 @@ const navItems = [
       { href: "/admin/pages/faq", label: "FAQ", icon: HelpCircle },
       { href: "/admin/pages/career", label: "Karir", icon: Briefcase },
       { href: "/admin/pages/gallery", label: "Galeri", icon: ImageIcon },
-      { href: "/admin/pages/articles", label: "Artikel", icon: FileText },
     ],
   },
   { href: "/admin/articles", label: "Artikel", icon: Newspaper },
