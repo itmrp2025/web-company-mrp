@@ -46,8 +46,10 @@ jobs:
                   script_stop: true
                   script: |
                       set -euo pipefail
-                      cd /var/www/company-mrp/web-company-mrp
-                      git fetch origin master
-                      git reset --hard origin/master
-                      docker compose --env-file .env.local up -d --build
-                      docker image prune -f --filter "label=com.docker.compose.project=mrp-law-fe"
+                      TARGET="/var/www/company-mrp/web-company-mrp"
+                      cd "$TARGET"
+                      sudo git config --global --add safe.directory "$TARGET" 2>/dev/null || true
+                      sudo git fetch origin master
+                      sudo git reset --hard origin/master
+                      sudo docker compose --env-file .env.local up -d --build
+                      sudo docker image prune -f --filter "label=com.docker.compose.project=mrp-law-fe"
