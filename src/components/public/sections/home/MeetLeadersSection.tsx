@@ -58,6 +58,7 @@ export function MeetLeadersSection({ content = {}, locale = "id" }: Props) {
                 src={founderImageUrl}
                 alt={founderName}
                 fill
+                unoptimized
                 className="object-cover object-top"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
