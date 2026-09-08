@@ -140,6 +140,7 @@ const SCHEMAS: SectionSchema[] = [
       { key: "subheading_id", label: "Subheading (Indonesia)", type: "textarea", span: "full" },
       { key: "subheading_en", label: "Subheading (English)", type: "textarea", span: "full" },
       { type: "divider", label: "Profil Pendiri" },
+      { key: "founder_image_url", label: "Foto Pendiri", type: "image", folder: "team", span: "full" },
       { key: "founder_name", label: "Nama Lengkap", type: "text", span: "full" },
       { key: "founder_role_id", label: "Jabatan (Indonesia)", type: "text" },
       { key: "founder_role_en", label: "Role (English)", type: "text" },

@@ -45,7 +45,7 @@ export default async function AboutPage({
 
   const statsData = [
     {
-      value: cms(stats, "stat_founded_value", "2008"),
+      value: cms(stats, "stat_founded_value", "2001"),
       label: cms(stats, `stat_founded_${lang}`, t("stat_founded")),
     },
     {

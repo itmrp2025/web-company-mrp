@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/custom-ui/Button";
 import { ArrowRight, ExternalLink, Award, BookOpen, Scale } from "lucide-react";
@@ -21,6 +22,7 @@ export function MeetLeadersSection({ content = {}, locale = "id" }: Props) {
   const credential1 = cms(content, `credential_1_${lang}`, t("founder_credential_1"));
   const credential2 = cms(content, `credential_2_${lang}`, t("founder_credential_2"));
   const credential3 = cms(content, `credential_3_${lang}`, t("founder_credential_3"));
+  const founderImageUrl = cms(content, "founder_image_url", "");
   const linkedinUrl = cms(content, "linkedin_url", "https://linkedin.com/in/dodi-abdulkadir");
   const instagramUrl = cms(content, "instagram_url", "https://instagram.com/dodisabdulkadir");
   const viewTeam = cms(content, `view_team_${lang}`, t("view_team"));
@@ -51,13 +53,23 @@ export function MeetLeadersSection({ content = {}, locale = "id" }: Props) {
           <div className="relative min-h-[360px] bg-neutral-900 overflow-hidden lg:min-h-[520px]">
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-900 to-primary-900" />
             <div className="absolute inset-6 border border-white/10" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-              <div className="flex h-36 w-28 items-end justify-center overflow-hidden bg-neutral-700/60 border border-white/10">
-                <div className="h-32 w-24 bg-gradient-to-t from-neutral-600 to-neutral-500 flex items-center justify-center">
-                  <span className="font-sans text-5xl font-bold text-white/30">{initial}</span>
+            {founderImageUrl ? (
+              <Image
+                src={founderImageUrl}
+                alt={founderName}
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                <div className="flex h-36 w-28 items-end justify-center overflow-hidden bg-neutral-700/60 border border-white/10">
+                  <div className="h-32 w-24 bg-gradient-to-t from-neutral-600 to-neutral-500 flex items-center justify-center">
+                    <span className="font-sans text-5xl font-bold text-white/30">{initial}</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             {/* Name overlay at bottom */}
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-neutral-950/80 to-transparent px-8 pb-8 pt-16">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent mb-2">
