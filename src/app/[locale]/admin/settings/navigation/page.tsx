@@ -7,7 +7,7 @@ import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
 import { toast } from "sonner";
 import { Button } from "@/components/custom-ui/Button";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, GripVertical } from "lucide-react";
 import type { ApiResponse, NavigationItem } from "@/interface/admin.interface";
 
 export default function AdminSettingsNavigationPage() {
@@ -24,6 +24,7 @@ export default function AdminSettingsNavigationPage() {
   });
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (data) setItems(data);
   }, [data]);
 
@@ -33,15 +34,15 @@ export default function AdminSettingsNavigationPage() {
     onSuccess: () => toast.success("Navigasi disimpan"),
   });
 
-  const toggleVisible = (key: string) => {
+  const updateField = (key: string, field: keyof NavigationItem, value: string | number | boolean) => {
     setItems((prev) =>
-      prev.map((item) => item.key === key ? { ...item, is_visible: !item.is_visible } : item)
+      prev.map((item) => item.key === key ? { ...item, [field]: value } : item)
     );
   };
 
-  const updateLabel = (key: string, field: "label_id" | "label_en", value: string) => {
+  const toggleVisible = (key: string) => {
     setItems((prev) =>
-      prev.map((item) => item.key === key ? { ...item, [field]: value } : item)
+      prev.map((item) => item.key === key ? { ...item, is_visible: !item.is_visible } : item)
     );
   };
 
@@ -70,9 +71,10 @@ export default function AdminSettingsNavigationPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-neutral-100">
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-neutral-400">Key</th>
+                <th className="w-8 px-2 py-3"></th>
                 <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-neutral-400">Label (ID)</th>
                 <th className="hidden px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-neutral-400 md:table-cell">Label (EN)</th>
+                <th className="hidden px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-neutral-400 lg:table-cell">URL</th>
                 <th className="px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider text-neutral-400">Tampil</th>
               </tr>
             </thead>
@@ -80,21 +82,30 @@ export default function AdminSettingsNavigationPage() {
               {items
                 .slice()
                 .sort((a, b) => a.order - b.order)
-                .map((item) => (
-                  <tr key={item.key} className="hover:bg-neutral-50/50">
-                    <td className="px-5 py-3 font-mono text-xs text-neutral-500">{item.key}</td>
+                .map((item, idx) => (
+                  <tr key={item.key ?? item.href ?? idx} className="hover:bg-neutral-50/50">
+                    <td className="px-2 py-3 text-neutral-300">
+                      <GripVertical className="h-4 w-4" />
+                    </td>
                     <td className="px-5 py-3">
                       <input
                         value={item.label_id}
-                        onChange={(e) => updateLabel(item.key, "label_id", e.target.value)}
+                        onChange={(e) => updateField(item.key, "label_id", e.target.value)}
                         className="w-full rounded border border-neutral-200 px-2 py-1 text-sm focus:border-primary focus:outline-none"
                       />
                     </td>
                     <td className="hidden px-5 py-3 md:table-cell">
                       <input
                         value={item.label_en}
-                        onChange={(e) => updateLabel(item.key, "label_en", e.target.value)}
+                        onChange={(e) => updateField(item.key, "label_en", e.target.value)}
                         className="w-full rounded border border-neutral-200 px-2 py-1 text-sm focus:border-primary focus:outline-none"
+                      />
+                    </td>
+                    <td className="hidden px-5 py-3 lg:table-cell">
+                      <input
+                        value={item.href}
+                        onChange={(e) => updateField(item.key, "href", e.target.value)}
+                        className="w-full rounded border border-neutral-200 px-2 py-1 font-mono text-xs focus:border-primary focus:outline-none"
                       />
                     </td>
                     <td className="px-5 py-3 text-center">

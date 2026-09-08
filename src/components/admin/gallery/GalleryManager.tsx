@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInterceptor } from "@/config/axios.config";
@@ -133,9 +134,9 @@ export function GalleryManager() {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {items.map((item) => (
             <div key={item.id} className={`group relative rounded-lg overflow-hidden border ${item.is_visible ? "border-neutral-100" : "border-neutral-200 opacity-50"}`}>
-              <div className="aspect-square bg-neutral-100">
+              <div className="relative aspect-square bg-neutral-100">
                 {item.image_url && (
-                  <img src={item.image_url} alt="" className="h-full w-full object-cover" />
+                  <Image src={item.image_url} alt="" fill unoptimized className="object-cover" sizes="200px" />
                 )}
               </div>
               <div className="p-2">

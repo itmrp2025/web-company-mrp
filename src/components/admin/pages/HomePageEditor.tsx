@@ -16,7 +16,7 @@ import type { ApiResponse, PageSection } from "@/interface/admin.interface";
 
 type FieldDef =
   | { key: string; label: string; type: "text" | "textarea"; span?: "full" | "half" }
-  | { key: string; label: string; type: "image"; folder?: string }
+  | { key: string; label: string; type: "image"; folder?: string; span?: "full" | "half" }
   | { type: "divider"; label: string };
 
 interface SectionSchema {
@@ -319,7 +319,7 @@ function SectionCard({ schema, section, onSave, saving }: SectionCardProps) {
     schema.fields.forEach((f) => {
       if (f.type !== "divider") next[f.key] = stored[f.key] ?? "";
     });
-    setValues(next);
+    setValues(next); // eslint-disable-line react-hooks/set-state-in-effect
     setDirty(false);
     setVisible(section?.is_visible ?? true);
   }, [section, schema.fields]);

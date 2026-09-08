@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { Upload, X, ImageIcon, Loader2 } from "lucide-react";
 import { axiosInterceptor } from "@/config/axios.config";
@@ -81,15 +82,14 @@ export function ImageUpload({ value, onChange, label = "Gambar", folder = "gener
       />
 
       {value ? (
-        <div className="relative group w-full overflow-hidden border border-neutral-200 bg-neutral-50">
-          <img
+        <div className="relative group h-48 w-full overflow-hidden border border-neutral-200 bg-neutral-50">
+          <Image
             src={value}
             alt="Preview"
-            className="h-48 w-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-              (e.target as HTMLImageElement).nextElementSibling?.classList.remove("hidden");
-            }}
+            fill
+            unoptimized
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
           <div className="hidden h-48 w-full items-center justify-center flex-col gap-2 bg-neutral-100">
             <ImageIcon className="h-8 w-8 text-neutral-300" />

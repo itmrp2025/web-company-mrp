@@ -49,6 +49,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   ) => {
     const generatedId = React.useId();
     const inputId = id ?? generatedId;
+    const listboxId = `${inputId}-listbox`;
     const [open, setOpen] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -104,6 +105,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             role="combobox"
             aria-expanded={open}
             aria-haspopup="listbox"
+            aria-controls={listboxId}
             disabled={disabled}
             onClick={() => !disabled && setOpen((o) => !o)}
             className={cn(
@@ -131,6 +133,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           {/* Dropdown — anchored to button */}
           {open && (
             <div
+              id={listboxId}
               role="listbox"
               className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 overflow-hidden rounded-md border border-neutral-200 bg-white shadow-lg"
             >

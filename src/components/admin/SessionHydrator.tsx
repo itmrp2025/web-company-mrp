@@ -9,7 +9,7 @@ import type { ApiResponse } from "@/interface/admin.interface";
 import type { AdminUser } from "@/store/use-auth";
 
 export function SessionHydrator() {
-  const { user, isLoaded, setUser } = useAuthStore();
+  const { isLoaded, setUser } = useAuthStore();
 
   useEffect(() => {
     if (isLoaded) return;

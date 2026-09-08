@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Link } from "@/i18n/navigation";
@@ -113,12 +114,15 @@ export function ArticlesClient({ locale }: { locale: string }) {
                     href={`/articles/${article.slug}`}
                     className="group flex flex-col border border-neutral-100 bg-white transition-colors hover:border-primary/20 overflow-hidden"
                   >
-                    <div className="h-48 bg-neutral-100 overflow-hidden">
+                    <div className="relative h-48 bg-neutral-100 overflow-hidden">
                       {article.featured_image ? (
-                        <img
+                        <Image
                           src={article.featured_image}
                           alt={title}
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          fill
+                          unoptimized
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 33vw"
                         />
                       ) : (
                         <div className="flex h-full items-center justify-center">

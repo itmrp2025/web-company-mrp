@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/custom-ui/Button";
 import { ChevronDown, ArrowRight } from "lucide-react";

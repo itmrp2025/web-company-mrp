@@ -205,7 +205,7 @@ export default function AdminSeoPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-50">
-              {Object.entries(grouped).flatMap(([slug, settings]) =>
+              {Object.entries(grouped).flatMap(([_slug, settings]) =>
                 settings.map((seo) => (
                   <tr key={`${seo.page_slug}-${seo.locale}`} className="group hover:bg-neutral-50/50">
                     <td className="px-5 py-4 font-mono text-xs text-neutral-700">/{seo.page_slug}</td>

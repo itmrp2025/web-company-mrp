@@ -15,7 +15,7 @@ interface Props {
   pageLabel: string;
 }
 
-export function PageSectionEditor({ pageSlug, pageLabel }: Props) {
+export function PageSectionEditor({ pageSlug, pageLabel: _pageLabel }: Props) {
   const qc = useQueryClient();
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<Record<string, Record<string, unknown>>>({});

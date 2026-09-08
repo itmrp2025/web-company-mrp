@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 import { Navbar } from "@/components/public/layout/Navbar";
 import { Footer } from "@/components/public/layout/Footer";
@@ -72,13 +73,13 @@ export default function Error({
               <RefreshCw className="h-4 w-4" />
               {locale === "id" ? "Muat Ulang" : "Try Again"}
             </button>
-            <a
+            <Link
               href="/"
               className="inline-flex items-center gap-2.5 border border-neutral-200 bg-white px-7 py-3 text-sm font-medium text-neutral-600 transition-all hover:border-primary/30 hover:text-primary"
             >
               <Home className="h-4 w-4" />
               {locale === "id" ? "Beranda" : "Home"}
-            </a>
+            </Link>
           </div>
 
           {error.digest && (

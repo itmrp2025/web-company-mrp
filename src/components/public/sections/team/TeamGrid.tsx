@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { X, ExternalLink, Mail } from "lucide-react";
 
@@ -141,10 +142,13 @@ function AttorneyCard({
     >
       <div className="relative overflow-hidden aspect-[3/4]">
         {attorney.photo ? (
-          <img
+          <Image
             src={attorney.photo}
             alt={attorney.name}
-            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            fill
+            unoptimized
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
         ) : (
           <div className="h-full w-full bg-neutral-100 flex items-center justify-center">

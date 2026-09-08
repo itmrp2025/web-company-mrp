@@ -29,25 +29,26 @@ import { toast } from "sonner";
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   {
-    label: "Konten",
+    label: "Halaman",
     items: [
-      { href: "/admin/pages/home", label: "Halaman Home", icon: FileText },
+      { href: "/admin/pages/home", label: "Home", icon: FileText },
       { href: "/admin/pages/about", label: "Tentang Kami", icon: FileText },
       { href: "/admin/pages/services", label: "Layanan", icon: Briefcase },
       { href: "/admin/pages/team", label: "Tim", icon: Users },
-      { href: "/admin/pages/contact", label: "Kontak", icon: FileText },
       { href: "/admin/pages/faq", label: "FAQ", icon: HelpCircle },
       { href: "/admin/pages/career", label: "Karir", icon: Briefcase },
+      { href: "/admin/pages/contact", label: "Kontak", icon: FileText },
       { href: "/admin/pages/gallery", label: "Galeri", icon: ImageIcon },
     ],
   },
-  { href: "/admin/articles", label: "Artikel", icon: Newspaper },
-  { href: "/admin/team", label: "Tim", icon: Users },
-  { href: "/admin/services", label: "Layanan", icon: Briefcase },
-  { href: "/admin/reviews", label: "Ulasan", icon: Star },
-  { href: "/admin/career", label: "Karir", icon: Briefcase },
-  { href: "/admin/media", label: "Media", icon: ImageIcon },
-  { href: "/admin/faq", label: "FAQ", icon: HelpCircle },
+  {
+    label: "Konten",
+    items: [
+      { href: "/admin/articles", label: "Artikel", icon: Newspaper },
+      { href: "/admin/reviews", label: "Ulasan", icon: Star },
+      { href: "/admin/media", label: "Media", icon: ImageIcon },
+    ],
+  },
   { href: "/admin/seo", label: "SEO", icon: Search },
   { href: "/admin/analytics", label: "Analitik", icon: BarChart2 },
   {

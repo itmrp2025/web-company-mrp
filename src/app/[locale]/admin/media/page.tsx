@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInterceptor } from "@/config/axios.config";
@@ -128,11 +129,14 @@ export default function AdminMediaPage() {
 
           {data.map((file) => (
             <div key={file.id} className="group relative rounded-lg border border-neutral-100 bg-white overflow-hidden">
-              <div className="aspect-square overflow-hidden bg-neutral-50">
-                <img
+              <div className="relative aspect-square overflow-hidden bg-neutral-50">
+                <Image
                   src={file.url}
                   alt={file.alt_text || file.filename}
-                  className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                  fill
+                  unoptimized
+                  className="object-cover transition-transform group-hover:scale-105"
+                  sizes="200px"
                 />
               </div>
               <div className="p-2">

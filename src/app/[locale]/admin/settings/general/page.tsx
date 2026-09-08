@@ -23,6 +23,15 @@ interface SettingsForm {
   google_maps_embed: string;
 }
 
+const toStr = (val: unknown, lang: "id" | "en" = "id"): string => {
+  if (val == null) return "";
+  if (typeof val === "object") {
+    const obj = val as Record<string, unknown>;
+    return String(obj[lang] ?? obj.id ?? "");
+  }
+  return String(val);
+};
+
 export default function AdminSettingsGeneralPage() {
   const { data: settings, isLoading } = useQuery({
     queryKey: ["admin-settings"],
@@ -39,16 +48,16 @@ export default function AdminSettingsGeneralPage() {
   useEffect(() => {
     if (!settings) return;
     reset({
-      site_name: (settings.site_name as string) ?? "",
-      site_tagline_id: (settings.site_tagline_id as string) ?? "",
-      site_tagline_en: (settings.site_tagline_en as string) ?? "",
-      contact_email: (settings.contact_email as string) ?? "",
-      contact_phone: (settings.contact_phone as string) ?? "",
-      contact_address: (settings.contact_address as string) ?? "",
-      office_hours_id: (settings.office_hours_id as string) ?? "",
-      office_hours_en: (settings.office_hours_en as string) ?? "",
-      whatsapp_number: (settings.whatsapp_number as string) ?? "",
-      google_maps_embed: (settings.google_maps_embed as string) ?? "",
+      site_name: toStr(settings.site_name),
+      site_tagline_id: toStr(settings.site_tagline_id, "id"),
+      site_tagline_en: toStr(settings.site_tagline_en, "en"),
+      contact_email: toStr(settings.contact_email),
+      contact_phone: toStr(settings.contact_phone),
+      contact_address: toStr(settings.contact_address),
+      office_hours_id: toStr(settings.office_hours_id, "id"),
+      office_hours_en: toStr(settings.office_hours_en, "en"),
+      whatsapp_number: toStr(settings.whatsapp_number),
+      google_maps_embed: toStr(settings.google_maps_embed),
     });
   }, [settings, reset]);
 

@@ -16,7 +16,7 @@ import type { ApiResponse, PageSection } from "@/interface/admin.interface";
 
 export type FieldDef =
   | { key: string; label: string; type: "text" | "textarea"; span?: "full" | "half" }
-  | { key: string; label: string; type: "image"; folder?: string }
+  | { key: string; label: string; type: "image"; folder?: string; span?: "full" | "half" }
   | { type: "divider"; label: string };
 
 export interface SectionSchema {
@@ -36,7 +36,7 @@ interface SectionCardProps {
   saving: boolean;
 }
 
-export function SectionCard({ schema, section, pageSlug, onSave, saving }: SectionCardProps) {
+export function SectionCard({ schema, section, pageSlug: _pageSlug, onSave, saving }: SectionCardProps) {
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState<Record<string, string>>(() => {
     const stored = (section?.content ?? {}) as Record<string, string>;
@@ -54,7 +54,7 @@ export function SectionCard({ schema, section, pageSlug, onSave, saving }: Secti
     schema.fields.forEach((f) => {
       if (f.type !== "divider") next[f.key] = stored[f.key] ?? "";
     });
-    setValues(next);
+    setValues(next); // eslint-disable-line react-hooks/set-state-in-effect
     setDirty(false);
   }, [section, schema.fields]);
 

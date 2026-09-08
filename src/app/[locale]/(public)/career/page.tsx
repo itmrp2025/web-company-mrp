@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/public/layout/PageHero";
-import { Button } from "@/components/custom-ui/Button";
 import { ArrowRight, MapPin, Clock, Calendar, Briefcase, Star, Users, Globe } from "lucide-react";
 import { serverFetch } from "@/utils/helpers/serverFetch";
 import { fetchCmsPage, getSectionContent } from "@/utils/helpers/fetchCmsPage";
