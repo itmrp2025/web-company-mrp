@@ -28,7 +28,7 @@ export function WhyChooseSection({ content = {}, locale = "id" }: { content?: Re
 
             {/* Large decorative stat */}
             <div className="border-l-4 border-primary pl-6 py-2">
-              <p className="font-sans text-6xl font-semibold text-primary">15+</p>
+              <p className="font-sans text-6xl font-semibold text-primary">20+</p>
               <p className="mt-1 text-sm text-neutral-500 uppercase tracking-wider">{t("statYears")}</p>
             </div>
 

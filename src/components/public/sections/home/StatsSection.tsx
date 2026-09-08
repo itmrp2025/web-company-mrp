@@ -12,7 +12,7 @@ export function StatsSection({ content = {}, locale = "id" }: Props) {
 
   const stats = [
     {
-      value: cms(content, "years_value", "15+"),
+      value: cms(content, "years_value", "20+"),
       label: cms(content, `years_label_${lang}`, t("years")),
     },
     {

@@ -49,7 +49,7 @@ export default async function AboutPage({
       label: cms(stats, `stat_founded_${lang}`, t("stat_founded")),
     },
     {
-      value: cms(stats, "stat_years_value", "15+"),
+      value: cms(stats, "stat_years_value", "20+"),
       label: cms(stats, `stat_years_${lang}`, t("stat_years")),
     },
     {
