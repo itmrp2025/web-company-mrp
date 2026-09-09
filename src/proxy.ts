@@ -23,7 +23,8 @@ function getLocale(pathname: string): string {
 export default function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const pathWithoutLocale = stripLocale(pathname);
-  const isAdminRoute = pathWithoutLocale.startsWith("/admin");
+  const isAdminRoute =
+    pathWithoutLocale === "/admin" || pathWithoutLocale.startsWith("/admin/");
   const isLoginRoute =
     pathWithoutLocale === "/admin/login" ||
     pathWithoutLocale.startsWith("/admin/login/");

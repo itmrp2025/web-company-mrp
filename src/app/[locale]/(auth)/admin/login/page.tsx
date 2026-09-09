@@ -33,6 +33,55 @@ function getLoginSchema(locale: string) {
 
 type LoginFormValues = { email: string; password: string };
 
+/**
+ * Route admin yang boleh jadi tujuan redirect setelah login.
+ * `returnURL` datang dari query param, jadi jangan dipercaya mentah-mentah —
+ * URL lama yang sudah tidak ada (mis. /admin/dashboard) akan berujung 404.
+ */
+const ADMIN_ROUTES = [
+  "/admin",
+  "/admin/analytics",
+  "/admin/articles",
+  "/admin/articles/new",
+  "/admin/career",
+  "/admin/faq",
+  "/admin/gallery",
+  "/admin/media",
+  "/admin/pages/about",
+  "/admin/pages/career",
+  "/admin/pages/contact",
+  "/admin/pages/faq",
+  "/admin/pages/gallery",
+  "/admin/pages/home",
+  "/admin/pages/services",
+  "/admin/pages/team",
+  "/admin/reviews",
+  "/admin/seo",
+  "/admin/services",
+  "/admin/settings/general",
+  "/admin/settings/navigation",
+  "/admin/team",
+];
+
+function resolveReturnPath(rawReturn: string | null, locale: string): string {
+  if (!rawReturn) return "/admin";
+
+  // Buang prefix locale agar tidak dobel saat dilempar ke i18n router
+  const localePrefix = `/${locale}`;
+  const path = rawReturn.startsWith(localePrefix)
+    ? rawReturn.slice(localePrefix.length) || "/admin"
+    : rawReturn;
+
+  // Hanya izinkan path internal (cegah open redirect ke domain luar)
+  if (!path.startsWith("/admin")) return "/admin";
+
+  const isKnown =
+    ADMIN_ROUTES.includes(path) ||
+    /^\/admin\/articles\/[^/]+\/edit$/.test(path);
+
+  return isKnown ? path : "/admin";
+}
+
 export default function AdminLoginPage() {
   const t = useTranslations("admin.login");
   const locale = useLocale();
@@ -59,13 +108,7 @@ export default function AdminLoginPage() {
     onSuccess: (data) => {
       setUser(data.data);
       toast.success(data.message);
-      const rawReturn = searchParams.get("returnURL") || `/${locale}/admin`;
-      // Strip leading locale prefix to avoid double-prefixing via i18n router
-      const localePrefix = `/${locale}`;
-      const cleanPath = rawReturn.startsWith(localePrefix)
-        ? rawReturn.slice(localePrefix.length) || "/admin"
-        : rawReturn;
-      router.replace(cleanPath as never);
+      router.replace(resolveReturnPath(searchParams.get("returnURL"), locale) as never);
     },
     onError: () => {
       toast.error(t("invalidCredentials"));
