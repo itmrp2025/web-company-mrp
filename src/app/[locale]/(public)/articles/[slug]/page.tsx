@@ -37,7 +37,10 @@ function parseDomNode(node: Node, index: number): React.ReactNode {
     if (tagName === "p") {
       if (!el.textContent?.trim() && children.length === 0) return null;
       return (
-        <p key={index} className="mb-4 text-neutral-700 leading-relaxed">
+        <p
+          key={index}
+          className="mb-4 text-neutral-700 leading-relaxed text-justify"
+        >
           {children}
         </p>
       );
@@ -68,7 +71,7 @@ function parseDomNode(node: Node, index: number): React.ReactNode {
     if (tagName === "blockquote") {
       const className =
         el.className ||
-        "border-l-4 border-primary/40 pl-4 text-neutral-500 italic my-4";
+        "border-l-4 border-primary/40 pl-4 text-neutral-500 italic my-4 text-justify";
       return (
         <blockquote key={index} className={className}>
           {children}
@@ -84,7 +87,7 @@ function parseDomNode(node: Node, index: number): React.ReactNode {
             const itemText = li.textContent || "";
             const [label, ...rest] = itemText.split(" — ");
             return (
-              <li key={j} className="flex items-start gap-3">
+              <li key={j} className="flex items-start gap-3 text-justify">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center bg-primary text-[11px] font-bold text-white mt-0.5">
                   {j + 1}
                 </span>
@@ -110,7 +113,10 @@ function parseDomNode(node: Node, index: number): React.ReactNode {
       return (
         <ul key={index} className="mb-5 space-y-1.5">
           {listItems.map((li, j) => (
-            <li key={j} className="flex items-start gap-2 text-neutral-700">
+            <li
+              key={j}
+              className="flex items-start gap-2 text-neutral-700 text-justify"
+            >
               <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-primary" />
               {li.textContent}
             </li>
@@ -153,7 +159,7 @@ function renderContent(content: string) {
           {items.map((item, j) => {
             const [label, ...rest] = item.split(" — ");
             return (
-              <li key={j} className="flex items-start gap-3">
+              <li key={j} className="flex items-start gap-3 text-justify">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center bg-primary text-[11px] font-bold text-white mt-0.5">
                   {j + 1}
                 </span>
@@ -182,7 +188,10 @@ function renderContent(content: string) {
       elements.push(
         <ul key={`ul-${i}`} className="mb-5 space-y-1.5">
           {items.map((item, j) => (
-            <li key={j} className="flex items-start gap-2 text-neutral-700">
+            <li
+              key={j}
+              className="flex items-start gap-2 text-neutral-700 text-justify"
+            >
               <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-primary" />
               {item}
             </li>
@@ -192,7 +201,10 @@ function renderContent(content: string) {
       continue;
     } else if (line.trim() !== "" && !line.match(/^[A-Z]/)) {
       elements.push(
-        <p key={i} className="mb-4 text-neutral-700 leading-relaxed">
+        <p
+          key={i}
+          className="mb-4 text-neutral-700 leading-relaxed text-justify"
+        >
           {line}
         </p>,
       );
@@ -297,7 +309,9 @@ export default function ArticleDetailPage() {
 
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <article className="prose-custom">{renderContent(body)}</article>
+          <article className="prose-custom text-justify">
+            {renderContent(body)}
+          </article>
 
           <div className="mt-14 border border-neutral-100 p-8">
             <h3 className="mb-2 font-sans text-lg font-semibold text-neutral-900">
