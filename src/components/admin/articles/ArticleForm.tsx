@@ -81,7 +81,10 @@ export function ArticleForm({ article, onSuccess }: Props) {
         },
       };
       if (isEdit) {
-        return axiosInterceptor.put(getApi(endpoints.articles.update(article!.id)), payload);
+        return axiosInterceptor.put(
+          getApi(endpoints.articles.update(article!.id)),
+          payload,
+        );
       }
       return axiosInterceptor.post(getApi(endpoints.articles.create), payload);
     },
@@ -98,11 +101,22 @@ export function ArticleForm({ article, onSuccess }: Props) {
     <form onSubmit={onSubmit} className="space-y-6">
       {/* ── Informasi Dasar ─────────────────────────────────────────────── */}
       <div className="rounded-lg border border-neutral-100 bg-white p-6">
-        <h2 className="mb-4 text-sm font-semibold text-neutral-700">Informasi Dasar</h2>
+        <h2 className="mb-4 text-sm font-semibold text-neutral-700">
+          Informasi Dasar
+        </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TextField
             label="Slug URL"
             {...register("slug")}
+            onChange={(e) => {
+              const transformed = e.target.value
+                .toLowerCase()
+                .replace(/[\s\W_]+/g, "-")
+                .replace(/^-+/, "");
+
+              e.target.value = transformed;
+              register("slug").onChange(e);
+            }}
             error={errors.slug?.message}
           />
 
@@ -231,7 +245,11 @@ export function ArticleForm({ article, onSuccess }: Props) {
 
       <div className="flex justify-end gap-3">
         <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Menyimpan..." : isEdit ? "Simpan Perubahan" : "Buat Artikel"}
+          {mutation.isPending
+            ? "Menyimpan..."
+            : isEdit
+              ? "Simpan Perubahan"
+              : "Buat Artikel"}
         </Button>
       </div>
     </form>

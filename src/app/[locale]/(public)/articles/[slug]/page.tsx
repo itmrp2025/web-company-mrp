@@ -247,6 +247,18 @@ export default function ArticleDetailPage() {
       .finally(() => setLoading(false));
   }, [params.slug]);
 
+  const handleCopy = (e: React.ClipboardEvent<HTMLElement>) => {
+    const selection = window.getSelection();
+    if (!selection || selection.toString().trim() === "") return;
+
+    const copiedText = selection.toString();
+    const currentUrl = window.location.href;
+    const formattedText = `"${copiedText}"\n\nBagikan artikel ini ke teman anda : ${currentUrl}`;
+
+    e.clipboardData.setData("text/plain", formattedText);
+    e.preventDefault();
+  };
+
   if (missing) notFound();
 
   if (loading) {
@@ -309,7 +321,7 @@ export default function ArticleDetailPage() {
 
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <article className="prose-custom text-justify">
+          <article className="prose-custom text-justify" onCopy={handleCopy}>
             {renderContent(body)}
           </article>
 
