@@ -122,7 +122,7 @@ export function Footer() {
 
         <div className="mt-12 border-t border-neutral-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-neutral-600">
-            Â© {new Date().getFullYear()} MRP Law Office. All rights reserved.
+            © {new Date().getFullYear()} MRP Law Office. All rights reserved.
           </p>
           <p className="text-xs text-neutral-700">M&R Partners Law Office</p>
         </div>
