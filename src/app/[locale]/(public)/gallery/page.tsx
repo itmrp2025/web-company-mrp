@@ -4,13 +4,19 @@ import { PageHero } from "@/components/public/layout/PageHero";
 import { GalleryGrid, type GalleryPhoto } from "@/components/public/GalleryGrid";
 import { fetchCmsPage, getSectionContent } from "@/utils/helpers/fetchCmsPage";
 import { serverFetch } from "@/utils/helpers/serverFetch";
+import { buildMetadata } from "@/utils/helpers/seo";
 
 export async function generateMetadata({
   params,
 }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "gallery" });
-  return { title: t("heading") };
+  return buildMetadata({
+    slug: "gallery",
+    locale,
+    path: "/gallery",
+    fallback: { title: t("heading"), description: t("subheading") },
+  });
 }
 
 interface GalleryItem {

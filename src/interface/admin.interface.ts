@@ -126,11 +126,13 @@ export interface Review {
   id: string;
   client_name: string;
   client_company: string;
+  client_photo: string;
   rating: number;
   review_text: string;
   review_text_en: string;
   service_type: string;
   status: "pending" | "approved";
+  reviewed_at: string | null;
   created_at: string;
 }
 

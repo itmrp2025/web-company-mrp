@@ -280,7 +280,7 @@
     "founder_label": "Founding Partner",
     "founder_badge": "Founding Partner",
     "associates_label": "Tim Pengacara",
-    "view_profile": "Lihat Profil",
+    "view_profile": "Lihat profil lengkap",
     "role_founder": "Founder & Managing Partner",
     "role_senior": "Senior Associate",
     "role_associate": "Associate",
@@ -316,7 +316,6 @@
     "raisha_title": "S.H.",
     "raisha_bio": "Junior Associate dengan minat di bidang hukum digital dan kekayaan intelektual. Aktif membantu klien startup dalam perlindungan merek, kontrak teknologi, dan kepatuhan regulasi digital.",
     "socials_label": "Sosial Media",
-    "view_profile": "Lihat profil lengkap",
     "view_profile_short": "Lihat profil"
   },
   "articles": {
@@ -440,6 +439,26 @@
     "phone_label": "Telepon",
     "email_label": "Email",
     "whatsapp": "WhatsApp"
+  },
+  "reviewForm": {
+    "badge": "Ulasan Klien",
+    "heading": "Bagikan Pengalaman Anda",
+    "subheading": "Ulasan Anda membantu kami melayani lebih baik dan membantu calon klien lain mengenal kami.",
+    "name": "Nama Lengkap",
+    "name_placeholder": "Nama Anda",
+    "company": "Perusahaan / Instansi",
+    "company_placeholder": "Opsional",
+    "service": "Layanan yang Digunakan",
+    "service_placeholder": "Pilih layanan",
+    "rating": "Penilaian",
+    "rating_star": "Beri {count} bintang",
+    "rating_required": "Mohon pilih penilaian bintang terlebih dahulu",
+    "review": "Ulasan Anda",
+    "review_placeholder": "Ceritakan pengalaman Anda bekerja sama dengan kami...",
+    "moderation_note": "Ulasan akan ditampilkan setelah ditinjau oleh tim kami.",
+    "submit": "Kirim Ulasan",
+    "success": "Terima kasih! Ulasan Anda telah kami terima dan akan ditinjau.",
+    "error": "Gagal mengirim ulasan. Silakan coba lagi."
   },
   "faq": {
     "badge": "FAQ",

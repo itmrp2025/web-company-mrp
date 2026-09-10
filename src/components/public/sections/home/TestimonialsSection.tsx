@@ -34,10 +34,12 @@ export function TestimonialsSection({ content = {} }: { content?: Record<string,
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(getApi(`${endpoints.reviews.list}?status=approved&limit=6`))
+    // Endpoint publik hanya mengembalikan yang sudah disetujui, dan limit
+    // kini dibatasi di server — tidak perlu memotong lagi di sini.
+    fetch(getApi(`${endpoints.reviews.list}?limit=6`))
       .then((r) => (r.ok ? r.json() : null))
       .then((data: ApiResponse<Review[]> | null) => {
-        if (data?.data?.length) setReviews(data.data.slice(0, 6));
+        if (data?.data?.length) setReviews(data.data);
       })
       .catch(() => {})
       .finally(() => setLoading(false));

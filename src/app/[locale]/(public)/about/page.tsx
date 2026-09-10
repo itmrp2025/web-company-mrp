@@ -4,6 +4,7 @@ import { Button } from "@/components/custom-ui/Button";
 import { PageHero } from "@/components/public/layout/PageHero";
 import { ArrowRight, Eye, Target, Heart, Users, Globe, Scale } from "lucide-react";
 import { fetchCmsPage, getSectionContent, cms } from "@/utils/helpers/fetchCmsPage";
+import { buildMetadata } from "@/utils/helpers/seo";
 
 export async function generateMetadata({
   params,
@@ -12,7 +13,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "about" });
-  return { title: t("heading") };
+  return buildMetadata({
+    slug: "about",
+    locale,
+    path: "/about",
+    fallback: { title: t("heading") },
+  });
 }
 
 const valueIcons = {

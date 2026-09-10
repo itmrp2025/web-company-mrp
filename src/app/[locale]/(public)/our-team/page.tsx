@@ -8,13 +8,19 @@ import { TeamGrid } from "@/components/public/sections/team/TeamGrid";
 import type { Attorney } from "@/components/public/sections/team/TeamGrid";
 import { serverFetch } from "@/utils/helpers/serverFetch";
 import type { TeamMember } from "@/interface/admin.interface";
+import { buildMetadata } from "@/utils/helpers/seo";
 
 export async function generateMetadata({
   params,
 }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "team" });
-  return { title: t("heading") };
+  return buildMetadata({
+    slug: "team",
+    locale,
+    path: "/our-team",
+    fallback: { title: t("heading"), description: t("subheading") },
+  });
 }
 
 function mapTeamMembers(members: TeamMember[], lang: "id" | "en"): Attorney[] {

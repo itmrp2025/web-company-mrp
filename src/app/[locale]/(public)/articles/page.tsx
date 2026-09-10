@@ -2,12 +2,18 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/public/layout/PageHero";
 import { fetchCmsPage, getSectionContent } from "@/utils/helpers/fetchCmsPage";
+import { buildMetadata } from "@/utils/helpers/seo";
 import { ArticlesClient } from "./ArticlesClient";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "articles" });
-  return { title: t("heading") };
+  return buildMetadata({
+    slug: "articles",
+    locale,
+    path: "/articles",
+    fallback: { title: t("heading"), description: t("subheading") },
+  });
 }
 
 export default async function ArticlesPage({ params }: { params: Promise<{ locale: string }> }) {

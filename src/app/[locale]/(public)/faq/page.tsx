@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { fetchCmsPage, getSectionContent } from "@/utils/helpers/fetchCmsPage";
+import { buildMetadata } from "@/utils/helpers/seo";
 import { FaqClient } from "./FaqClient";
 import { PageHero } from "@/components/public/layout/PageHero";
 import type { Metadata } from "next";
@@ -7,7 +8,12 @@ import type { Metadata } from "next";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "faq" });
-  return { title: t("heading") };
+  return buildMetadata({
+    slug: "faq",
+    locale,
+    path: "/faq",
+    fallback: { title: t("heading"), description: t("subheading") },
+  });
 }
 
 export default async function FaqPage({ params }: { params: Promise<{ locale: string }> }) {

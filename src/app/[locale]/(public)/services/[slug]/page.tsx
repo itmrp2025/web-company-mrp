@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PageHero } from "@/components/public/layout/PageHero";
 import { Button } from "@/components/custom-ui/Button";
 import { ArrowLeft, ArrowRight, CheckCircle2, Phone } from "lucide-react";
+import { buildMetadata } from "@/utils/helpers/seo";
 
 const validSlugs = [
   "litigation", "corporate", "regulatory", "professional",
@@ -24,8 +25,21 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!validSlugs.includes(slug as Slug)) return { title: "MRP Law Office" };
+
   const t = await getTranslations({ locale, namespace: "services" });
-  return { title: t(`items.${slug as Slug}.name` as Parameters<typeof t>[0]) };
+  const s = slug as Slug;
+
+  // Slug SEO per-layanan ("services/litigation") belum di-seed, jadi selama
+  // admin belum mengisinya metadata diambil dari terjemahan.
+  return buildMetadata({
+    slug: `services/${s}`,
+    locale,
+    path: `/services/${s}`,
+    fallback: {
+      title: t(`items.${s}.name` as Parameters<typeof t>[0]),
+      description: t(`items.${s}.desc` as Parameters<typeof t>[0]),
+    },
+  });
 }
 
 export default async function ServiceDetailPage({

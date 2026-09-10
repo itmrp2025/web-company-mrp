@@ -4,6 +4,7 @@ import { PageHero } from "@/components/public/layout/PageHero";
 import { ArrowRight, MapPin, Clock, Calendar, Briefcase, Star, Users, Globe } from "lucide-react";
 import { serverFetch } from "@/utils/helpers/serverFetch";
 import { fetchCmsPage, getSectionContent } from "@/utils/helpers/fetchCmsPage";
+import { buildMetadata } from "@/utils/helpers/seo";
 import type { JobListing } from "@/interface/admin.interface";
 import { Link } from "@/i18n/navigation";
 
@@ -12,7 +13,12 @@ export async function generateMetadata({
 }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "career" });
-  return { title: t("heading") };
+  return buildMetadata({
+    slug: "career",
+    locale,
+    path: "/career",
+    fallback: { title: t("heading"), description: t("subheading") },
+  });
 }
 
 const perkIcons = [Star, Users, Globe, Briefcase];

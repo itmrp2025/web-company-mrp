@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { outfit } from "@/lib/fonts";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default async function LocaleLayout({
       <body className={`${outfit.variable} font-sans antialiased`}>
         <NextIntlClientProvider locale={locale}>
           <QueryProvider>
+            <PageViewTracker />
             {children}
             <Toaster richColors position="top-right" />
           </QueryProvider>

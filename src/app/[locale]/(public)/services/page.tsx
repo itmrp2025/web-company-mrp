@@ -5,13 +5,19 @@ import { Button } from "@/components/custom-ui/Button";
 import { ArrowRight, Scale, Building2, ShieldCheck, Gavel, Globe, ShoppingBag, Home, Users, FileText, Briefcase, Plane, Leaf } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { fetchCmsPage, getSectionContent, cms } from "@/utils/helpers/fetchCmsPage";
+import { buildMetadata } from "@/utils/helpers/seo";
 
 export async function generateMetadata({
   params,
 }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "services" });
-  return { title: t("heading") };
+  return buildMetadata({
+    slug: "services",
+    locale,
+    path: "/services",
+    fallback: { title: t("heading"), description: t("subheading") },
+  });
 }
 
 const iconMap: Record<string, React.ElementType> = {

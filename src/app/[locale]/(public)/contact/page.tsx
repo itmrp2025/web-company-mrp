@@ -1,13 +1,20 @@
 import { getTranslations } from "next-intl/server";
 import { fetchCmsPage, getSectionContent } from "@/utils/helpers/fetchCmsPage";
+import { buildMetadata } from "@/utils/helpers/seo";
 import { ContactClient } from "./ContactClient";
+import { ReviewForm } from "@/components/public/ReviewForm";
 import { PageHero } from "@/components/public/layout/PageHero";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "contact" });
-  return { title: t("heading") };
+  return buildMetadata({
+    slug: "contact",
+    locale,
+    path: "/contact",
+    fallback: { title: t("heading"), description: t("subheading") },
+  });
 }
 
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -40,6 +47,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         hoursSaturday={cms(info, `hours_saturday_${lang}`, lang === "id" ? "Sabtu, 09:00 – 13:00" : "Saturday, 09:00 – 13:00")}
         hoursSunday={cms(info, `hours_sunday_${lang}`, lang === "id" ? "Minggu, Tutup" : "Sunday, Closed")}
       />
+      <ReviewForm />
     </>
   );
 }

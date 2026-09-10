@@ -280,7 +280,7 @@
     "founder_label": "Founding Partner",
     "founder_badge": "Founding Partner",
     "associates_label": "Attorney Team",
-    "view_profile": "View Profile",
+    "view_profile": "View full profile",
     "role_founder": "Founder & Managing Partner",
     "role_senior": "Senior Associate",
     "role_associate": "Associate",
@@ -316,7 +316,6 @@
     "raisha_title": "S.H.",
     "raisha_bio": "Junior Associate with a focus on digital law and intellectual property. Actively assists startup clients with brand protection, technology contracts, and digital regulatory compliance.",
     "socials_label": "Social Media",
-    "view_profile": "View full profile",
     "view_profile_short": "View profile"
   },
   "articles": {
@@ -440,6 +439,26 @@
     "phone_label": "Phone",
     "email_label": "Email",
     "whatsapp": "WhatsApp"
+  },
+  "reviewForm": {
+    "badge": "Client Reviews",
+    "heading": "Share Your Experience",
+    "subheading": "Your review helps us serve better and helps prospective clients get to know us.",
+    "name": "Full Name",
+    "name_placeholder": "Your name",
+    "company": "Company / Organization",
+    "company_placeholder": "Optional",
+    "service": "Service Used",
+    "service_placeholder": "Select a service",
+    "rating": "Rating",
+    "rating_star": "Give {count} stars",
+    "rating_required": "Please select a star rating first",
+    "review": "Your Review",
+    "review_placeholder": "Tell us about your experience working with us...",
+    "moderation_note": "Your review will appear after our team reviews it.",
+    "submit": "Submit Review",
+    "success": "Thank you! Your review has been received and will be reviewed.",
+    "error": "Failed to submit review. Please try again."
   },
   "faq": {
     "badge": "FAQ",
