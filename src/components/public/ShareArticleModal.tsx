@@ -5,7 +5,6 @@ import { X, Check, Link2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-/* Lucide v1 tidak lagi menyertakan brand icon, jadi SVG-nya inline di sini. */
 function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
@@ -60,7 +59,6 @@ interface ShareArticleModalProps {
   onClose: () => void;
   url: string;
   title: string;
-  /** Label i18n; default berbahasa Indonesia. */
   labels?: {
     heading?: string;
     subheading?: string;
@@ -89,6 +87,14 @@ export function ShareArticleModal({
 
   const backdropRef = useRef<HTMLDivElement>(null);
   const [justCopied, setJustCopied] = useState(false);
+  const [prevOpen, setPrevOpen] = useState(open);
+
+  if (open !== prevOpen) {
+    setPrevOpen(open);
+    if (!open) {
+      setJustCopied(false);
+    }
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -102,11 +108,6 @@ export function ShareArticleModal({
       window.removeEventListener("keydown", onKey);
     };
   }, [open, onClose]);
-
-  // Reset state tombol salin setiap modal dibuka ulang.
-  useEffect(() => {
-    if (!open) setJustCopied(false);
-  }, [open]);
 
   if (!open) return null;
 
@@ -162,7 +163,6 @@ export function ShareArticleModal({
     try {
       await navigator.clipboard.writeText(url);
     } catch {
-      // Clipboard API butuh secure context; fallback textarea + execCommand.
       const ta = document.createElement("textarea");
       ta.value = url;
       ta.style.position = "fixed";
