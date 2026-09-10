@@ -12,15 +12,24 @@ import { X } from "lucide-react";
 import { Button } from "@/components/custom-ui/Button";
 import { TextField } from "@/components/custom-ui/TextField";
 import { ImageUpload } from "@/components/admin/shared/ImageUpload";
-import type { TeamMember, TeamMemberPayload } from "@/interface/admin.interface";
+import type {
+  TeamMember,
+  TeamMemberPayload,
+} from "@/interface/admin.interface";
 
 const schema = z.object({
   slug: z.string().min(1, "Slug wajib diisi"),
   role_type: z.string().min(1, "Tipe peran wajib dipilih"),
   order_index: z.number().int().min(0, "Urutan tidak boleh negatif"),
   photo_url: z.string().url("Format URL foto tidak valid").or(z.literal("")),
-  linkedin_url: z.string().url("Format URL LinkedIn tidak valid").or(z.literal("")),
-  instagram_url: z.string().url("Format URL Instagram tidak valid").or(z.literal("")),
+  linkedin_url: z
+    .string()
+    .url("Format URL LinkedIn tidak valid")
+    .or(z.literal("")),
+  instagram_url: z
+    .string()
+    .url("Format URL Instagram tidak valid")
+    .or(z.literal("")),
   is_visible: z.boolean(),
   name_id: z.string().min(1, "Nama (Indonesia) wajib diisi"),
   name_en: z.string().min(1, "Nama (Inggris) wajib diisi"),
@@ -87,17 +96,24 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
         },
       };
       if (isEdit) {
-        return axiosInterceptor.put(getApi(endpoints.team.update(member!.id)), payload);
+        return axiosInterceptor.put(
+          getApi(endpoints.team.update(member!.id)),
+          payload,
+        );
       }
       return axiosInterceptor.post(getApi(endpoints.team.create), payload);
     },
     onSuccess: () => {
-      toast.success(isEdit ? "Anggota tim diperbarui" : "Anggota tim ditambahkan");
+      toast.success(
+        isEdit ? "Anggota tim diperbarui" : "Anggota tim ditambahkan",
+      );
       onSuccess();
     },
   });
 
-  const onSubmit = handleSubmit((values: FormValues) => mutation.mutate(values));
+  const onSubmit = handleSubmit((values: FormValues) =>
+    mutation.mutate(values),
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 pt-10">
@@ -106,7 +122,10 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
           <h2 className="text-base font-semibold text-neutral-900">
             {isEdit ? "Edit Anggota Tim" : "Tambah Anggota Tim"}
           </h2>
-          <button onClick={onClose} className="rounded p-1 text-neutral-400 hover:text-neutral-700">
+          <button
+            onClick={onClose}
+            className="rounded p-1 text-neutral-400 hover:text-neutral-700"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -115,17 +134,32 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
           {/* Info dasar */}
           <div className="space-y-4 px-6 py-5">
             <div className="grid grid-cols-2 gap-4">
-              <TextField label="Slug" {...register("slug")} error={errors.slug?.message} />
+              <TextField
+                label="Slug"
+                {...register("slug")}
+                error={errors.slug?.message}
+              />
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-neutral-700">Tipe Role</label>
+                <label className="mb-1.5 block text-sm font-medium text-neutral-700">
+                  Tipe Role
+                </label>
                 <select
                   {...register("role_type")}
                   className="w-full rounded border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
                   <option value="founder">Founder</option>
+                  <option value="equity_partner">Equity Partner</option>
                   <option value="managing_partner">Managing Partner</option>
+                  <option value="senior_partner">Senior Partner</option>
+                  <option value="partner">Partner</option>
                   <option value="senior_associate">Senior Associate</option>
+                  <option value="intermediate_associate">
+                    Intermediate Associate
+                  </option>
                   <option value="associate">Associate</option>
+                  <option value="junior_associate">Junior Associate</option>
+                  <option value="trainee">Trainee</option>
+                  <option value="magang">Magang</option>
                   <option value="staff">Staff</option>
                 </select>
               </div>
@@ -139,7 +173,11 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
               />
               <div className="flex items-end pb-1">
                 <label className="flex items-center gap-2 text-sm text-neutral-700">
-                  <input type="checkbox" {...register("is_visible")} className="h-4 w-4 accent-primary" />
+                  <input
+                    type="checkbox"
+                    {...register("is_visible")}
+                    className="h-4 w-4 accent-primary"
+                  />
                   Tampilkan di website
                 </label>
               </div>
@@ -158,18 +196,38 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
               )}
             />
             <div className="grid grid-cols-2 gap-4">
-              <TextField label="LinkedIn URL" {...register("linkedin_url")} error={errors.linkedin_url?.message} />
-              <TextField label="Instagram URL" {...register("instagram_url")} error={errors.instagram_url?.message} />
+              <TextField
+                label="LinkedIn URL"
+                {...register("linkedin_url")}
+                error={errors.linkedin_url?.message}
+              />
+              <TextField
+                label="Instagram URL"
+                {...register("instagram_url")}
+                error={errors.instagram_url?.message}
+              />
             </div>
           </div>
 
           {/* Konten ID */}
           <div className="space-y-4 px-6 py-5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">Bahasa Indonesia</p>
-            <TextField label="Nama (ID)" {...register("name_id")} error={errors.name_id?.message} />
-            <TextField label="Jabatan (ID)" {...register("title_id")} error={errors.title_id?.message} />
+            <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+              Bahasa Indonesia
+            </p>
+            <TextField
+              label="Nama (ID)"
+              {...register("name_id")}
+              error={errors.name_id?.message}
+            />
+            <TextField
+              label="Jabatan (ID)"
+              {...register("title_id")}
+              error={errors.title_id?.message}
+            />
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-neutral-700">Bio (ID)</label>
+              <label className="mb-1.5 block text-sm font-medium text-neutral-700">
+                Bio (ID)
+              </label>
               <textarea
                 {...register("bio_id")}
                 rows={4}
@@ -180,11 +238,23 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
 
           {/* Konten EN */}
           <div className="space-y-4 px-6 py-5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">English</p>
-            <TextField label="Name (EN)" {...register("name_en")} error={errors.name_en?.message} />
-            <TextField label="Title (EN)" {...register("title_en")} error={errors.title_en?.message} />
+            <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+              English
+            </p>
+            <TextField
+              label="Name (EN)"
+              {...register("name_en")}
+              error={errors.name_en?.message}
+            />
+            <TextField
+              label="Title (EN)"
+              {...register("title_en")}
+              error={errors.title_en?.message}
+            />
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-neutral-700">Bio (EN)</label>
+              <label className="mb-1.5 block text-sm font-medium text-neutral-700">
+                Bio (EN)
+              </label>
               <textarea
                 {...register("bio_en")}
                 rows={4}
@@ -195,11 +265,20 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
 
           {/* Footer */}
           <div className="flex justify-end gap-3 px-6 py-4">
-            <Button variant="outlined" color="neutral" onClick={onClose} type="button">
+            <Button
+              variant="outlined"
+              color="neutral"
+              onClick={onClose}
+              type="button"
+            >
               Batal
             </Button>
             <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? "Menyimpan..." : isEdit ? "Simpan" : "Tambah"}
+              {mutation.isPending
+                ? "Menyimpan..."
+                : isEdit
+                  ? "Simpan"
+                  : "Tambah"}
             </Button>
           </div>
         </form>
