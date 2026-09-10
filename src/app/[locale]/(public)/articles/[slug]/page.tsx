@@ -6,9 +6,19 @@ import { useLocale, useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/public/layout/PageHero";
 import { Button } from "@/components/custom-ui/Button";
-import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import { ShareArticleModal } from "@/components/public/ShareArticleModal";
+import { ImageLightbox } from "@/components/public/ImageLightbox";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  Eye,
+  Share2,
+  Maximize2,
+} from "lucide-react";
 import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
+import { readingTimeMinutes } from "@/utils/helpers/readingTime";
 import type { Article, ApiResponse } from "@/interface/admin.interface";
 
 function formatDate(dateStr: string, locale: string) {
@@ -232,6 +242,18 @@ export default function ArticleDetailPage() {
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
   const [missing, setMissing] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
+
+  // window tidak tersedia saat SSR — ambil URL setelah mount.
+  useEffect(() => {
+    const handle = requestAnimationFrame(() => {
+      setShareUrl(window.location.href);
+    });
+
+    return () => cancelAnimationFrame(handle);
+  }, []);
 
   useEffect(() => {
     fetch(getApi(endpoints.articles.detail(params.slug)))
@@ -281,21 +303,35 @@ export default function ArticleDetailPage() {
       : article.category.content.en.name
     : "";
 
+  const heroImage =
+    article.featured_image ||
+    "https://images.unsplash.com/photo-1543269664-56d93c1b41a6?w=1600&q=80&auto=format&fit=crop";
+  const minutes = readingTimeMinutes(body);
+
   return (
     <>
-      <PageHero
-        badge={catName || t("badge")}
-        heading={title}
-        imageUrl={
-          article.featured_image ||
-          "https://images.unsplash.com/photo-1543269664-56d93c1b41a6?w=1600&q=80&auto=format&fit=crop"
-        }
-        overlay="darker"
-      />
+      <div className="group relative">
+        <PageHero
+          badge={catName || t("badge")}
+          heading={title}
+          imageUrl={heroImage}
+          overlay="gradient"
+          headingClassName="max-w-4xl text-[calc(2.25rem-1px)] sm:text-[calc(3rem-1px)] lg:text-[calc(3.75rem-1px)] [text-shadow:0_2px_20px_rgba(0,0,0,0.5)]"
+        />
+        <button
+          type="button"
+          onClick={() => setLightboxOpen(true)}
+          aria-label={t("view_image")}
+          className="absolute right-4 top-4 z-10 flex items-center gap-1.5 bg-neutral-950/60 px-3 py-2 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-neutral-950/85 sm:right-6 lg:right-8"
+        >
+          <Maximize2 className="h-3.5 w-3.5" />
+          {t("view_image")}
+        </button>
+      </div>
 
       <section className="border-b border-neutral-100 bg-neutral-50 py-4">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-500">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-neutral-500">
             <Button
               variant="text"
               href="/articles"
@@ -313,13 +349,33 @@ export default function ArticleDetailPage() {
             )}
             <div className="flex items-center gap-2">
               <Clock className="h-3.5 w-3.5 text-primary" />
-              <span>{t("read_time")}</span>
+              <span>
+                {minutes} {t("read_time")}
+              </span>
             </div>
+            <div className="flex items-center gap-2">
+              <Eye className="h-3.5 w-3.5 text-primary" />
+              <span>
+                {(article.views_count ?? 0).toLocaleString(
+                  locale === "id" ? "id-ID" : "en-US",
+                )}{" "}
+                {t("views")}
+              </span>
+            </div>
+
+            <button
+              onClick={() => setShareOpen(true)}
+              aria-label={t("share")}
+              className="ml-auto flex items-center gap-2 border border-neutral-200 px-3 py-2 text-xs font-medium text-neutral-600 transition-colors hover:border-primary hover:bg-primary hover:text-white"
+            >
+              <Share2 className="h-3.5 w-3.5" />
+              {t("share")}
+            </button>
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section className="pb-16 pt-12 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <article className="prose-custom text-justify" onCopy={handleCopy}>
             {renderContent(body)}
@@ -330,10 +386,43 @@ export default function ArticleDetailPage() {
               {t("consult_prompt")}
             </h3>
             <p className="mb-5 text-sm text-neutral-600">{t("consult_sub")}</p>
-            <Button href="/contact">{t("consult_cta")}</Button>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button href="/contact">{t("consult_cta")}</Button>
+              <Button
+                variant="outlined"
+                color="neutral"
+                onClick={() => setShareOpen(true)}
+                startIcon={<Share2 className="h-4 w-4" />}
+              >
+                {t("share")}
+              </Button>
+            </div>
           </div>
         </div>
       </section>
+
+      <ShareArticleModal
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        url={shareUrl}
+        title={title}
+        labels={{
+          heading: t("share_heading"),
+          subheading: t("share_sub"),
+          linkLabel: t("share_link_label"),
+          copy: t("share_copy"),
+          copied: t("share_copied"),
+          close: t("close"),
+        }}
+      />
+
+      <ImageLightbox
+        open={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        src={heroImage}
+        alt={title}
+        closeLabel={t("close")}
+      />
     </>
   );
 }

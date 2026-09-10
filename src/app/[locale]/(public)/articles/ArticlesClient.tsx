@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { Calendar, Clock, Tag } from "lucide-react";
 import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
+import { readingTimeMinutes } from "@/utils/helpers/readingTime";
 import type { Article, ArticleCategory, ApiResponse } from "@/interface/admin.interface";
 
 function formatDate(dateStr: string, locale: string) {
@@ -149,7 +150,14 @@ export function ArticlesClient({ locale }: { locale: string }) {
                         )}
                         <div className="flex items-center gap-1.5">
                           <Clock className="h-3.5 w-3.5" />
-                          <span>{t("read_time")}</span>
+                          <span>
+                            {readingTimeMinutes(
+                              lang === "id"
+                                ? article.content.body_id
+                                : article.content.body_en,
+                            )}{" "}
+                            {t("read_time")}
+                          </span>
                         </div>
                       </div>
                     </div>
