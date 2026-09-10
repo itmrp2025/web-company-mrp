@@ -138,6 +138,15 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
                 label="Slug"
                 {...register("slug")}
                 error={errors.slug?.message}
+                onChange={(e) => {
+                  const transformed = e.target.value
+                    .toLowerCase()
+                    .replace(/[\s\W_]+/g, "-")
+                    .replace(/^-+/, "");
+
+                  e.target.value = transformed;
+                  register("slug").onChange(e);
+                }}
               />
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-neutral-700">
