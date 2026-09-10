@@ -147,20 +147,18 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
                   {...register("role_type")}
                   className="w-full rounded border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
-                  <option value="founder">Founder</option>
-                  <option value="equity_partner">Equity Partner</option>
-                  <option value="managing_partner">Managing Partner</option>
-                  <option value="senior_partner">Senior Partner</option>
-                  <option value="partner">Partner</option>
-                  <option value="senior_associate">Senior Associate</option>
+                  <option value="magang">Magang</option>
+                  <option value="trainee">Trainee</option>
+                  <option value="junior_associate">Junior Associate</option>
+                  <option value="associate">Associate</option>
                   <option value="intermediate_associate">
                     Intermediate Associate
                   </option>
-                  <option value="associate">Associate</option>
-                  <option value="junior_associate">Junior Associate</option>
-                  <option value="trainee">Trainee</option>
-                  <option value="magang">Magang</option>
-                  <option value="staff">Staff</option>
+                  <option value="senior_associate">Senior Associate</option>
+                  <option value="partner">Partner</option>
+                  <option value="senior_partner">Senior Partner</option>
+                  <option value="managing_partner">Managing Partner</option>
+                  <option value="equity_partner">Equity Partner</option>
                 </select>
               </div>
             </div>
