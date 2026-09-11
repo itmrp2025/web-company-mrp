@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { X, Check, Link2 } from "lucide-react";
-// import { toast } from "sonner";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -173,7 +173,7 @@ export function ShareArticleModal({
       document.body.removeChild(ta);
     }
     setJustCopied(true);
-    // toast.success(copied);
+    toast.success(copied);
     setTimeout(() => setJustCopied(false), 2000);
   };
 
