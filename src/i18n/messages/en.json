@@ -450,6 +450,7 @@
     "company_placeholder": "Optional",
     "service": "Service Used",
     "service_placeholder": "Select a service",
+    "service_other": "Other",
     "rating": "Rating",
     "rating_star": "Give {count} stars",
     "rating_required": "Please select a star rating first",

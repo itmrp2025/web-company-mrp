@@ -450,6 +450,7 @@
     "company_placeholder": "Opsional",
     "service": "Layanan yang Digunakan",
     "service_placeholder": "Pilih layanan",
+    "service_other": "Lainnya",
     "rating": "Penilaian",
     "rating_star": "Beri {count} bintang",
     "rating_required": "Mohon pilih penilaian bintang terlebih dahulu",

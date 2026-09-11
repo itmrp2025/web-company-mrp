@@ -106,11 +106,17 @@ export function ReviewForm() {
               className="h-10 rounded-lg border border-neutral-200 px-3 text-sm text-neutral-700 focus:border-primary focus:outline-none"
             >
               <option value="">{t("service_placeholder")}</option>
-              {serviceOptionKeys.map((key) => (
-                <option key={key} value={key}>
-                  {tSvc(`items.${key}.name` as Parameters<typeof tSvc>[0])}
-                </option>
-              ))}
+              {serviceOptionKeys.map((key) =>
+                key === "other" ? (
+                  <option key={key} value={key}>
+                    {t("service_other")}
+                  </option>
+                ) : (
+                  <option key={key} value={key}>
+                    {tSvc(`items.${key}.name` as Parameters<typeof tSvc>[0])}
+                  </option>
+                ),
+              )}
             </select>
           </div>
 
