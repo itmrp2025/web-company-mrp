@@ -1,6 +1,7 @@
 ﻿import { useTranslations } from "next-intl";
 import { Clock, Users, UserCheck, Globe, BarChart3, Eye } from "lucide-react";
 import { cms } from "@/utils/helpers/fetchCmsPage";
+import { YEARS_OF_EXPERIENCE, YEARS_DISPLAY } from "@/utils/constants/site.config";
 
 const icons = [Clock, Users, UserCheck, Globe, BarChart3, Eye] as const;
 
@@ -13,7 +14,7 @@ export function WhyChooseSection({ content = {}, locale = "id" }: { content?: Re
 
   const reasons = Array.from({ length: 6 }, (_, i) => ({
     icon: icons[i],
-    title: cms(content, `reason${i + 1}_title_${lang}`, t(`reasons_v2.${i}.title`)),
+    title: cms(content, `reason${i + 1}_title_${lang}`, t(`reasons_v2.${i}.title`, { years: YEARS_OF_EXPERIENCE })),
     desc: cms(content, `reason${i + 1}_desc_${lang}`, t(`reasons_v2.${i}.desc`)),
   }));
 
@@ -28,7 +29,7 @@ export function WhyChooseSection({ content = {}, locale = "id" }: { content?: Re
 
             {/* Large decorative stat */}
             <div className="border-l-4 border-primary pl-6 py-2">
-              <p className="font-sans text-6xl font-semibold text-primary">20+</p>
+              <p className="font-sans text-6xl font-semibold text-primary">{YEARS_DISPLAY}</p>
               <p className="mt-1 text-sm text-neutral-500 uppercase tracking-wider">{t("statYears")}</p>
             </div>
 

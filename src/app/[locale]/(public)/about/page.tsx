@@ -5,6 +5,7 @@ import { PageHero } from "@/components/public/layout/PageHero";
 import { ArrowRight, Eye, Target, Heart, Users, Globe, Scale } from "lucide-react";
 import { fetchCmsPage, getSectionContent, cms } from "@/utils/helpers/fetchCmsPage";
 import { buildMetadata } from "@/utils/helpers/seo";
+import { YEARS_OF_EXPERIENCE, YEARS_DISPLAY } from "@/utils/constants/site.config";
 
 export async function generateMetadata({
   params,
@@ -55,7 +56,7 @@ export default async function AboutPage({
       label: cms(stats, `stat_founded_${lang}`, t("stat_founded")),
     },
     {
-      value: cms(stats, "stat_years_value", "20+"),
+      value: cms(stats, "stat_years_value", YEARS_DISPLAY),
       label: cms(stats, `stat_years_${lang}`, t("stat_years")),
     },
     {
@@ -84,11 +85,11 @@ export default async function AboutPage({
             <div>
               <p className="section-label mb-4">{cms(story, `story_heading_${lang}`, t("story_heading"))}</p>
               <h2 className="mb-6 text-3xl font-semibold text-neutral-900">
-                {cms(story, `story_title_${lang}`, t("story_title"))}
+                {cms(story, `story_title_${lang}`, t("story_title", { years: YEARS_OF_EXPERIENCE }))}
               </h2>
               <div className="space-y-4 text-neutral-600 leading-relaxed">
                 <p>{cms(story, `story_p1_${lang}`, t("story_p1"))}</p>
-                <p>{cms(story, `story_p2_${lang}`, t("story_p2"))}</p>
+                <p>{cms(story, `story_p2_${lang}`, t("story_p2", { years: YEARS_OF_EXPERIENCE }))}</p>
                 <p>{cms(story, `story_p3_${lang}`, t("story_p3"))}</p>
               </div>
               <Button href="/our-team" className="mt-8" endIcon={<ArrowRight className="h-4 w-4" />}>

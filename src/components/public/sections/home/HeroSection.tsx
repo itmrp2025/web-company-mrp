@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { cms } from "@/utils/helpers/fetchCmsPage";
+import { YEARS_OF_EXPERIENCE } from "@/utils/constants/site.config";
 
 interface Props {
   content?: Record<string, string>;
@@ -21,7 +22,7 @@ export function HeroSection({ content = {}, locale = "id" }: Props) {
 
   const badge = cms(content, `badge_${lang}`, t("badge"));
   const heading = cms(content, `heading_${lang}`, t("heading"));
-  const subheading = cms(content, `subheading_${lang}`, t("subheading"));
+  const subheading = cms(content, `subheading_${lang}`, t("subheading", { years: YEARS_OF_EXPERIENCE }));
   const ctaPrimary = cms(content, `cta_primary_${lang}`, t("cta_primary"));
   const ctaSecondary = cms(content, `cta_secondary_${lang}`, t("cta_secondary"));
 

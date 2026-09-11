@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/custom-ui/Button";
 import { ArrowRight } from "lucide-react";
 import { Avatar } from "@/components/custom-ui/Avatar";
+import { YEARS_OF_EXPERIENCE } from "@/utils/constants/site.config";
 
 const featured = [
   { slug: "dodi", titleKey: "role_founder" as const, specs: ["Corporate Law", "International Law", "Dispute Resolution"] },
@@ -52,7 +53,7 @@ export function TeamPreviewSection() {
               </h3>
               <p className="mb-1 text-sm text-neutral-400">{tTeam(`${member.slug}_title`)}</p>
               <p className="mt-3 text-sm text-neutral-500 leading-relaxed line-clamp-3">
-                {tTeam(`${member.slug}_bio`)}
+                {tTeam(`${member.slug}_bio`, { years: YEARS_OF_EXPERIENCE })}
               </p>
               <div className="mt-5 flex flex-wrap gap-1.5">
                 {member.specs.map((s) => (

@@ -41,7 +41,7 @@
   "hero": {
     "badge": "Trusted Law Firm since 2001",
     "heading": "Strategic Legal Solutions for a Global Future",
-    "subheading": "MRP Law Office stands as your trusted legal partner with over 15 years of experience. We handle complex legal matters with a strategic, personal, and results-oriented approach.",
+    "subheading": "MRP Law Office stands as your trusted legal partner with over {years} years of experience. We handle complex legal matters with a strategic, personal, and results-oriented approach.",
     "cta_primary": "Schedule a Consultation",
     "cta_secondary": "Our Services",
     "phone": "Available for consultation: (+62) 21 50300825"
@@ -56,7 +56,7 @@
     "statLawyers": "Expert Attorneys",
     "statAreas": "Practice Areas",
     "reasons": {
-      "0": "Experienced legal team with over 15 years in practice",
+      "0": "Experienced legal team with over {years} years in practice",
       "1": "Expertise across 13 major areas of law",
       "2": "Personalized and strategic approach for every client",
       "3": "Strong international network",
@@ -67,7 +67,7 @@
     },
     "reasons_v2": {
       "0": {
-        "title": "20+ Years Experience",
+        "title": "{years}+ Years Experience",
         "desc": "Proven track record handling thousands of cases across various areas of law."
       },
       "1": {
@@ -109,9 +109,9 @@
     "heading": "Indonesia's Leading Law Firm",
     "intro": "MRP Law Office has been standing since 2001 with a commitment to providing high-quality legal services for domestic and international clients.",
     "story_heading": "Our Story",
-    "story_title": "More Than 20 Years of Service",
+    "story_title": "More Than {years} Years of Service",
     "story_p1": "MRP Law Office was founded by Dr. Dodi S Abdulkadir in 2001 with a vision to become a law firm that provides strategic and comprehensive solutions for clients in Indonesia and the international arena.",
-    "story_p2": "Over more than 15 years, we have handled over 1,000 cases across various areas of law, from corporate litigation and family law to international disputes.",
+    "story_p2": "Over more than {years} years, we have handled over 1,000 cases across various areas of law, from corporate litigation and family law to international disputes.",
     "story_p3": "With a team of 9 experienced attorneys and a global network of partners, we are ready to accompany you through every legal challenge.",
     "stat_founded": "Year Founded",
     "stat_years": "Years of Experience",
@@ -290,7 +290,7 @@
     "career_btn": "View Career Openings",
     "dodi_name": "Dr. Dodi S Abdulkadir",
     "dodi_title": "S.H., M.H., Ph.D",
-    "dodi_bio": "Founder and Managing Partner of MRP Law Office with over 20 years of experience in corporate and international law. He has handled hundreds of major cases in commercial courts and international arbitration, and serves as legal counsel to various multinational companies operating in Indonesia.",
+    "dodi_bio": "Founder and Managing Partner of MRP Law Office with over {years} years of experience in corporate and international law. He has handled hundreds of major cases in commercial courts and international arbitration, and serves as legal counsel to various multinational companies operating in Indonesia.",
     "tabrani_name": "Tabrani Abby",
     "tabrani_title": "S.H.",
     "tabrani_bio": "Senior Associate with deep expertise in advocacy, mediation, and bankruptcy administration. He is an experienced curator in major bankruptcy cases and a Supreme Court-certified mediator.",
@@ -480,7 +480,7 @@
     "items": {
       "1": {
         "q": "What sets MRP Law Office apart from other law firms?",
-        "a": "MRP Law Office has advantages including over 15 years of experience, a dedicated attorney team, a personalized approach for each client, and a strong international network. We don't just focus on legal aspects but also understand the business context of our clients to provide the most effective solutions."
+        "a": "MRP Law Office has advantages including over {years} years of experience, a dedicated attorney team, a personalized approach for each client, and a strong international network. We don't just focus on legal aspects but also understand the business context of our clients to provide the most effective solutions."
       },
       "2": {
         "q": "How do I start a consultation with MRP Law Office?",
@@ -769,7 +769,7 @@
     "subheading": "Led by legal professionals who have built decades-long reputations in their fields.",
     "founder_role": "Founder & Managing Partner",
     "founder_name": "Dr. Dodi S Abdulkadir, B.Sc., S.E., S.H., M.H.",
-    "founder_bio": "Dr. Dodi S Abdulkadir is the founder and Managing Partner of MRP Law Office. With multidisciplinary academic credentials and over 20 years of experience, he has led the handling of hundreds of corporate and international law cases, and serves as a trusted legal counsel to various multinational companies operating in Indonesia.",
+    "founder_bio": "Dr. Dodi S Abdulkadir is the founder and Managing Partner of MRP Law Office. With multidisciplinary academic credentials and over {years} years of experience, he has led the handling of hundreds of corporate and international law cases, and serves as a trusted legal counsel to various multinational companies operating in Indonesia.",
     "founder_credential_1": "Doctor of International Law",
     "founder_credential_2": "Registered Advocate PERADI",
     "founder_credential_3": "MA-RI Certified Mediator",

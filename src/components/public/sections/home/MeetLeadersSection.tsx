@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/custom-ui/Button";
 import { ArrowRight, ExternalLink, Award, BookOpen, Scale } from "lucide-react";
 import { cms } from "@/utils/helpers/fetchCmsPage";
+import { YEARS_OF_EXPERIENCE } from "@/utils/constants/site.config";
 
 interface Props {
   content?: Record<string, string>;
@@ -18,7 +19,7 @@ export function MeetLeadersSection({ content = {}, locale = "id" }: Props) {
   const subheading = cms(content, `subheading_${lang}`, t("subheading"));
   const founderName = cms(content, "founder_name", t("founder_name"));
   const founderRole = cms(content, `founder_role_${lang}`, t("founder_role"));
-  const founderBio = cms(content, `founder_bio_${lang}`, t("founder_bio"));
+  const founderBio = cms(content, `founder_bio_${lang}`, t("founder_bio", { years: YEARS_OF_EXPERIENCE }));
   const credential1 = cms(content, `credential_1_${lang}`, t("founder_credential_1"));
   const credential2 = cms(content, `credential_2_${lang}`, t("founder_credential_2"));
   const credential3 = cms(content, `credential_3_${lang}`, t("founder_credential_3"));

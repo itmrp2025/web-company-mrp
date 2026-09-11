@@ -1,5 +1,6 @@
 ﻿import { useTranslations } from "next-intl";
 import { cms } from "@/utils/helpers/fetchCmsPage";
+import { YEARS_DISPLAY } from "@/utils/constants/site.config";
 
 interface Props {
   content?: Record<string, string>;
@@ -12,7 +13,7 @@ export function StatsSection({ content = {}, locale = "id" }: Props) {
 
   const stats = [
     {
-      value: cms(content, "years_value", "20+"),
+      value: cms(content, "years_value", YEARS_DISPLAY),
       label: cms(content, `years_label_${lang}`, t("years")),
     },
     {
