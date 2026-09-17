@@ -21,7 +21,7 @@ export function LanguageSwitcher() {
       aria-label="Switch language"
     >
       <Globe className="h-4 w-4" />
-      <span>{locale === "id" ? "EN" : "ID"}</span>
+      <span>{locale === "id" ? "ID" : "EN"}</span>
     </button>
   );
 }

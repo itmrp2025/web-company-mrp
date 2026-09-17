@@ -168,10 +168,6 @@
         "name": "Professional Legal Services",
         "desc": "Personalized and professional legal solutions tailored to each client's specific needs."
       },
-      "digital": {
-        "name": "Digital Consultation",
-        "desc": "Modern legal consultation via digital platforms, available anytime and anywhere."
-      },
       "ecommerce": {
         "name": "E-Commerce Legal",
         "desc": "Comprehensive legal protection for e-commerce businesses, marketplaces, and digital platforms."
@@ -189,7 +185,7 @@
         "desc": "Legal solutions for layoffs, industrial relations, and employment compliance."
       }
     },
-    "subheading": "We provide comprehensive legal solutions across 13 practice areas with an experienced and dedicated team of attorneys."
+    "subheading": "Explore our key practice areas — from litigation to corporate law and beyond."
   },
   "services": {
     "badge": "Practice Areas",
@@ -217,10 +213,6 @@
       "professional": {
         "name": "Professional Legal Services",
         "desc": "Personalized and professional legal solutions tailored to each client's specific needs."
-      },
-      "digital": {
-        "name": "Digital Consultation",
-        "desc": "Modern legal consultation via digital platforms, available anytime and anywhere."
       },
       "ecommerce": {
         "name": "E-Commerce Legal",
@@ -575,19 +567,6 @@
       "process_2": "Expert consultation and review of professional standards",
       "process_3": "Defense strategy — mediation or litigation",
       "process_4": "Representation at ethics committee hearings or court proceedings"
-    },
-    "digital": {
-      "benefit_count": "5",
-      "process_count": "4",
-      "benefit_1": "Compliance with Indonesian Personal Data Protection Law and GDPR for cross-border operations",
-      "benefit_2": "Legally compliant privacy policies, terms of service, and cookie policies",
-      "benefit_3": "SaaS contracts, software licenses, and technology development agreements",
-      "benefit_4": "Data breach response and mandatory notification to Ministry of Communication",
-      "benefit_5": "Advisory on Fintech, Artificial Intelligence, and digital platform regulations",
-      "process_1": "Personal data processing audit and privacy risk mapping",
-      "process_2": "Drafting of policy documents and data processing agreements",
-      "process_3": "Implementation of consent mechanisms and data subject rights",
-      "process_4": "Internal team training and ongoing compliance monitoring"
     },
     "ecommerce": {
       "benefit_count": "5",

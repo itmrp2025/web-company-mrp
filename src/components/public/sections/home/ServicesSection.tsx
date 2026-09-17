@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/custom-ui/Button";
 import {
   ArrowRight, Scale, Building2, ShieldCheck, Gavel,
-  Globe, ShoppingBag, Home, Users, Briefcase,
+  ShoppingBag, Home, Users, Briefcase,
 } from "lucide-react";
 import { cms } from "@/utils/helpers/fetchCmsPage";
 
@@ -20,12 +20,14 @@ export function ServicesSection({ content = {}, locale = "id" }: Props) {
     { icon: Building2, key: "corporate", slug: "corporate" },
     { icon: ShieldCheck, key: "regulatory", slug: "regulatory" },
     { icon: Scale, key: "professional", slug: "professional" },
-    { icon: Globe, key: "digital", slug: "digital" },
     { icon: ShoppingBag, key: "ecommerce", slug: "ecommerce" },
     { icon: Home, key: "property", slug: "property" },
     { icon: Users, key: "family", slug: "family" },
     { icon: Briefcase, key: "employment", slug: "employment" },
   ] as const;
+
+  // ponytail: show only 6 featured items on homepage; full list on /services
+  const featured = services.slice(0, 6);
 
   const badge = cms(content, `badge_${lang}`, t("badge"));
   const heading = cms(content, `heading_${lang}`, t("heading"));
@@ -55,7 +57,7 @@ export function ServicesSection({ content = {}, locale = "id" }: Props) {
 
         {/* Grid */}
         <div className="grid grid-cols-1 gap-px bg-neutral-200 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => {
+          {featured.map((service) => {
             const Icon = service.icon;
             const name = cms(content, `${service.key}_name_${lang}`, t(`items.${service.key}.name`));
             const desc = cms(content, `${service.key}_desc_${lang}`, t(`items.${service.key}.desc`));

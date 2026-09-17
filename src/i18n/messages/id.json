@@ -168,10 +168,6 @@
         "name": "Jasa Hukum Profesional",
         "desc": "Solusi hukum personal dan profesional yang disesuaikan dengan kebutuhan spesifik klien."
       },
-      "digital": {
-        "name": "Konsultasi Digital",
-        "desc": "Layanan konsultasi hukum modern via platform digital, tersedia kapan saja dan di mana saja."
-      },
       "ecommerce": {
         "name": "E-Commerce Legal",
         "desc": "Perlindungan hukum komprehensif untuk bisnis e-commerce, marketplace, dan platform digital."
@@ -189,7 +185,7 @@
         "desc": "Solusi hukum PHK, hubungan industrial, dan kepatuhan ketenagakerjaan."
       }
     },
-    "subheading": "Kami menyediakan solusi hukum komprehensif di 13 bidang dengan tim pengacara berpengalaman dan berdedikasi."
+    "subheading": "Jelajahi bidang praktik utama kami — dari litigasi hingga hukum korporasi dan lainnya."
   },
   "services": {
     "badge": "Bidang Praktik",
@@ -217,10 +213,6 @@
       "professional": {
         "name": "Jasa Hukum Profesional",
         "desc": "Solusi hukum personal dan profesional yang disesuaikan dengan kebutuhan spesifik klien."
-      },
-      "digital": {
-        "name": "Konsultasi Digital",
-        "desc": "Layanan konsultasi hukum modern via platform digital, tersedia kapan saja dan di mana saja."
       },
       "ecommerce": {
         "name": "E-Commerce Legal",
@@ -575,19 +567,6 @@
       "process_2": "Konsultasi ahli dan kajian standar profesi",
       "process_3": "Strategi pembelaan — mediasi atau litigasi",
       "process_4": "Pendampingan sidang majelis etik atau pengadilan"
-    },
-    "digital": {
-      "benefit_count": "5",
-      "process_count": "4",
-      "benefit_1": "Kepatuhan UU PDP (Perlindungan Data Pribadi) dan GDPR untuk operasi lintas negara",
-      "benefit_2": "Penyusunan privacy policy, terms of service, dan cookie policy yang sah secara hukum",
-      "benefit_3": "Kontrak SaaS, lisensi perangkat lunak, dan perjanjian pengembangan teknologi",
-      "benefit_4": "Penanganan kebocoran data (data breach) dan notifikasi wajib ke Kominfo",
-      "benefit_5": "Advisory regulasi Fintech, Artificial Intelligence, dan platform digital",
-      "process_1": "Audit pemrosesan data pribadi dan pemetaan risiko privasi",
-      "process_2": "Penyusunan dokumen kebijakan dan perjanjian pengolahan data",
-      "process_3": "Implementasi mekanisme persetujuan (consent) dan hak subjek data",
-      "process_4": "Pelatihan tim internal dan monitoring kepatuhan berkelanjutan"
     },
     "ecommerce": {
       "benefit_count": "5",

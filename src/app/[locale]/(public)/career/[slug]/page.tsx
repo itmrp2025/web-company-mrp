@@ -11,6 +11,7 @@ import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
 import { axiosInterceptor } from "@/config/axios.config";
 import { toast } from "sonner";
+import { PolicyModal } from "@/components/public/PolicyModal";
 import type { JobListing, ApiResponse } from "@/interface/admin.interface";
 
 export default function CareerDetailPage() {
@@ -23,6 +24,9 @@ export default function CareerDetailPage() {
   const [loading, setLoading] = useState(true);
   const [applied, setApplied] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [policyAgreed, setPolicyAgreed] = useState(false);
+  const [modalSlug, setModalSlug] = useState<"privacy-policy" | "terms-conditions" | null>(null);
+  const [policyError, setPolicyError] = useState<string | null>(null);
   const [form, setForm] = useState({
     full_name: "", email: "", phone: "", cover_letter: "", cv_url: "", portfolio_url: "",
   });
@@ -39,11 +43,24 @@ export default function CareerDetailPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!job) return;
+
+    if (!policyAgreed) {
+      const msg =
+        lang === "id"
+          ? "Anda harus menyetujui Kebijakan Privasi dan Syarat & Ketentuan."
+          : "You must agree to the Privacy Policy and Terms & Conditions.";
+      setPolicyError(msg);
+      toast.error(msg);
+      return;
+    }
+
     setSubmitting(true);
     try {
       await axiosInterceptor.post(getApi(endpoints.career.apply(job.id)), form);
       toast.success(lang === "id" ? "Lamaran berhasil dikirim!" : "Application submitted!");
       setApplied(true);
+      setPolicyAgreed(false);
+      setPolicyError(null);
     } catch {
       toast.error(lang === "id" ? "Gagal mengirim lamaran." : "Failed to submit application.");
     } finally {
@@ -200,7 +217,55 @@ export default function CareerDetailPage() {
                         placeholder={lang === "id" ? "Kenapa Anda tertarik bergabung?" : "Why do you want to join?"}
                       />
                     </div>
-                    <Button type="submit" loading={submitting} className="w-full justify-center">
+                    <div className="flex flex-col gap-1 pt-1">
+                      <label className="flex items-start gap-2 text-xs text-neutral-600 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={policyAgreed}
+                          onChange={(e) => {
+                            setPolicyAgreed(e.target.checked);
+                            if (e.target.checked) setPolicyError(null);
+                          }}
+                          className="mt-0.5 h-3.5 w-3.5 rounded border-neutral-300 text-primary focus:ring-primary"
+                        />
+                        <span className="leading-snug">
+                          {lang === "id" ? "Saya telah membaca dan menyetujui " : "I have read and agree to the "}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setModalSlug("privacy-policy");
+                            }}
+                            className="font-medium text-primary hover:underline"
+                          >
+                            [{lang === "id" ? "Kebijakan Privasi" : "Privacy Policy"}]
+                          </button>
+                          {" "}{lang === "id" ? "dan" : "&"}{" "}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setModalSlug("terms-conditions");
+                            }}
+                            className="font-medium text-primary hover:underline"
+                          >
+                            [{lang === "id" ? "Syarat & Ketentuan" : "Terms & Conditions"}]
+                          </button>
+                        </span>
+                      </label>
+                      {policyError && (
+                        <p className="text-[11px] text-red-500 font-medium ml-5">{policyError}</p>
+                      )}
+                    </div>
+
+                    <Button
+                      type="submit"
+                      loading={submitting}
+                      disabled={!policyAgreed || submitting}
+                      className="w-full justify-center"
+                    >
                       {lang === "id" ? "Kirim Lamaran" : "Submit Application"}
                     </Button>
                   </form>
@@ -210,6 +275,20 @@ export default function CareerDetailPage() {
           </div>
         </div>
       </section>
+
+      {modalSlug && (
+        <PolicyModal
+          slug={modalSlug}
+          open={!!modalSlug}
+          onOpenChange={(open) => {
+            if (!open) setModalSlug(null);
+          }}
+          onAgree={() => {
+            setPolicyAgreed(true);
+            setPolicyError(null);
+          }}
+        />
+      )}
     </>
   );
 }

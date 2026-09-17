@@ -1,12 +1,18 @@
-﻿import { useTranslations } from "next-intl";
+﻿"use client";
+
+import { useState } from "react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { PolicyModal } from "@/components/public/PolicyModal";
 
 export function Footer() {
   const t = useTranslations("navigation");
+  const [modalSlug, setModalSlug] = useState<"privacy-policy" | "terms-conditions" | null>(null);
 
   return (
+    <>
     <footer className="bg-neutral-900 text-neutral-300">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
@@ -78,14 +84,22 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-sm text-neutral-400 transition-colors hover:text-white">
+                <button
+                  type="button"
+                  onClick={() => setModalSlug("privacy-policy")}
+                  className="text-sm text-neutral-400 transition-colors hover:text-white text-left cursor-pointer"
+                >
                   {t("footerPrivacy")}
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/terms-conditions" className="text-sm text-neutral-400 transition-colors hover:text-white">
+                <button
+                  type="button"
+                  onClick={() => setModalSlug("terms-conditions")}
+                  className="text-sm text-neutral-400 transition-colors hover:text-white text-left cursor-pointer"
+                >
                   {t("footerTerms")}
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
@@ -128,6 +142,17 @@ export function Footer() {
         </div>
       </div>
     </footer>
+
+      {modalSlug && (
+        <PolicyModal
+          slug={modalSlug}
+          open={!!modalSlug}
+          onOpenChange={(open) => {
+            if (!open) setModalSlug(null);
+          }}
+        />
+      )}
+    </>
   );
 }
 
