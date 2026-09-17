@@ -8,6 +8,7 @@ import { MapPin, Phone, Mail, Clock, MessageSquare } from "lucide-react";
 import { axiosInterceptor } from "@/config/axios.config";
 import { getApi } from "@/utils/helpers/getApi";
 import { toast } from "sonner";
+import { PolicyModal } from "@/components/public/PolicyModal";
 
 const serviceOptionKeys = [
   "litigation", "corporate", "regulatory", "property", "family", "employment", "other",
@@ -41,9 +42,22 @@ export function ContactClient({
     name: "", email: "", phone: "", subject: "", service: "", message: "",
   });
   const [loading, setLoading] = useState(false);
+  const [policyAgreed, setPolicyAgreed] = useState(false);
+  const [modalSlug, setModalSlug] = useState<"privacy-policy" | "terms-conditions" | null>(null);
+  const [policyError, setPolicyError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!policyAgreed) {
+      const msg = locale === "id"
+        ? "Anda harus menyetujui Kebijakan Privasi dan Syarat & Ketentuan."
+        : "You must agree to the Privacy Policy and Terms & Conditions.";
+      setPolicyError(msg);
+      toast.error(msg);
+      return;
+    }
+
     setLoading(true);
     try {
       await axiosInterceptor.post(getApi("/contact"), {
@@ -51,7 +65,25 @@ export function ContactClient({
         ...form,
       });
       toast.success(t("success"));
+      // ponytail: open wa.me link with message summary; upgrade to WA Business API when backend supports it
+      const waNumber = process.env.NEXT_PUBLIC_CONTACT_WHATSAPP_NUMBER;
+      if (waNumber) {
+        const waText = [
+          `[Contact Form — ${form.name}]`,
+          `Email: ${form.email}`,
+          form.phone ? `Phone: ${form.phone}` : "",
+          `Subject: ${form.subject}`,
+          form.service ? `Service: ${form.service}` : "",
+          `Message: ${form.message}`,
+        ].filter(Boolean).join("\n");
+        window.open(
+          `https://wa.me/${waNumber}?text=${encodeURIComponent(waText)}`,
+          "_blank",
+        );
+      }
       setForm({ name: "", email: "", phone: "", subject: "", service: "", message: "" });
+      setPolicyAgreed(false);
+      setPolicyError(null);
     } catch {
       toast.error(t("error"));
     } finally {
@@ -159,13 +191,69 @@ export function ContactClient({
                   placeholder={locale === "id" ? "Ceritakan kebutuhan hukum Anda..." : "Tell us about your legal needs..."}
                 />
               </div>
-              <Button type="submit" loading={loading} size="lg">
+
+              <div className="flex flex-col gap-1 pt-2">
+                <label className="flex items-start gap-2.5 text-xs text-neutral-600 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={policyAgreed}
+                    onChange={(e) => {
+                      setPolicyAgreed(e.target.checked);
+                      if (e.target.checked) setPolicyError(null);
+                    }}
+                    className="mt-0.5 h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+                  />
+                  <span className="leading-relaxed">
+                    {locale === "id" ? "Saya telah membaca dan menyetujui " : "I have read and agree to the "}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setModalSlug("privacy-policy");
+                      }}
+                      className="font-medium text-primary hover:underline"
+                    >
+                      [{locale === "id" ? "Kebijakan Privasi" : "Privacy Policy"}]
+                    </button>
+                    {" "}{locale === "id" ? "dan" : "and"}{" "}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setModalSlug("terms-conditions");
+                      }}
+                      className="font-medium text-primary hover:underline"
+                    >
+                      [{locale === "id" ? "Syarat & Ketentuan" : "Terms & Conditions"}]
+                    </button>
+                  </span>
+                </label>
+                {policyError && <p className="text-xs text-red-500 font-medium ml-6.5">{policyError}</p>}
+              </div>
+
+              <Button type="submit" loading={loading} size="lg" disabled={!policyAgreed || loading}>
                 {t("submit")}
               </Button>
             </form>
           </div>
         </div>
       </div>
+
+      {modalSlug && (
+        <PolicyModal
+          slug={modalSlug}
+          open={!!modalSlug}
+          onOpenChange={(open) => {
+            if (!open) setModalSlug(null);
+          }}
+          onAgree={() => {
+            setPolicyAgreed(true);
+            setPolicyError(null);
+          }}
+        />
+      )}
     </section>
   );
 }

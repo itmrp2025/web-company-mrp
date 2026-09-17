@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/public/layout/PageHero";
 import { Button } from "@/components/custom-ui/Button";
-import { ArrowRight, Scale, Building2, ShieldCheck, Gavel, Globe, ShoppingBag, Home, Users, FileText, Briefcase, Plane, Leaf } from "lucide-react";
+import { ArrowRight, Scale, Building2, ShieldCheck, Gavel, ShoppingBag, Home, Users, FileText, Briefcase, Plane, Leaf } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { fetchCmsPage, getSectionContent, cms } from "@/utils/helpers/fetchCmsPage";
 import { buildMetadata } from "@/utils/helpers/seo";
@@ -22,14 +22,14 @@ export async function generateMetadata({
 
 const iconMap: Record<string, React.ElementType> = {
   litigation: Gavel, corporate: Building2, regulatory: ShieldCheck,
-  professional: Scale, digital: Globe, ecommerce: ShoppingBag,
+  professional: Scale, ecommerce: ShoppingBag,
   property: Home, family: Users, employment: Briefcase,
   intellectual: FileText, immigration: Plane, environmental: Leaf, criminal: Scale,
 };
 
 const serviceKeys = [
   "litigation", "corporate", "regulatory", "professional",
-  "digital", "ecommerce", "property", "family",
+  "ecommerce", "property", "family",
   "employment", "intellectual", "immigration", "environmental", "criminal",
 ] as const;
 

@@ -47,6 +47,26 @@ interface Props {
   onSuccess: () => void;
 }
 
+// Urutan opsi disusun dari jabatan terendah ke tertinggi.
+// "founder" adalah jabatan tertinggi — ditampilkan paling bawah di dropdown
+// (konvensi umum select berjenjang: makin bawah makin senior), dan di
+// halaman publik (TeamGrid) role_type "founder" otomatis dirender di
+// section terpisah, center, paling atas — lihat our-team/page.tsx
+// (mapTeamMembers: roleType = role_type === "founder" ? "founder" : "associate").
+const ROLE_TYPE_OPTIONS = [
+  { value: "magang", label: "Magang" },
+  { value: "trainee", label: "Trainee" },
+  { value: "junior_associate", label: "Junior Associate" },
+  { value: "associate", label: "Associate" },
+  { value: "intermediate_associate", label: "Intermediate Associate" },
+  { value: "senior_associate", label: "Senior Associate" },
+  { value: "partner", label: "Partner" },
+  { value: "senior_partner", label: "Senior Partner" },
+  { value: "managing_partner", label: "Managing Partner" },
+  { value: "equity_partner", label: "Equity Partner" },
+  { value: "founder", label: "Founder" },
+] as const;
+
 export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
   const isEdit = !!member;
 
@@ -156,18 +176,11 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
                   {...register("role_type")}
                   className="w-full rounded border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
-                  <option value="magang">Magang</option>
-                  <option value="trainee">Trainee</option>
-                  <option value="junior_associate">Junior Associate</option>
-                  <option value="associate">Associate</option>
-                  <option value="intermediate_associate">
-                    Intermediate Associate
-                  </option>
-                  <option value="senior_associate">Senior Associate</option>
-                  <option value="partner">Partner</option>
-                  <option value="senior_partner">Senior Partner</option>
-                  <option value="managing_partner">Managing Partner</option>
-                  <option value="equity_partner">Equity Partner</option>
+                  {ROLE_TYPE_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
