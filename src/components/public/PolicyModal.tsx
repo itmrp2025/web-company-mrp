@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocale } from "next-intl";
 import { X, ExternalLink, ShieldCheck, FileText } from "lucide-react";
+import DOMPurify from "isomorphic-dompurify";
 import { Button } from "@/components/custom-ui/Button";
 import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
@@ -258,9 +259,10 @@ export function PolicyModal({
                       <h3 className="font-semibold text-neutral-900">
                         {headingText}
                       </h3>
-                      <div className="whitespace-pre-line text-neutral-600 leading-relaxed">
-                        {bodyText}
-                      </div>
+                      <div
+                        className="text-neutral-600 leading-relaxed [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:mb-3 [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:mb-3 [&>h2]:font-semibold [&>h2]:text-neutral-900 [&>h3]:font-medium [&>strong]:font-bold [&>p]:mb-2"
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(bodyText) }}
+                      />
                     </div>
                   );
                 })
