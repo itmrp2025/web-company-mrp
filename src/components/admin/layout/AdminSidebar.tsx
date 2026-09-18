@@ -18,6 +18,7 @@ import {
   ChevronRight,
   HelpCircle,
   Search,
+  Shield,
 } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth";
 import { useRouter } from "@/i18n/navigation";
@@ -29,18 +30,20 @@ import { toast } from "sonner";
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   {
-    label: "Halaman",
-    items: [
-      { href: "/admin/pages/home", label: "Home", icon: FileText },
-      { href: "/admin/pages/about", label: "Tentang Kami", icon: FileText },
-      { href: "/admin/pages/services", label: "Layanan", icon: Briefcase },
-      { href: "/admin/pages/team", label: "Tim", icon: Users },
-      { href: "/admin/pages/faq", label: "FAQ", icon: HelpCircle },
-      { href: "/admin/pages/career", label: "Karir", icon: Briefcase },
-      { href: "/admin/pages/contact", label: "Kontak", icon: FileText },
-      { href: "/admin/pages/gallery", label: "Galeri", icon: ImageIcon },
-    ],
-  },
+      label: "Halaman",
+      items: [
+        { href: "/admin/pages/home", label: "Home", icon: FileText },
+        { href: "/admin/pages/about", label: "Tentang Kami", icon: FileText },
+        { href: "/admin/pages/services", label: "Layanan", icon: Briefcase },
+        { href: "/admin/pages/team", label: "Tim", icon: Users },
+        { href: "/admin/pages/faq", label: "FAQ", icon: HelpCircle },
+        { href: "/admin/pages/career", label: "Karir", icon: Briefcase },
+        { href: "/admin/pages/contact", label: "Kontak", icon: FileText },
+        { href: "/admin/pages/gallery", label: "Galeri", icon: ImageIcon },
+        { href: "/admin/pages/privacy-policy", label: "Privacy Policy", icon: Shield },
+        { href: "/admin/pages/terms-conditions", label: "Terms & Conditions", icon: FileText },
+      ],
+    },
   {
     label: "Konten",
     items: [
