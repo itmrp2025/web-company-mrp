@@ -39,7 +39,7 @@ export function TeamPreviewSection() {
         {/* Cards */}
         <div className="grid grid-cols-1 gap-px bg-neutral-200 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((member) => (
-            <div key={member.slug} className="group bg-white p-8 hover:bg-neutral-50 transition-colors">
+            <div key={member.slug} className="bg-white p-8">
               <div className="mb-6 flex justify-start">
                 <Avatar
                   fallback={tTeam(`${member.slug}_name`)}

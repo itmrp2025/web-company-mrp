@@ -42,6 +42,7 @@ export interface TeamMemberPayload {
   role_type: string;
   order_index: number;
   photo_url: string;
+  email: string;
   linkedin_url: string;
   instagram_url: string;
   is_visible: boolean;

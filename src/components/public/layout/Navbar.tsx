@@ -6,12 +6,13 @@ import { Link, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { cn } from "@/lib/utils";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
 
 type NavLink = {
   key: "home" | "about" | "services" | "team" | "gallery" | "articles" | "tanyaHakim" | "career" | "contact";
   href: string;
   external?: boolean;
+  cta?: boolean;
 };
 
 const navLinks: NavLink[] = [
@@ -21,7 +22,7 @@ const navLinks: NavLink[] = [
   { key: "team", href: "/our-team" },
   { key: "gallery", href: "/gallery" },
   { key: "articles", href: "/articles" },
-  { key: "tanyaHakim", href: "https://tanyahakim.com", external: true },
+  { key: "tanyaHakim", href: "https://tanyahakim.com", external: true, cta: true },
   { key: "career", href: "/career" },
   { key: "contact", href: "/contact" },
 ];
@@ -77,8 +78,22 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-0.5">
-          {navLinks.map((link) =>
-            link.external ? (
+          {navLinks.map((link) => {
+            if (link.cta) {
+              return (
+                <a
+                  key={link.key}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-2 inline-flex items-center gap-1.5 rounded bg-primary px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-xs transition-colors hover:bg-primary-600"
+                >
+                  <MessageCircle className="h-3.5 w-3.5" />
+                  {t(link.key)}
+                </a>
+              );
+            }
+            return link.external ? (
               <a
                 key={link.key}
                 href={link.href}
@@ -101,8 +116,8 @@ export function Navbar() {
               >
                 {t(link.key)}
               </Link>
-            )
-          )}
+            );
+          })}
         </nav>
 
         {/* Right â€” mobile actions */}
@@ -122,8 +137,24 @@ export function Navbar() {
       {open && (
         <div className="lg:hidden border-t border-neutral-100 bg-white">
           <nav className="flex flex-col py-2">
-            {navLinks.map((link) =>
-              link.external ? (
+            {navLinks.map((link) => {
+              if (link.cta) {
+                return (
+                  <div key={link.key} className="px-6 py-2">
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-primary-600"
+                      onClick={() => setOpen(false)}
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      {t(link.key)}
+                    </a>
+                  </div>
+                );
+              }
+              return link.external ? (
                 <a
                   key={link.key}
                   href={link.href}
@@ -148,8 +179,8 @@ export function Navbar() {
                 >
                   {t(link.key)}
                 </Link>
-              )
-            )}
+              );
+            })}
           </nav>
           <div className="border-t border-neutral-100 px-6 py-3">
             <a href="tel:+622150300825" className="flex items-center gap-2 text-sm text-neutral-500">

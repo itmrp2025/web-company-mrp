@@ -2,10 +2,13 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { X, ExternalLink, Mail } from "lucide-react";
+import { X, ExternalLink, Mail, ArrowRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export interface Attorney {
   id: string;
+  slug: string;
   name: string;
   title: string;
   roleType: "founder" | "associate";
@@ -36,6 +39,8 @@ function Modal({
   labels: Labels;
   onClose: () => void;
 }) {
+  const t = useTranslations("team");
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/60 backdrop-blur-sm"
@@ -120,6 +125,17 @@ function Modal({
               )}
             </div>
           )}
+
+          {/* Full Profile Button */}
+          <div className="mt-6 pt-6 border-t border-neutral-100">
+            <Link
+              href={`/our-team/${attorney.slug}`}
+              className="inline-flex items-center gap-2 w-full sm:w-auto bg-primary px-4 py-2 text-sm font-semibold text-white rounded-lg transition-colors hover:bg-primary-600"
+            >
+              <ArrowRight className="h-3.5 w-3.5" />
+              {t("full_profile")}
+            </Link>
+          </div>
         </div>
       </div>
     </div>

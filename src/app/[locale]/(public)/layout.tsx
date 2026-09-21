@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/public/layout/Navbar";
 import { Footer } from "@/components/public/layout/Footer";
+import { TanyaHakimBubble } from "@/components/public/TanyaHakimBubble";
 
 export default function PublicLayout({
   children,
@@ -11,6 +12,7 @@ export default function PublicLayout({
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
+      <TanyaHakimBubble />
     </div>
   );
 }

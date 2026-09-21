@@ -22,6 +22,7 @@ const schema = z.object({
   role_type: z.string().min(1, "Tipe peran wajib dipilih"),
   order_index: z.number().int().min(0, "Urutan tidak boleh negatif"),
   photo_url: z.string().url("Format URL foto tidak valid").or(z.literal("")),
+  email: z.string().email("Format email tidak valid").or(z.literal("")),
   linkedin_url: z
     .string()
     .url("Format URL LinkedIn tidak valid")
@@ -78,33 +79,35 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      slug: member?.slug ?? "",
-      role_type: member?.role_type ?? "associate",
-      order_index: member?.order_index ?? 0,
-      photo_url: member?.photo_url ?? "",
-      linkedin_url: member?.linkedin_url ?? "",
-      instagram_url: member?.instagram_url ?? "",
-      is_visible: member?.is_visible ?? true,
-      name_id: member?.content.name_id ?? "",
-      name_en: member?.content.name_en ?? "",
-      title_id: member?.content.title_id ?? "",
-      title_en: member?.content.title_en ?? "",
-      bio_id: member?.content.bio_id ?? "",
-      bio_en: member?.content.bio_en ?? "",
-    },
+          slug: member?.slug ?? "",
+          role_type: member?.role_type ?? "associate",
+          order_index: member?.order_index ?? 0,
+          photo_url: member?.photo_url ?? "",
+          email: member?.email ?? "",
+          linkedin_url: member?.linkedin_url ?? "",
+          instagram_url: member?.instagram_url ?? "",
+          is_visible: member?.is_visible ?? true,
+          name_id: member?.content.name_id ?? "",
+          name_en: member?.content.name_en ?? "",
+          title_id: member?.content.title_id ?? "",
+          title_en: member?.content.title_en ?? "",
+          bio_id: member?.content.bio_id ?? "",
+          bio_en: member?.content.bio_en ?? "",
+        },
   });
 
   const mutation = useMutation({
     mutationFn: async (values: FormValues) => {
       const payload: TeamMemberPayload = {
-        slug: values.slug,
-        role_type: values.role_type,
-        order_index: values.order_index,
-        photo_url: values.photo_url,
-        linkedin_url: values.linkedin_url,
-        instagram_url: values.instagram_url,
-        is_visible: values.is_visible,
-        content: {
+              slug: values.slug,
+              role_type: values.role_type,
+              order_index: values.order_index,
+              photo_url: values.photo_url,
+              email: values.email,
+              linkedin_url: values.linkedin_url,
+              instagram_url: values.instagram_url,
+              is_visible: values.is_visible,
+              content: {
           name_id: values.name_id,
           name_en: values.name_en,
           title_id: values.title_id,
@@ -216,17 +219,23 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
               )}
             />
             <div className="grid grid-cols-2 gap-4">
-              <TextField
-                label="LinkedIn URL"
-                {...register("linkedin_url")}
-                error={errors.linkedin_url?.message}
-              />
-              <TextField
-                label="Instagram URL"
-                {...register("instagram_url")}
-                error={errors.instagram_url?.message}
-              />
-            </div>
+                          <TextField
+                            label="LinkedIn URL"
+                            {...register("linkedin_url")}
+                            error={errors.linkedin_url?.message}
+                          />
+                          <TextField
+                            label="Instagram URL"
+                            {...register("instagram_url")}
+                            error={errors.instagram_url?.message}
+                          />
+                        </div>
+                        <TextField
+                          label="Email"
+                          type="email"
+                          {...register("email")}
+                          error={errors.email?.message}
+                        />
           </div>
 
           {/* Konten ID */}
