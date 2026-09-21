@@ -51,8 +51,8 @@ export function WhyChooseSection({ content = {}, locale = "id" }: { content?: Re
           {/* Right â€” icon cards */}
           <div className="grid grid-cols-1 gap-px bg-neutral-100 sm:grid-cols-2">
             {reasons.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="group bg-white p-7 hover:bg-neutral-50 transition-colors">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center bg-primary/8 group-hover:bg-primary/12 transition-colors">
+              <div key={title} className="bg-white p-7">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center bg-primary/8">
                   <Icon className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="mb-2 text-base font-semibold text-neutral-900">{title}</h3>

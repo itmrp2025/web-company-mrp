@@ -128,7 +128,7 @@ export function PolicyModal({
   const backdropRef = useRef<HTMLDivElement>(null);
 
   const [sections, setSections] = useState<SectionData[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -140,26 +140,30 @@ export function PolicyModal({
     };
     window.addEventListener("keydown", handleKeyDown);
 
-    setLoading(true);
-    setError(false);
+    let cancelled = false;
 
     fetch(getApi(endpoints.cms.pageSections(slug)))
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
+        if (cancelled) return;
         if (data?.data?.sections && Array.isArray(data.data.sections)) {
           setSections(data.data.sections);
         } else {
           setSections([]);
         }
+        setError(false);
       })
       .catch(() => {
+        if (cancelled) return;
         setError(true);
       })
       .finally(() => {
+        if (cancelled) return;
         setLoading(false);
       });
 
     return () => {
+      cancelled = true;
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
     };

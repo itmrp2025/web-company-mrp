@@ -1,4 +1,3 @@
-import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/public/layout/PageHero";
 import { buildMetadata } from "@/utils/helpers/seo";

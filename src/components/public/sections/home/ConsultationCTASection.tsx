@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/custom-ui/Button";
-import { Phone, MessageSquare } from "lucide-react";
+import { Phone, MessageSquare, MessageCircle } from "lucide-react";
 import { cms } from "@/utils/helpers/fetchCmsPage";
 
 interface Props {
@@ -19,6 +19,7 @@ export function ConsultationCTASection({ content = {}, locale = "id" }: Props) {
   const phone = cms(content, "phone", "(+62) 21 50300825");
 
   const phoneHref = `tel:${phone.replace(/[^\d+]/g, "")}`;
+  const tanyaHakimLabel = cms(content, `tanya_hakim_label_${lang}`, t("tanya_hakim"));
 
   return (
     <section className="relative py-20 sm:py-24 text-white overflow-hidden">
@@ -50,6 +51,15 @@ export function ConsultationCTASection({ content = {}, locale = "id" }: Props) {
             >
               <Phone className="h-4 w-4" />
               {phone}
+            </a>
+            <a
+              href="https://tanyahakim.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border border-white/20 px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-white/8 hover:border-white/30"
+            >
+              <MessageCircle className="h-4 w-4" />
+              {tanyaHakimLabel}
             </a>
           </div>
         </div>

@@ -26,6 +26,7 @@ export async function generateMetadata({
 function mapTeamMembers(members: TeamMember[], lang: "id" | "en"): Attorney[] {
   return members.map((m) => ({
     id: m.id,
+    slug: m.slug,
     name: lang === "id" ? m.content.name_id : m.content.name_en,
     title: lang === "id" ? m.content.title_id : m.content.title_en,
     roleType: m.role_type === "founder" ? "founder" : "associate",
