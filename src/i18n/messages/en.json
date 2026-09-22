@@ -38,9 +38,9 @@
     "notFound": "Page not found",
     "published": "Published",
         "tanya_hakim_title": "Tanya Hakim",
-        "tanya_hakim_fallback_title": "Unable to load chat here",
-        "tanya_hakim_fallback_desc": "The Tanya Hakim platform does not allow embedding in iframes.",
-        "tanya_hakim_fallback_button": "Open Tanya Hakim in New Tab"
+        "tanya_hakim_desc": "Have a quick legal question? Chat directly with Tanya Hakim, a trusted legal Q&A platform.",
+        "tanya_hakim_cta_button": "Open Tanya Hakim",
+        "close": "Close"
       },
   "hero": {
     "badge": "Trusted Law Firm since 2001",

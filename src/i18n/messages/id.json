@@ -38,9 +38,9 @@
     "notFound": "Halaman tidak ditemukan",
     "published": "Dipublikasikan",
         "tanya_hakim_title": "Tanya Hakim",
-        "tanya_hakim_fallback_title": "Tidak bisa memuat chat di sini",
-        "tanya_hakim_fallback_desc": "Platform Tanya Hakim tidak mengizinkan tampilan dalam iframe.",
-        "tanya_hakim_fallback_button": "Buka Tanya Hakim di Tab Baru"
+        "tanya_hakim_desc": "Punya pertanyaan hukum cepat? Chat langsung dengan Tanya Hakim, platform tanya-jawab hukum terpercaya.",
+        "tanya_hakim_cta_button": "Buka Tanya Hakim",
+        "close": "Tutup"
       },
   "hero": {
     "badge": "Firma Hukum Terpercaya sejak 2001",
