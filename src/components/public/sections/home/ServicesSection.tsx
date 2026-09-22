@@ -55,8 +55,8 @@ export function ServicesSection({ content = {}, locale = "id" }: Props) {
           </Button>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 gap-px bg-neutral-200 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Services List: Carousel on mobile, Grid on tablet/desktop */}
+        <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-4 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-px sm:overflow-visible sm:bg-neutral-200 sm:p-0 sm:pb-0 sm:snap-none lg:grid-cols-3">
           {featured.map((service) => {
             const Icon = service.icon;
             const name = cms(content, `${service.key}_name_${lang}`, t(`items.${service.key}.name`));
@@ -65,21 +65,23 @@ export function ServicesSection({ content = {}, locale = "id" }: Props) {
               <a
                 key={service.slug}
                 href={`/services/${service.slug}`}
-                className="group relative bg-white p-8 sm:p-10 transition-colors duration-200 hover:bg-primary"
+                className="group relative flex w-[85%] shrink-0 flex-col justify-between border border-neutral-200/80 bg-white p-8 snap-center transition-colors duration-200 hover:bg-primary sm:w-auto sm:border-0 sm:p-10 sm:snap-align-none"
               >
-                {/* Arrow top-right on hover */}
-                <div className="absolute right-6 top-6 opacity-0 transition-opacity group-hover:opacity-100">
-                  <ArrowRight className="h-5 w-5 text-white/60" />
+                <div>
+                  {/* Arrow top-right on hover */}
+                  <div className="absolute right-6 top-6 opacity-0 transition-opacity group-hover:opacity-100">
+                    <ArrowRight className="h-5 w-5 text-white/60" />
+                  </div>
+                  <div className="mb-6 flex h-14 w-14 items-center justify-center bg-primary/8 transition-colors group-hover:bg-white/15">
+                    <Icon className="h-7 w-7 text-primary transition-colors group-hover:text-white" />
+                  </div>
+                  <h3 className="mb-3 text-lg font-semibold text-neutral-900 transition-colors group-hover:text-white">
+                    {name}
+                  </h3>
+                  <p className="text-sm text-neutral-500 leading-relaxed transition-colors group-hover:text-white/70">
+                    {desc}
+                  </p>
                 </div>
-                <div className="mb-6 flex h-14 w-14 items-center justify-center bg-primary/8 transition-colors group-hover:bg-white/15">
-                  <Icon className="h-7 w-7 text-primary transition-colors group-hover:text-white" />
-                </div>
-                <h3 className="mb-3 text-lg font-semibold text-neutral-900 transition-colors group-hover:text-white">
-                  {name}
-                </h3>
-                <p className="text-sm text-neutral-500 leading-relaxed transition-colors group-hover:text-white/70">
-                  {desc}
-                </p>
                 <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors group-hover:text-white/80">
                   {t("detail")} <ArrowRight className="h-3.5 w-3.5" />
                 </span>
