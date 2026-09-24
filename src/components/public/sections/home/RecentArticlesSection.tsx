@@ -72,7 +72,7 @@ export function RecentArticlesSection({ content = {} }: Props) {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((i) => (
               <div key={i} className="border border-neutral-100 animate-pulse">
-                <div className="aspect-[16/9] bg-neutral-100" />
+                <div className="aspect-video bg-neutral-100" />
                 <div className="p-6 space-y-3">
                   <div className="h-3 w-24 bg-neutral-100 rounded" />
                   <div className="h-4 w-full bg-neutral-100 rounded" />
@@ -102,7 +102,7 @@ export function RecentArticlesSection({ content = {} }: Props) {
                   className="group flex flex-col border border-neutral-100 hover:border-neutral-200 transition-colors"
                 >
                   {/* Image */}
-                  <div className="aspect-[16/9] overflow-hidden bg-neutral-100">
+                  <div className="aspect-video overflow-hidden bg-neutral-100">
                     {article.featured_image ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img

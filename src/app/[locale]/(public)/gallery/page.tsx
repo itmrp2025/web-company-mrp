@@ -19,9 +19,15 @@ export async function generateMetadata({
   });
 }
 
+interface GalleryCategory {
+  id: string;
+  name: string;
+}
+
 interface GalleryItem {
   id: string;
-  category: string;
+  category_id: string;
+  category: GalleryCategory | null;
   image_url: string;
   order_index: number;
   is_visible: boolean;
@@ -44,18 +50,24 @@ export default async function GalleryPage({
   const hero = getSectionContent(sections, "hero");
   const cms = (c: Record<string, string>, k: string, fb: string) => c[k] || fb;
 
-  const photos: GalleryPhoto[] = (galleryItems ?? []).map((item) => ({
+      const photos: GalleryPhoto[] = (galleryItems ?? []).map((item) => ({
     id: item.id,
     src: item.image_url,
-    category: item.category,
+    category: item.category_id,
+    categoryLabel: item.category?.name ?? "",
     title: (lang === "id" ? item.content.title_id : item.content.title_en) ?? "",
     description: (lang === "id" ? item.content.desc_id : item.content.desc_en) ?? "",
     date: "",
   }));
 
-  const categories = [...new Set((galleryItems ?? []).map((i) => i.category))]
-    .filter(Boolean)
-    .map((key) => ({ key, label: key }));
+  const categoryMap = new Map<string, string>();
+  (galleryItems ?? []).forEach((item) => {
+    if (item.category_id && item.category?.name) {
+      categoryMap.set(item.category_id, item.category.name);
+    }
+  });
+  const categories = Array.from(categoryMap, ([key, label]) => ({ key, label }));
+
 
   return (
     <>

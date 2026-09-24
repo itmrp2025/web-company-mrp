@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
 export interface GalleryPhoto {
   id: string;
   src: string;
-  category: string;
+  category: string;     
+  categoryLabel: string; 
   title: string;
   description: string;
   date: string;
 }
-
 interface GalleryGridProps {
   photos: GalleryPhoto[];
   categories: { key: string; label: string }[];
@@ -62,7 +62,7 @@ function PhotoModal({
         <div className="bg-white px-6 py-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="section-label mb-1 text-neutral-400">{photo.category}</p>
+              <p className="section-label mb-1 text-neutral-400">{photo.categoryLabel}</p>
               <h3 className="font-sans text-lg font-semibold text-neutral-900">{photo.title}</h3>
               {photo.description && (
                 <p className="mt-2 text-sm text-neutral-600 leading-relaxed">{photo.description}</p>
@@ -124,7 +124,7 @@ export function GalleryGrid({ photos, categories, allLabel, noPhotosLabel }: Gal
             <button
               key={photo.id}
               onClick={() => setSelectedPhoto(photo)}
-              className="group relative aspect-[4/3] overflow-hidden bg-neutral-100"
+              className="group relative aspect-4/3 overflow-hidden bg-neutral-100"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -142,7 +142,7 @@ export function GalleryGrid({ photos, categories, allLabel, noPhotosLabel }: Gal
               </div>
               {/* Caption bar */}
               <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white px-4 py-3">
-                <p className="section-label mb-0.5 text-neutral-400">{photo.category}</p>
+                <p className="section-label mb-0.5 text-neutral-400">{photo.categoryLabel}</p>
                 <p className="text-xs font-medium text-neutral-900 line-clamp-1">{photo.title}</p>
               </div>
             </button>
