@@ -29,7 +29,7 @@ export function TanyaHakimBubble() {
           role="dialog"
           aria-label="Tanya Hakim"
         >
-          <div className="relative flex h-[520px] w-[360px] max-h-[calc(100vh-8rem)] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl sm:h-[560px] sm:w-[400px]">
+          <div className="relative flex h-130 w-90 max-h-[calc(100vh-8rem)] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl sm:h-140 sm:w-100">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-neutral-100 px-4 py-3 bg-white rounded-t-2xl shrink-0">
               <h2 className="font-sans text-base font-semibold text-neutral-900">
@@ -54,7 +54,7 @@ export function TanyaHakimBubble() {
                   <h3 className="font-serif text-xl font-bold text-neutral-900">
                     {t("tanya_hakim_title") ?? "Tanya Hakim"}
                   </h3>
-                  <p className="max-w-[280px] text-sm leading-relaxed text-neutral-500">
+                  <p className="max-w-70 text-sm leading-relaxed text-neutral-500">
                     {t("tanya_hakim_desc") ??
                       "Punya pertanyaan hukum cepat? Chat langsung dengan Tanya Hakim, platform tanya-jawab hukum terpercaya."}
                   </p>

@@ -41,8 +41,8 @@ export function PageHero({
       {overlay === "gradient" ? (
         <>
           {/* Gambar tetap terbaca — gelap hanya cukup untuk kontras teks */}
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/55 to-neutral-950/25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/50 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-neutral-950/90 via-neutral-950/55 to-neutral-950/25" />
+          <div className="absolute inset-0 bg-linear-to-r from-neutral-950/50 to-transparent" />
         </>
       ) : (
         <>
@@ -52,7 +52,7 @@ export function PageHero({
             }`}
           />
           {/* Subtle bottom gradient */}
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-neutral-950/40 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-neutral-950/40 to-transparent" />
         </>
       )}
 
