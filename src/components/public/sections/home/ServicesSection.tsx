@@ -1,4 +1,7 @@
+"use client";
+
 import { useTranslations } from "next-intl";
+import { useRef, useState } from "react";
 import { Button } from "@/components/custom-ui/Button";
 import {
   ArrowRight, Scale, Building2, ShieldCheck, Gavel,
@@ -34,6 +37,27 @@ export function ServicesSection({ content = {}, locale = "id" }: Props) {
   const subheading = cms(content, `subheading_${lang}`, t("subheading"));
   const viewAll = cms(content, `view_all_${lang}`, t("viewAll"));
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const itemWidthOf = (el: HTMLDivElement) => el.clientWidth * 0.85 + 16; // w-[85%] + gap-4
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const itemWidth = itemWidthOf(el);
+    if (itemWidth <= 0) return;
+    const index = Math.round(el.scrollLeft / itemWidth);
+    setActiveIndex(Math.max(0, Math.min(index, featured.length - 1)));
+  };
+
+  const scrollToIndex = (index: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const itemWidth = itemWidthOf(el);
+    el.scrollTo({ left: index * itemWidth, behavior: "smooth" });
+  };
+
   return (
     <section className="bg-neutral-50 py-24 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -56,7 +80,11 @@ export function ServicesSection({ content = {}, locale = "id" }: Props) {
         </div>
 
         {/* Services List: Carousel on mobile, Grid on tablet/desktop */}
-        <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-4 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-px sm:overflow-visible sm:bg-neutral-200 sm:p-0 sm:pb-0 sm:snap-none lg:grid-cols-3">
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-4 snap-x snap-mandatory scrollbar-none [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-px sm:overflow-visible sm:bg-neutral-200 sm:p-0 sm:pb-0 sm:snap-none lg:grid-cols-3"
+        >
           {featured.map((service) => {
             const Icon = service.icon;
             const name = cms(content, `${service.key}_name_${lang}`, t(`items.${service.key}.name`));
@@ -88,6 +116,20 @@ export function ServicesSection({ content = {}, locale = "id" }: Props) {
               </a>
             );
           })}
+        </div>
+
+        {/* Dot indicators - mobile carousel only */}
+        <div className="mt-5 flex justify-center gap-2 sm:hidden">
+          {featured.map((service, i) => (
+            <button
+              key={service.slug}
+              onClick={() => scrollToIndex(i)}
+              aria-label={`Slide ${i + 1}`}
+              className={`h-2 rounded-full transition-all duration-200 ${
+                i === activeIndex ? "w-6 bg-primary" : "w-2 bg-neutral-300"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>

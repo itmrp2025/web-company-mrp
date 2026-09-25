@@ -3,6 +3,7 @@ import { StatsSection } from "@/components/public/sections/home/StatsSection";
 import { ServicesSection } from "@/components/public/sections/home/ServicesSection";
 import { MeetLeadersSection } from "@/components/public/sections/home/MeetLeadersSection";
 import { RecentArticlesSection } from "@/components/public/sections/home/RecentArticlesSection";
+import { TanyaHakimPromoSection } from "@/components/public/sections/home/TanyaHakimSection";
 import { ConsultationCTASection } from "@/components/public/sections/home/ConsultationCTASection";
 import { WhyChooseSection } from "@/components/public/sections/home/WhyChooseSection";
 import { ProcessSection } from "@/components/public/sections/home/ProcessSection";
@@ -29,16 +30,17 @@ export default async function HomePage({
   const testimonials = getSectionContent(sections, "testimonials");
 
   return (
-    <>
-      <HeroSection content={hero} locale={locale} />
-      <StatsSection content={stats} locale={locale} />
-      <WhyChooseSection content={whyChoose} locale={locale} />
-      <ServicesSection content={servicesSection} locale={locale} />
-      <ProcessSection content={process} locale={locale} />
-      <MeetLeadersSection content={meetLeaders} locale={locale} />
-      <RecentArticlesSection content={recentArticles} />
-      <TestimonialsSection content={testimonials} />
-      <ConsultationCTASection content={cta} locale={locale} />
-    </>
-  );
+  <>
+    <HeroSection content={hero} locale={locale} />
+    <StatsSection content={stats} locale={locale} />
+    <WhyChooseSection content={whyChoose} locale={locale} />
+    <ServicesSection content={servicesSection} locale={locale} />
+    <ProcessSection content={process} locale={locale} />
+    <MeetLeadersSection content={meetLeaders} locale={locale} />
+    <RecentArticlesSection content={recentArticles} />
+    <TanyaHakimPromoSection />
+    <TestimonialsSection content={testimonials} />
+    <ConsultationCTASection content={cta} locale={locale} />
+  </>
+);
 }
