@@ -100,7 +100,7 @@ export default async function AboutPage({
               {statsData.map((s, i) => (
                 <div key={i} className="border border-neutral-100 p-8 text-center">
                   <p className="font-sans text-4xl font-semibold text-primary">{s.value}</p>
-                  <p className="mt-1.5 text-xs tracking-[0.1em] uppercase text-neutral-400">{s.label}</p>
+                  <p className="mt-1.5 text-xs tracking-widest uppercase text-neutral-400">{s.label}</p>
                 </div>
               ))}
             </div>

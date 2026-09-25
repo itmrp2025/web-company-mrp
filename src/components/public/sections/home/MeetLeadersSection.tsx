@@ -10,6 +10,106 @@ interface Props {
   locale?: string;
 }
 
+/*FounderPhoto*/
+function FounderPhoto({
+  imageUrl,
+  name,
+  initial,
+}: {
+  imageUrl: string;
+  name: string;
+  initial: string;
+}) {
+  return (
+    <div className="relative h-80 sm:h-90 lg:h-full lg:min-h-140 overflow-hidden rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none ring-1 ring-inset ring-primary/20">
+      {imageUrl ? (
+        <Image
+          src={imageUrl}
+          alt={name}
+          fill
+          unoptimized
+          className="object-cover object-top"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+        />
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center bg-primary-800">
+          <span className="font-sans text-7xl font-bold text-white/20">{initial}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/*FounderInfo*/
+function FounderInfo({
+  role,
+  name,
+  bio,
+  credentials,
+  linkedinUrl,
+  instagramUrl,
+  viewTeamLabel,
+}: {
+  role: string;
+  name: string;
+  bio: string;
+  credentials: { icon: typeof BookOpen; label: string }[];
+  linkedinUrl: string;
+  instagramUrl: string;
+  viewTeamLabel: string;
+}) {
+  const socials = [
+    { label: "LinkedIn", href: linkedinUrl },
+    { label: "Instagram", href: instagramUrl },
+  ].filter(({ href }) => href);
+
+  return (
+<div className="flex flex-col justify-center p-8 sm:p-9 lg:p-10 bg-neutral-50 rounded-b-2xl lg:rounded-r-2xl lg:rounded-bl-none">    <p className="section-label mb-3">{role}</p>
+      <h3 className="mb-1 font-sans text-2xl font-bold text-neutral-900 leading-snug">
+        {name}
+      </h3>
+
+      <div className="my-5 h-px bg-neutral-200" />
+
+      <p className="mb-6 text-base text-neutral-600 leading-relaxed">{bio}</p>
+
+      <ul className="mb-6 space-y-3">
+        {credentials.map(({ icon: Icon, label }) => (
+          <li key={label} className="flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center bg-primary/8">
+              <Icon className="h-4 w-4 text-primary" />
+            </div>
+            <span className="text-sm text-neutral-700">{label}</span>
+          </li>
+        ))}
+      </ul>
+
+      {socials.length > 0 && (
+        <div className="mb-6 flex flex-wrap gap-3">
+          {socials.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border border-neutral-200 bg-white px-4 py-2 text-xs font-medium text-neutral-600 hover:border-primary hover:text-primary transition-colors"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              {label}
+            </a>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-auto">
+        <Button href="/our-team" variant="outlined" color="neutral" endIcon={<ArrowRight className="h-4 w-4" />}>
+          {viewTeamLabel}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 export function MeetLeadersSection({ content = {}, locale = "id" }: Props) {
   const t = useTranslations("meetLeaders");
   const lang = locale as "id" | "en";
@@ -30,8 +130,8 @@ export function MeetLeadersSection({ content = {}, locale = "id" }: Props) {
 
   const credentials = [
     { icon: BookOpen, label: credential1 },
-    { icon: Scale,    label: credential2 },
-    { icon: Award,    label: credential3 },
+    { icon: Scale, label: credential2 },
+    { icon: Award, label: credential3 },
   ];
 
   const initial = founderName?.charAt(0) ?? "D";
@@ -43,107 +143,20 @@ export function MeetLeadersSection({ content = {}, locale = "id" }: Props) {
         <div className="mb-16 text-center">
           <p className="section-label mb-4">{badge}</p>
           <h2 className="text-neutral-900">{heading}</h2>
-          <p className="mx-auto mt-4 max-w-lg text-neutral-500 leading-relaxed">
-            {subheading}
-          </p>
+          <p className="mx-auto mt-4 max-w-lg text-neutral-500 leading-relaxed">{subheading}</p>
         </div>
 
-        {/* Founder – large feature card */}
-        <div className="grid grid-cols-1 gap-0 lg:grid-cols-2 border border-neutral-100">
-          {/* Photo col */}
-          <div className="relative flex items-center justify-center bg-neutral-900 overflow-hidden">
-            <div className="absolute inset-0 bg-linear-to-br from-neutral-800 via-neutral-900 to-primary-900" />
-            <div className="absolute inset-6 border border-white/10" />
-
-            {/* Centered photo wrapper with fixed height */}
-            <div className="relative w-full h-90 sm:h-105 lg:h-145 overflow-hidden">
-              {founderImageUrl ? (
-                <Image
-                  src={founderImageUrl}
-                  alt={founderName}
-                  fill
-                  unoptimized
-                  className="object-cover object-top"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                  <div className="flex h-36 w-28 items-end justify-center overflow-hidden bg-neutral-700/60 border border-white/10">
-                    <div className="h-32 w-24 bg-linear-to-t from-neutral-600 to-neutral-500 flex items-center justify-center">
-                      <span className="font-sans text-5xl font-bold text-white/30">{initial}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {/* Name overlay at bottom */}
-              <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-neutral-950/95 via-neutral-950/60 to-transparent px-6 pb-6 pt-20 sm:px-8 sm:pb-8 sm:pt-16">
-                <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-accent mb-1.5 sm:mb-2">
-                  {founderRole}
-                </p>
-                <p className="font-sans text-base sm:text-xl font-bold text-white leading-snug">
-                  {founderName}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Content col */}
-          <div className="flex flex-col justify-center p-8 sm:p-9 lg:p-10 bg-neutral-50">
-            <p className="section-label mb-3">{founderRole}</p>
-            <h3 className="mb-1 font-sans text-2xl font-bold text-neutral-900 leading-snug">
-              {founderName}
-            </h3>
-
-            <div className="my-5 h-px bg-neutral-200" />
-
-            <p className="mb-6 text-base text-neutral-600 leading-relaxed">
-              {founderBio}
-            </p>
-
-            {/* Credentials */}
-            <ul className="mb-6 space-y-3">
-              {credentials.map(({ icon: Icon, label }) => (
-                <li key={label} className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center bg-primary/8">
-                    <Icon className="h-4 w-4 text-primary" />
-                  </div>
-                  <span className="text-sm text-neutral-700">{label}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* Social links */}
-            <div className="mb-6 flex flex-wrap gap-3">
-              {[
-                { label: "LinkedIn", href: linkedinUrl },
-                { label: "Instagram", href: instagramUrl },
-              ].filter(({ href }) => href).map(({ label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 border border-neutral-200 bg-white px-4 py-2 text-xs font-medium text-neutral-600 hover:border-primary hover:text-primary transition-colors"
-                >
-                  <ExternalLink className="h-3.5 w-3.5" />
-                  {label}
-                </a>
-              ))}
-            </div>
-
-            <div className="mt-auto">
-              <Button
-                href="/our-team"
-                variant="outlined"
-                color="neutral"
-                endIcon={<ArrowRight className="h-4 w-4" />}
-              >
-                {viewTeam}
-              </Button>
-            </div>
-          </div>
+        {/* Founder – large feature card: foto & teks terpisah, masing-masing sub-komponen sendiri */}
+          <div className="grid grid-cols-1 gap-0 lg:grid-cols-2 border border-neutral-100 rounded-2xl overflow-hidden">            <FounderPhoto imageUrl={founderImageUrl} name={founderName} initial={initial} />          <FounderInfo
+            role={founderRole}
+            name={founderName}
+            bio={founderBio}
+            credentials={credentials}
+            linkedinUrl={linkedinUrl}
+            instagramUrl={instagramUrl}
+            viewTeamLabel={viewTeam}
+          />
         </div>
-
       </div>
     </section>
   );

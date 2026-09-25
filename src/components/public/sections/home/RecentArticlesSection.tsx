@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@/components/custom-ui/Button";
 import { ArrowRight, Clock, Newspaper } from "lucide-react";
@@ -33,6 +33,27 @@ export function RecentArticlesSection({ content = {} }: Props) {
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const itemWidthOf = (el: HTMLDivElement) => el.clientWidth * 0.85 + 16; // w-[85%] + gap-4
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const itemWidth = itemWidthOf(el);
+    if (itemWidth <= 0) return;
+    const index = Math.round(el.scrollLeft / itemWidth);
+    setActiveIndex(Math.max(0, Math.min(index, articles.length - 1)));
+  };
+
+  const scrollToIndex = (index: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const itemWidth = itemWidthOf(el);
+    el.scrollTo({ left: index * itemWidth, behavior: "smooth" });
+  };
 
   useEffect(() => {
     fetch(getApi(`${endpoints.articles.list}?status=published&limit=3`))
@@ -83,79 +104,101 @@ export function RecentArticlesSection({ content = {} }: Props) {
           </div>
         )}
 
-        {/* Articles */}
+        {/* Articles: Carousel on mobile, Grid on tablet/desktop */}
         {!loading && (
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {articles.map((article) => {
-              const title = lang === "id" ? article.content.title_id : article.content.title_en;
-              const excerpt = lang === "id" ? article.content.excerpt_id : article.content.excerpt_en;
-              const body = lang === "id" ? article.content.body_id : article.content.body_en;
-              const catName = article.category
-                ? (lang === "id" ? article.category.content.id.name : article.category.content.en.name)
-                : null;
-              const mins = readingTime(body);
+          <>
+            <div
+              ref={scrollRef}
+              onScroll={handleScroll}
+              className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-4 snap-x snap-mandatory scrollbar-none [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-8 sm:overflow-visible sm:p-0 sm:pb-0 sm:snap-none lg:grid-cols-3"
+            >
+              {articles.map((article) => {
+                const title = lang === "id" ? article.content.title_id : article.content.title_en;
+                const excerpt = lang === "id" ? article.content.excerpt_id : article.content.excerpt_en;
+                const body = lang === "id" ? article.content.body_id : article.content.body_en;
+                const catName = article.category
+                  ? (lang === "id" ? article.category.content.id.name : article.category.content.en.name)
+                  : null;
+                const mins = readingTime(body);
 
-              return (
-                <a
-                  key={article.id}
-                  href={`/${locale}/articles/${article.slug}`}
-                  className="group flex flex-col border border-neutral-100 hover:border-neutral-200 transition-colors"
-                >
-                  {/* Image */}
-                  <div className="aspect-video overflow-hidden bg-neutral-100">
-                    {article.featured_image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={article.featured_image}
-                        alt={title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-50">
-                        <Newspaper className="h-10 w-10 text-neutral-200" />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex flex-1 flex-col p-6 sm:p-7">
-                    <div className="mb-4 flex items-center justify-between gap-2">
-                      {catName && (
-                        <span className="border border-primary/20 bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary truncate">
-                          {catName}
-                        </span>
-                      )}
-                      {article.published_at && (
-                        <span className="shrink-0 text-xs text-neutral-400">
-                          {formatDate(article.published_at, locale)}
-                        </span>
+                return (
+                  <a
+                    key={article.id}
+                    href={`/${locale}/articles/${article.slug}`}
+                    className="group flex w-[85%] shrink-0 flex-col border border-neutral-100 hover:border-neutral-200 transition-colors snap-center sm:w-auto sm:snap-align-none"
+                  >
+                    {/* Image */}
+                    <div className="aspect-video overflow-hidden bg-neutral-100">
+                      {article.featured_image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={article.featured_image}
+                          alt={title}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-neutral-50">
+                          <Newspaper className="h-10 w-10 text-neutral-200" />
+                        </div>
                       )}
                     </div>
 
-                    <h3 className="mb-3 flex-1 text-base font-semibold text-neutral-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
-                      {title}
-                    </h3>
-
-                    {excerpt && (
-                      <p className="mb-4 text-sm text-neutral-500 leading-relaxed line-clamp-2">
-                        {excerpt}
-                      </p>
-                    )}
-
-                    <div className="flex items-center justify-between pt-4 border-t border-neutral-100">
-                      <div className="flex items-center gap-1.5 text-xs text-neutral-400">
-                        <Clock className="h-3.5 w-3.5" />
-                        {mins} {cms(content, `min_read_${lang}`, t("minRead"))}
+                    {/* Content */}
+                    <div className="flex flex-1 flex-col p-6 sm:p-7">
+                      <div className="mb-4 flex items-center justify-between gap-2">
+                        {catName && (
+                          <span className="border border-primary/20 bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary truncate">
+                            {catName}
+                          </span>
+                        )}
+                        {article.published_at && (
+                          <span className="shrink-0 text-xs text-neutral-400">
+                            {formatDate(article.published_at, locale)}
+                          </span>
+                        )}
                       </div>
-                      <span className="flex items-center gap-1 text-xs font-medium text-primary group-hover:gap-2 transition-all">
-                        {cms(content, `read_more_${lang}`, t("readMore"))} <ArrowRight className="h-3.5 w-3.5" />
-                      </span>
+
+                      <h3 className="mb-3 flex-1 text-base font-semibold text-neutral-900 leading-snug group-hover:text-primary transition-colors line-clamp-3">
+                        {title}
+                      </h3>
+
+                      {excerpt && (
+                        <p className="mb-4 text-sm text-neutral-500 leading-relaxed line-clamp-2">
+                          {excerpt}
+                        </p>
+                      )}
+
+                      <div className="flex items-center justify-between pt-4 border-t border-neutral-100">
+                        <div className="flex items-center gap-1.5 text-xs text-neutral-400">
+                          <Clock className="h-3.5 w-3.5" />
+                          {mins} {cms(content, `min_read_${lang}`, t("minRead"))}
+                        </div>
+                        <span className="flex items-center gap-1 text-xs font-medium text-primary group-hover:gap-2 transition-all">
+                          {cms(content, `read_more_${lang}`, t("readMore"))} <ArrowRight className="h-3.5 w-3.5" />
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* Dot indicators - mobile carousel only */}
+            {articles.length > 1 && (
+              <div className="mt-5 flex justify-center gap-2 sm:hidden">
+                {articles.map((article, i) => (
+                  <button
+                    key={article.id}
+                    onClick={() => scrollToIndex(i)}
+                    aria-label={`Slide ${i + 1}`}
+                    className={`h-2 rounded-full transition-all duration-200 ${
+                      i === activeIndex ? "w-6 bg-primary" : "w-2 bg-neutral-300"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>
