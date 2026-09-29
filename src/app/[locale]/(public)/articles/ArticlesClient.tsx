@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "@/i18n/navigation";
 import { Calendar, Clock, Tag, ChevronLeft, ChevronRight } from "lucide-react";
 import { getApi } from "@/utils/helpers/getApi";
@@ -90,8 +90,9 @@ export function ArticlesClient({ locale }: { locale: string }) {
   const [activeCategory, setActiveCategory] = useState<string>("all"); // slug, bukan id
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [initialLoading, setInitialLoading] = useState(true);
-  const [pageLoading, setPageLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const requestId = useRef(0);
 
   // Kategori cuma perlu di-fetch sekali
   useEffect(() => {
@@ -104,6 +105,10 @@ export function ArticlesClient({ locale }: { locale: string }) {
   }, []);
 
   const fetchArticles = useCallback(async (targetPage: number, category: string) => {
+  const id = ++requestId.current;
+  setLoading(true);
+  setError(false);
+  try {
     const params = new URLSearchParams({
       page: String(targetPage),
       per_page: String(PER_PAGE),
@@ -111,36 +116,40 @@ export function ArticlesClient({ locale }: { locale: string }) {
     if (category !== "all") params.set("category", category);
 
     const res = await fetch(getApi(`${endpoints.articles.list}?${params.toString()}`));
-    if (!res.ok) return;
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data: ApiResponse<Article[]> = await res.json();
+    if (id !== requestId.current) return; // sudah ada request yang lebih baru
     setArticles(data.data ?? []);
     setTotalPages(data.meta?.total_pages ?? 1);
-  }, []);
+  } catch {
+    if (id !== requestId.current) return;
+    setArticles([]);
+    setTotalPages(1);
+    setError(true);
+  } finally {
+    if (id === requestId.current) setLoading(false);
+  }
+}, []);
 
   // Fetch awal
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchArticles(1, "all").finally(() => setInitialLoading(false));
-  }, [fetchArticles]);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  fetchArticles(1, "all");
+}, [fetchArticles]);
 
-  const handleCategoryChange = async (slug: string) => {
+  const handleCategoryChange = (slug: string) => {
     if (slug === activeCategory) return;
     setActiveCategory(slug);
     setPage(1);
-    setPageLoading(true);
-    await fetchArticles(1, slug);
-    setPageLoading(false);
+    fetchArticles(1, slug);
   };
 
-  const handlePageChange = async (p: number) => {
+  const handlePageChange = (p: number) => {
     setPage(p);
-    setPageLoading(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
-    await fetchArticles(p, activeCategory);
-    setPageLoading(false);
+    fetchArticles(p, activeCategory);
   };
 
-  const loading = initialLoading || pageLoading;
 
   return (
     <>
@@ -175,6 +184,7 @@ export function ArticlesClient({ locale }: { locale: string }) {
         </div>
       </div>
 
+
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {loading ? (
@@ -187,9 +197,12 @@ export function ArticlesClient({ locale }: { locale: string }) {
                     <div className="h-5 bg-neutral-100 rounded" />
                     <div className="h-5 w-4/5 bg-neutral-100 rounded" />
                   </div>
+                  
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <p className="py-20 text-center text-neutral-400">{t("load_error")}</p>
           ) : articles.length === 0 ? (
             <p className="py-20 text-center text-neutral-400">{t("no_results")}</p>
           ) : (
