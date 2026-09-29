@@ -77,13 +77,13 @@ export default async function LawyerProfilePage({ params }: Props) {
     <>
       {/* Unified Hero Section (Dark Background) */}
       <section className="relative bg-neutral-950 text-white py-14 sm:py-18 lg:py-20 border-b border-neutral-800 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-950 to-neutral-900/90 pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-br from-neutral-900 via-neutral-950 to-neutral-900/90 pointer-events-none" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Foto KIRI */}
             <div className="md:col-span-5 lg:col-span-4 flex justify-center md:justify-start">
-              <div className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[3/4] overflow-hidden rounded-xl bg-neutral-900 border border-white/10 shadow-2xl">
+              <div className="relative w-full max-w-70 sm:max-w-[320px] aspect-3/4 overflow-hidden rounded-xl bg-neutral-900 border border-white/10 shadow-2xl">
                 {member.photo_url ? (
                   <Image
                     src={member.photo_url}

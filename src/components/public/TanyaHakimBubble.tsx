@@ -15,7 +15,7 @@ export function TanyaHakimBubble() {
       {/* Floating Bubble Button */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="fixed bottom-6 left-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-xl transition-all duration-300 hover:bg-primary-600 hover:shadow-2xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-neutral-950"
+        className="fixed bottom-6 left-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-xl transition-all duration-300 hover:bg-primary-600 hover:shadow-2xl hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         aria-label="Buka Tanya Hakim"
         aria-expanded={isOpen}
       >
@@ -25,7 +25,7 @@ export function TanyaHakimBubble() {
       {/* Popup Panel */}
       {isOpen && (
         <div
-          className="fixed bottom-24 left-6 z-50 animate-in fade-in zoom-in-95 duration-200"
+          className="fixed bottom-24 left-6 z-40 animate-in fade-in zoom-in-95 duration-200"
           role="dialog"
           aria-label="Tanya Hakim"
         >
