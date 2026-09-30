@@ -32,6 +32,7 @@ function mapTeamMembers(members: TeamMember[], lang: "id" | "en"): Attorney[] {
     roleType: m.role_type === "founder" ? "founder" : "associate",
     photo: m.photo_url,
     bio: { id: m.content.bio_id, en: m.content.bio_en },
+    summary: { id: m.content.summary_id ?? "", en: m.content.summary_en ?? "" },
     credentials: [],
     specializations: m.content.specializations ?? [],
     linkedin: m.linkedin_url || undefined,

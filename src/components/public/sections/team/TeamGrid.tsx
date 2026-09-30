@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X, ExternalLink, Mail, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
@@ -14,6 +14,7 @@ export interface Attorney {
   roleType: "founder" | "associate";
   photo: string;
   bio: { id: string; en: string };
+  summary?: { id: string; en: string };
   credentials: string[];
   specializations: string[];
   linkedin?: string;
@@ -28,6 +29,9 @@ interface Labels {
   founderBadge: string;
 }
 
+const stripHtml = (s: string) =>
+  s.replace(/<[^>]*>/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+
 function Modal({
   attorney,
   locale,
@@ -41,39 +45,63 @@ function Modal({
 }) {
   const t = useTranslations("team");
 
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  // Ringkasan dari admin; kalau kosong, potong dari bio
+  const summary = attorney.summary?.[locale]?.trim();
+  const bioText = stripHtml(attorney.bio[locale] ?? "");
+  const fallback = bioText.length > 320 ? bioText.slice(0, 320).trimEnd() + "…" : bioText;
+
+  const hasLinks = attorney.linkedin || attorney.instagram || attorney.email;
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/60 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-neutral-950/70 backdrop-blur-sm sm:items-center sm:p-6"
+      role="dialog"
+      aria-modal="true"
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl pt-2"
+        className="relative flex max-h-[90svh] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 h-8 w-8 rounded-full bg-neutral-100 flex items-center justify-center hover:bg-neutral-200 transition-colors"
+          aria-label="Tutup"
+          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-neutral-600 shadow transition-colors hover:bg-white"
         >
-          <X className="h-4 w-4 text-neutral-500" />
+          <X className="h-4 w-4" />
         </button>
 
-        <div className="p-6 sm:p-8">
+        
+        <div className="bg-primary px-6 py-5 pr-16 sm:px-8 sm:py-7">
           {attorney.roleType === "founder" && (
-            <span className="inline-block mb-3 text-[10px] font-semibold tracking-widest uppercase text-primary">
+            <span className="inline-block rounded-full border border-white/25 bg-white/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
               {labels.founderBadge}
             </span>
           )}
-          <h2 className="font-sans text-lg font-semibold text-neutral-900 leading-snug pr-8">
+          <h2 className="mt-2 font-sans text-lg font-semibold leading-snug text-white sm:text-xl">
             {attorney.name}
           </h2>
-          <p className="mt-1 text-sm text-primary font-medium">{attorney.title}</p>
-
-          <p className="mt-5 text-sm text-neutral-600 leading-relaxed">
-            {attorney.bio[locale]}
+          <p className="mt-1 text-sm font-medium text-white/80">{attorney.title}</p>
+        </div>
+        {/* Isi: ringkasan (scroll kalau panjang) */}
+        <div className="flex-1 overflow-y-auto px-6 py-6 sm:px-8">
+                   <p className="whitespace-pre-line text-sm leading-relaxed text-neutral-600">
+            {summary || fallback}
           </p>
 
           {attorney.credentials.length > 0 && (
-            <ul className="mt-5 space-y-1 bg-neutral-50 rounded-lg p-4">
+            <ul className="mt-5 space-y-1 rounded-lg bg-neutral-50 p-4">
               {attorney.credentials.map((c) => (
                 <li key={c} className="text-xs text-neutral-500">{c}</li>
               ))}
@@ -81,67 +109,72 @@ function Modal({
           )}
 
           {attorney.specializations.length > 0 && (
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {attorney.specializations.map((s) => (
+            <div className="mt-6 flex flex-wrap gap-2">
+              {attorney.specializations.slice(0, 6).map((s) => (
                 <span
                   key={s}
-                  className="bg-primary/6 border border-primary/12 px-2.5 py-0.5 text-[10px] font-medium text-primary rounded-full"
+                  className="rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-medium text-primary"
                 >
                   {s}
                 </span>
               ))}
             </div>
           )}
+        </div>
 
-          {(attorney.linkedin || attorney.email || attorney.instagram) && (
-            <div className="mt-6 flex flex-wrap gap-4">
-              {attorney.linkedin && (
-                <a
-                  href={attorney.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-primary transition-colors"
-                >
-                  <ExternalLink className="h-3.5 w-3.5" /> LinkedIn
-                </a>
-              )}
-              {attorney.email && (
-                <a
-                  href={`mailto:${attorney.email}`}
-                  className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-primary transition-colors"
-                >
-                  <Mail className="h-3.5 w-3.5" /> {attorney.email}
-                </a>
-              )}
-              {attorney.instagram && (
-                <a
-                  href={attorney.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-primary transition-colors"
-                >
-                  <ExternalLink className="h-3.5 w-3.5" /> Instagram
-                </a>
-              )}
-            </div>
-          )}
-
-          {/* Full Profile Button */}
-          <div className="mt-6 pt-6 border-t border-neutral-100">
-            <Link
-              href={`/our-team/${attorney.slug}`}
-              className="inline-flex items-center gap-2 w-full sm:w-auto bg-primary px-4 py-2 text-sm font-semibold text-white rounded-lg transition-colors hover:bg-primary-600"
-            >
-              <ArrowRight className="h-3.5 w-3.5" />
-              {t("full_profile")}
-            </Link>
+        {/* Footer: kontak + CTA, selalu terlihat */}
+        <div className="flex flex-col gap-3 border-t border-neutral-100 bg-neutral-50 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <div className="flex flex-wrap items-center gap-2">
+            {hasLinks && (
+              <>
+                {attorney.email && (
+                  <a
+                    href={`mailto:${attorney.email}`}
+                    aria-label="Email"
+                    className="rounded-lg border border-neutral-200 bg-white p-2 text-neutral-500 transition-colors hover:border-primary hover:text-primary"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </a>
+                )}
+                {attorney.linkedin && (
+                  <a
+                    href={attorney.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-600 transition-colors hover:border-primary hover:text-primary"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" /> LinkedIn
+                  </a>
+                )}
+                {attorney.instagram && (
+                  <a
+                    href={attorney.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-600 transition-colors hover:border-primary hover:text-primary"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" /> Instagram
+                  </a>
+                )}
+              </>
+            )}
           </div>
+
+          <Link
+            href={`/our-team/${attorney.slug}`}
+            onClick={onClose}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-600"
+          >
+            {t("full_profile")}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </div>
   );
 }
 
+/* ===== AttorneyCard dan TeamGrid: TIDAK BERUBAH dari file kamu ===== */
 function AttorneyCard({
   attorney,
   labels,

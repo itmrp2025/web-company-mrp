@@ -23,13 +23,15 @@ export interface TeamMember {
   linkedin_url: string;
   instagram_url: string;
   is_visible: boolean;
-  content: {
+   content: {
     name_id: string;
     name_en: string;
     title_id: string;
     title_en: string;
     bio_id: string;
     bio_en: string;
+    summary_id?: string;
+    summary_en?: string;
     specializations: string[];
     languages: string[];
   };

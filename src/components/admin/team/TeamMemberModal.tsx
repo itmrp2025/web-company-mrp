@@ -38,6 +38,8 @@ const schema = z.object({
   title_en: z.string().min(1, "Jabatan (Inggris) wajib diisi"),
   bio_id: z.string().min(1, "Bio (Indonesia) wajib diisi"),
   bio_en: z.string().min(1, "Bio (Inggris) wajib diisi"),
+  summary_id: z.string().optional(),
+  summary_en: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -93,6 +95,8 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
           title_en: member?.content.title_en ?? "",
           bio_id: member?.content.bio_id ?? "",
           bio_en: member?.content.bio_en ?? "",
+          summary_id: member?.content.summary_id ?? "",
+          summary_en: member?.content.summary_en ?? "",
         },
   });
 
@@ -114,6 +118,8 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
           title_en: values.title_en,
           bio_id: values.bio_id,
           bio_en: values.bio_en,
+          summary_id: values.summary_id ?? "",
+          summary_en: values.summary_en ?? "",
           specializations: member?.content.specializations ?? [],
           languages: member?.content.languages ?? [],
         },
@@ -253,6 +259,19 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
               {...register("title_id")}
               error={errors.title_id?.message}
             />
+              <div>
+              <label className="mb-1.5 block text-sm font-medium text-neutral-700">
+                Ringkasan Profil (ID)
+              </label>
+              <textarea
+                {...register("summary_id")}
+                rows={3}
+                maxLength={400}
+                placeholder="Ringkasan singkat 2 sampai 4 kalimat, tampil di popup profil..."
+                className="w-full rounded border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none"
+              />
+            </div>
+          
             <div>
               <label className="mb-1.5 block text-sm font-medium text-neutral-700">
                 Bio (ID)
@@ -280,6 +299,19 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
               {...register("title_en")}
               error={errors.title_en?.message}
             />
+              <div>
+              <label className="mb-1.5 block text-sm font-medium text-neutral-700">
+                Profile Summary (EN)
+              </label>
+              <textarea
+                {...register("summary_en")}
+                rows={3}
+                maxLength={400}
+                placeholder="Short summary, 2 to 4 sentences, shown in the profile popup..."
+                className="w-full rounded border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none"
+              />
+            </div>
+
             <div>
               <label className="mb-1.5 block text-sm font-medium text-neutral-700">
                 Bio (EN)
