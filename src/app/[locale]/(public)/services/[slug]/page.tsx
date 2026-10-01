@@ -8,7 +8,7 @@ import { buildMetadata } from "@/utils/helpers/seo";
 
 const validSlugs = [
   "litigation", "corporate", "regulatory", "professional",
-  "digital", "ecommerce", "property", "family",
+  "ecommerce", "property", "family",
   "employment", "intellectual", "immigration", "environmental", "criminal",
 ] as const;
 

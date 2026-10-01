@@ -189,7 +189,7 @@ function AttorneyCard({
       onClick={onClick}
       className="group text-left overflow-hidden rounded-xl bg-white border border-neutral-100 hover:border-primary/20 hover:shadow-lg transition-all duration-300 cursor-pointer w-full"
     >
-      <div className="relative overflow-hidden aspect-[3/4]">
+      <div className="relative overflow-hidden aspect-3/4">
         {attorney.photo ? (
           <Image
             src={attorney.photo}
