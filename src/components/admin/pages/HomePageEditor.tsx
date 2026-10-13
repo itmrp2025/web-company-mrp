@@ -23,6 +23,7 @@ interface SectionSchema {
   key: string;
   label: string;
   description: string;
+  toggleable?: boolean;
   fields: FieldDef[];
 }
 
@@ -177,6 +178,40 @@ const SCHEMAS: SectionSchema[] = [
       { key: "min_read_en", label: "Reading Time Text (English)", type: "text" },
     ],
   },
+    {
+    key: "tanya_hakim_promo",
+    label: "Promo Tanya Hakim",
+    description: "Banner promosi kecil di beranda (antara Artikel dan Testimoni)",
+    toggleable: true,
+    fields: [
+      { type: "divider", label: "Teks (kosongkan untuk memakai teks bawaan)" },
+      { key: "title_id", label: "Judul (Indonesia)", type: "text" },
+      { key: "title_en", label: "Title (English)", type: "text" },
+      { key: "desc_id", label: "Deskripsi (Indonesia)", type: "textarea", span: "full" },
+      { key: "desc_en", label: "Description (English)", type: "textarea", span: "full" },
+      { key: "button_id", label: "Label Tombol (Indonesia)", type: "text" },
+      { key: "button_en", label: "Button Label (English)", type: "text" },
+      { type: "divider", label: "Tautan" },
+      { key: "url", label: "URL Tujuan (harus diawali https://)", type: "text", span: "full" },
+    ],
+  },
+  {
+    key: "tanya_hakim_bubble",
+    label: "Bubble Tanya Hakim (Melayang)",
+    description: "Tombol melayang pojok kiri bawah, tampil di SEMUA halaman publik (bukan hanya beranda)",
+    toggleable: true,
+    fields: [
+      { type: "divider", label: "Teks (kosongkan untuk memakai teks bawaan)" },
+      { key: "title_id", label: "Judul (Indonesia)", type: "text" },
+      { key: "title_en", label: "Title (English)", type: "text" },
+      { key: "desc_id", label: "Deskripsi (Indonesia)", type: "textarea", span: "full" },
+      { key: "desc_en", label: "Description (English)", type: "textarea", span: "full" },
+      { key: "button_id", label: "Label Tombol (Indonesia)", type: "text" },
+      { key: "button_en", label: "Button Label (English)", type: "text" },
+      { type: "divider", label: "Tautan" },
+      { key: "url", label: "URL Tujuan (harus diawali https://)", type: "text", span: "full" },
+    ],
+  },
   {
     key: "why_choose",
     label: "Mengapa Memilih Kami",
@@ -257,6 +292,7 @@ const SCHEMAS: SectionSchema[] = [
     key: "testimonials",
     label: "Testimoni",
     description: "Header section testimoni klien",
+    toggleable: true,    
     fields: [
       { key: "badge_id", label: "Badge (Indonesia)", type: "text" },
       { key: "badge_en", label: "Badge (English)", type: "text" },
@@ -303,6 +339,7 @@ function SectionCard({ schema, section, onSave, saving }: SectionCardProps) {
     const defaults: Record<string, string> = {};
     schema.fields.forEach((f) => {
       if (f.type !== "divider") defaults[f.key] = stored[f.key] ?? "";
+          if (schema.toggleable) defaults.enabled = stored.enabled ?? "true";
     });
     return defaults;
   });
@@ -314,16 +351,18 @@ function SectionCard({ schema, section, onSave, saving }: SectionCardProps) {
     const next: Record<string, string> = {};
     schema.fields.forEach((f) => {
       if (f.type !== "divider") next[f.key] = stored[f.key] ?? "";
+          if (schema.toggleable) next.enabled = stored.enabled ?? "true";
     });
     setValues(next); // eslint-disable-line react-hooks/set-state-in-effect
     setDirty(false);
     setVisible(section?.is_visible ?? true);
-  }, [section, schema.fields]);
+  }, [section, schema.fields, schema.toggleable]);
 
   const set = (key: string, val: string) => {
     setValues((p) => ({ ...p, [key]: val }));
     setDirty(true);
   };
+    const shown = schema.toggleable ? values.enabled !== "false" : visible;
 
   const handleSave = async () => {
     await onSave(schema.key, section?.id ?? null, values);
@@ -334,19 +373,26 @@ function SectionCard({ schema, section, onSave, saving }: SectionCardProps) {
     <div className="rounded-lg border border-neutral-100 bg-white">
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4">
-        <button
+                <button
           type="button"
-          onClick={() => setVisible((v) => !v)}
-          title={visible ? "Sembunyikan section" : "Tampilkan section"}
-          className={`rounded p-1 transition-colors ${visible ? "text-primary" : "text-neutral-300"}`}
+          onClick={() =>
+            schema.toggleable
+              ? set("enabled", shown ? "false" : "true")
+              : setVisible((v) => !v)
+          }
+          title={shown ? "Sembunyikan section" : "Tampilkan section"}
+          className={`rounded p-1 transition-colors ${shown ? "text-primary" : "text-neutral-300"}`}
         >
-          {visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+          {shown ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
         </button>
         <div className="flex-1">
           <p className="text-sm font-semibold text-neutral-900">{schema.label}</p>
           <p className="text-xs text-neutral-400">{schema.description}</p>
           {dirty && (
             <span className="text-xs font-medium text-amber-600">● Perubahan belum disimpan</span>
+          )}
+                    {schema.toggleable && !shown && (
+            <span className="block text-xs font-medium text-neutral-500">● Disembunyikan dari website</span>
           )}
         </div>
         {dirty && (
