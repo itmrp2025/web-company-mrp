@@ -9,6 +9,7 @@ import { WhyChooseSection } from "@/components/public/sections/home/WhyChooseSec
 import { ProcessSection } from "@/components/public/sections/home/ProcessSection";
 import { TestimonialsSection } from "@/components/public/sections/home/TestimonialsSection";
 import { fetchCmsPage, getSectionContent } from "@/utils/helpers/fetchCmsPage";
+import { isSectionEnabled } from "@/utils/helpers/sectionVisibility";
 
 export default async function HomePage({
   params,
@@ -24,23 +25,28 @@ export default async function HomePage({
   const servicesSection = getSectionContent(sections, "services_section");
   const meetLeaders = getSectionContent(sections, "meet_leaders");
   const recentArticles = getSectionContent(sections, "recent_articles");
+  const tanyaHakimPromo = getSectionContent(sections, "tanya_hakim_promo");
   const cta = getSectionContent(sections, "cta");
   const whyChoose = getSectionContent(sections, "why_choose");
   const process = getSectionContent(sections, "process");
   const testimonials = getSectionContent(sections, "testimonials");
 
   return (
-  <>
-    <HeroSection content={hero} locale={locale} />
-    <StatsSection content={stats} locale={locale} />
-    <WhyChooseSection content={whyChoose} locale={locale} />
-    <ServicesSection content={servicesSection} locale={locale} />
-    <ProcessSection content={process} locale={locale} />
-    <MeetLeadersSection content={meetLeaders} locale={locale} />
-    <RecentArticlesSection content={recentArticles} />
-    <TanyaHakimPromoSection />
-    <TestimonialsSection content={testimonials} />
-    <ConsultationCTASection content={cta} locale={locale} />
-  </>
-);
+    <>
+      <HeroSection content={hero} locale={locale} />
+      <StatsSection content={stats} locale={locale} />
+      <WhyChooseSection content={whyChoose} locale={locale} />
+      <ServicesSection content={servicesSection} locale={locale} />
+      <ProcessSection content={process} locale={locale} />
+      <MeetLeadersSection content={meetLeaders} locale={locale} />
+      <RecentArticlesSection content={recentArticles} />
+      {isSectionEnabled(tanyaHakimPromo) && (
+        <TanyaHakimPromoSection content={tanyaHakimPromo} locale={locale} />
+      )}
+      {isSectionEnabled(testimonials) && (
+        <TestimonialsSection content={testimonials} />
+      )}
+      <ConsultationCTASection content={cta} locale={locale} />
+    </>
+  );
 }

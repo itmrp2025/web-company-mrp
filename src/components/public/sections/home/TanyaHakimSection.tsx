@@ -1,8 +1,23 @@
 import { useTranslations } from "next-intl";
 import { Scale, MessageCircle, ArrowRight } from "lucide-react";
+import { cms } from "@/utils/helpers/fetchCmsPage";
+import { safeExternalUrl } from "@/utils/helpers/sectionVisibility";
 
-export function TanyaHakimPromoSection() {
+const DEFAULT_URL = "https://tanyahakim.com";
+
+interface Props {
+  content?: Record<string, string>;
+  locale?: string;
+}
+
+export function TanyaHakimPromoSection({ content = {}, locale = "id" }: Props) {
   const t = useTranslations("common");
+  const lang = locale as "id" | "en";
+
+  const title = cms(content, `title_${lang}`, t("tanya_hakim_title"));
+  const desc = cms(content, `desc_${lang}`, t("tanya_hakim_desc"));
+  const button = cms(content, `button_${lang}`, t("tanya_hakim_cta_button"));
+  const url = safeExternalUrl(content.url, DEFAULT_URL);
 
   return (
     <section className="bg-primary py-10 sm:py-12">
@@ -13,23 +28,19 @@ export function TanyaHakimPromoSection() {
               <Scale className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h3 className="font-sans text-lg font-semibold text-white sm:text-xl">
-                {t("tanya_hakim_title")}
-              </h3>
-              <p className="mt-1 max-w-md text-sm text-white/75 leading-relaxed">
-                {t("tanya_hakim_desc")}
-              </p>
+              <h3 className="font-sans text-lg font-semibold text-white sm:text-xl">{title}</h3>
+              <p className="mt-1 max-w-md text-sm text-white/75 leading-relaxed">{desc}</p>
             </div>
           </div>
 
           <a
-            href="https://tanyahakim.com"
+            href={url}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-white/90"
           >
             <MessageCircle className="h-4 w-4" />
-            {t("tanya_hakim_cta_button")}
+            {button}
             <ArrowRight className="h-3.5 w-3.5" />
           </a>
         </div>
