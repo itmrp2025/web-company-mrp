@@ -3,6 +3,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 
+declare module "axios" {
+  export interface AxiosRequestConfig {
+    /** Lewati toast error otomatis; pemanggil menangani error sendiri. */
+    skipErrorToast?: boolean;
+  }
+}
+
 export const axiosInterceptor = axios.create({
   withCredentials: true,
 });
@@ -37,9 +44,12 @@ axiosInterceptor.interceptors.response.use(
       resData?.message ||
       (statusCode === 401 ? "Sesi telah berakhir" : "Terjadi kesalahan");
 
-    toast.error(message);
+       if (!error.config?.skipErrorToast) {
+      toast.error(message);
+    }
 
     return Promise.reject(error);
+
   },
 );
 

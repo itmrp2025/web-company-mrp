@@ -80,8 +80,8 @@ export default async function OurTeamPage({
       <section className="relative py-14 text-white overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/gedung.webp')", backgroundAttachment: "fixed" }}
-        />
+          style={{ backgroundImage: "url('/gedung.webp')" }}        
+          />
         <div className="absolute inset-0 bg-neutral-950/75" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>

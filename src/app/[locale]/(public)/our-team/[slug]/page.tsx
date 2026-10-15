@@ -177,7 +177,7 @@ export default async function LawyerProfilePage({ params }: Props) {
           <div className="max-w-4xl">
             <h2 className="font-sans text-2xl font-semibold text-neutral-900 mb-6 flex items-center gap-2">
               <BookOpen className="h-6 w-6 text-primary" />
-              {t("overview") ?? (lang === "id" ? "Ringkasan" : "Overview")}
+              {t("overview")}
             </h2>
             <div className="prose prose-neutral max-w-none text-neutral-600 leading-relaxed text-base">
               <p className="whitespace-pre-line">{bio}</p>
@@ -189,8 +189,7 @@ export default async function LawyerProfilePage({ params }: Props) {
             <div className="mt-14 max-w-4xl border-t border-neutral-100 pt-10">
               <h3 className="font-sans text-xl font-semibold text-neutral-900 mb-4 flex items-center gap-2">
                 <Award className="h-5 w-5 text-primary" />
-                {t("specializations") ??
-                  (lang === "id" ? "Spesialisasi" : "Specializations")}
+                {t("specializations")}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {specializations.map((s) => (
@@ -212,8 +211,7 @@ export default async function LawyerProfilePage({ params }: Props) {
               className="inline-flex items-center gap-2 text-primary font-medium hover:text-primary-600 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
-              {t("back_to_team") ??
-                (lang === "id" ? "Kembali ke Tim" : "Back to Team")}
+              {t("back_to_team")}
             </Link>
           </div>
         </div>

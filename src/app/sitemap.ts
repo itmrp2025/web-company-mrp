@@ -21,7 +21,7 @@ const STATIC_PAGES: { path: string; priority: number }[] = [
 /** Slug layanan — sama dengan validSlugs di services/[slug]/page.tsx. */
 const SERVICE_SLUGS = [
   "litigation", "corporate", "regulatory", "professional",
-  "digital", "ecommerce", "property", "family",
+  "ecommerce", "property", "family",
   "employment", "intellectual", "immigration", "environmental", "criminal",
 ];
 

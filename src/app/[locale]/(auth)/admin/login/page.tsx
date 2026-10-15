@@ -16,6 +16,7 @@ import { useAuthStore } from "@/store/use-auth";
 import { toast } from "sonner";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { isAxiosError } from "axios";
 
 function getLoginSchema(locale: string) {
   const id = locale === "id";
@@ -102,15 +103,28 @@ export default function AdminLoginPage() {
 
   const loginMutation = useMutation({
     mutationFn: async (values: LoginFormValues) => {
-      const res = await axiosInterceptor.post(getApi(endpoints.auth.login), values);
-      return res.data;
-    },
+    const res = await axiosInterceptor.post(getApi(endpoints.auth.login), values, {
+    skipErrorToast: true,
+    });
+    return res.data;
+  },
     onSuccess: (data) => {
       setUser(data.data);
       toast.success(data.message);
       router.replace(resolveReturnPath(searchParams.get("returnURL"), locale) as never);
     },
-    onError: () => {
+        onError: (error) => {
+      if (isAxiosError(error) && error.response?.status === 429) {
+        const seconds = Number(error.response.data?.retry_after) || 0;
+        const minutes = Math.max(1, Math.ceil(seconds / 60));
+        toast.error(
+          locale === "id"
+            ? `Terlalu banyak percobaan login. Coba lagi dalam ${minutes} menit.`
+            : `Too many login attempts. Try again in ${minutes} minute${minutes > 1 ? "s" : ""}.`,
+          { id: "login-rate-limit" },
+        );
+        return;
+      }
       toast.error(t("invalidCredentials"));
     },
   });
