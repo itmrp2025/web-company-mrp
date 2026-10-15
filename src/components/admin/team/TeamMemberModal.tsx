@@ -103,7 +103,7 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
   const mutation = useMutation({
     mutationFn: async (values: FormValues) => {
       const payload: TeamMemberPayload = {
-              slug: values.slug,
+              slug: isEdit ? member!.slug : values.slug,
               role_type: values.role_type,
               order_index: values.order_index,
               photo_url: values.photo_url,
@@ -166,8 +166,10 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
               <TextField
                 label="Slug"
                 {...register("slug")}
+                readOnly={isEdit}
                 error={errors.slug?.message}
                 onChange={(e) => {
+                  if (isEdit) return;
                   const transformed = e.target.value
                     .toLowerCase()
                     .replace(/[\s\W_]+/g, "-")
@@ -192,6 +194,11 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
                   ))}
                 </select>
               </div>
+              {isEdit && (
+                  <p className="-mt-2 text-xs text-neutral-400">
+                    Slug tidak bisa diubah karena menjadi alamat halaman profil. Untuk mengganti, hapus lalu buat anggota baru.
+                  </p>
+                )}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <TextField

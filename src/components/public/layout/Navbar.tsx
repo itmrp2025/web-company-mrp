@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 
 type NavLink = {
-  key: "home" | "about" | "services" | "team" | "gallery" | "articles" | "tanyaHakim" | "career" | "contact";
+  key: "home" | "about" | "services" | "team" | "gallery" | "articles" | "career" | "contact";
   href: string;
   external?: boolean;
   cta?: boolean;
@@ -22,7 +22,6 @@ const navLinks: NavLink[] = [
   { key: "team", href: "/our-team" },
   { key: "gallery", href: "/gallery" },
   { key: "articles", href: "/articles" },
-  { key: "tanyaHakim", href: "https://tanyahakim.com", external: true, cta: true },
   { key: "career", href: "/career" },
   { key: "contact", href: "/contact" },
 ];
