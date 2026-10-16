@@ -32,7 +32,7 @@ export async function generateMetadata({
   // Slug SEO per-layanan ("services/litigation") belum di-seed, jadi selama
   // admin belum mengisinya metadata diambil dari terjemahan.
   return buildMetadata({
-    slug: `services/${s}`,
+     slug: `services-${s}`,
     locale,
     path: `/services/${s}`,
     fallback: {

@@ -201,12 +201,7 @@ export function TeamMemberModal({ member, onClose, onSuccess }: Props) {
                 )}
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <TextField
-                label="Order"
-                type="number"
-                {...register("order_index", { valueAsNumber: true })}
-                error={errors.order_index?.message}
-              />
+              
               <div className="flex items-end pb-1">
                 <label className="flex items-center gap-2 text-sm text-neutral-700">
                   <input
