@@ -12,7 +12,7 @@ export const endpoints = {
     create: "/admin/team",
     update: (id: string) => `/admin/team/${id}`,
     delete: (id: string) => `/admin/team/${id}`,
-    reorder: "/admin/team/reorder",
+    reorder: "/admin/team/reorder",  
   },
   services: {
     list: "/services",

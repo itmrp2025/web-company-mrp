@@ -47,6 +47,10 @@ const emptyForm = (locale = "id"): SeoForm => ({
   robots: "index, follow",
 });
 
+// Slug layanan disimpan sebagai "services-<slug>"; tampilkan sebagai path aslinya.
+const slugLabel = (slug: string) =>
+  slug.startsWith("services-") ? `/services/${slug.slice("services-".length)}` : `/${slug}`;
+
 export default function AdminSeoPage() {
   const qc = useQueryClient();
   const [editing, setEditing] = useState<{ slug: string; locale: string } | null>(null);
@@ -111,7 +115,7 @@ export default function AdminSeoPage() {
         <div className="mb-6 rounded-lg border border-neutral-200 bg-white p-6">
           <div className="mb-5 flex items-center justify-between">
             <h2 className="text-base font-semibold text-neutral-900">
-              Edit SEO: <span className="text-primary">{editing.slug}</span>{" "}
+              Edit SEO: <span className="text-primary">{slugLabel(editing.slug)}</span>{" "}
               <span className="text-neutral-400">({editing.locale.toUpperCase()})</span>
             </h2>
             <button onClick={() => setEditing(null)} className="rounded p-1 text-neutral-400 hover:text-neutral-700">
@@ -208,7 +212,7 @@ export default function AdminSeoPage() {
               {Object.entries(grouped).flatMap(([_slug, settings]) =>
                 settings.map((seo) => (
                   <tr key={`${seo.page_slug}-${seo.locale}`} className="group hover:bg-neutral-50/50">
-                    <td className="px-5 py-4 font-mono text-xs text-neutral-700">/{seo.page_slug}</td>
+                    <td className="px-5 py-4 font-mono text-xs text-neutral-700">{slugLabel(seo.page_slug)}</td>
                     <td className="px-5 py-4">
                       <span className="inline-flex rounded bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-500 uppercase">
                         {seo.locale}
