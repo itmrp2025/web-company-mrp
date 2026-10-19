@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { serverFetch } from "@/utils/helpers/serverFetch";
-import type { Article } from "@/interface/admin.interface";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+import { getSiteUrl } from "@/utils/helpers/siteUrl";
+import { SERVICE_SLUGS } from "@/utils/constants/services.const";
+import type { Article, TeamMember } from "@/interface/admin.interface";
 
 /** Halaman statis beserta bobot prioritasnya. */
 const STATIC_PAGES: { path: string; priority: number }[] = [
@@ -16,13 +16,8 @@ const STATIC_PAGES: { path: string; priority: number }[] = [
   { path: "/career", priority: 0.7 },
   { path: "/faq", priority: 0.6 },
   { path: "/contact", priority: 0.7 },
-];
-
-/** Slug layanan — sama dengan validSlugs di services/[slug]/page.tsx. */
-const SERVICE_SLUGS = [
-  "litigation", "corporate", "regulatory", "professional",
-  "ecommerce", "property", "family",
-  "employment", "intellectual", "immigration", "environmental", "criminal",
+  { path: "/privacy-policy", priority: 0.3 },
+  { path: "/terms-conditions", priority: 0.3 },
 ];
 
 /**
@@ -34,12 +29,13 @@ function localizedEntries(
   priority: number,
   lastModified?: Date,
 ): MetadataRoute.Sitemap {
+  const siteUrl = getSiteUrl();
   const languages = Object.fromEntries(
-    routing.locales.map((l) => [l, `${SITE_URL}/${l}${path}`]),
+    routing.locales.map((l) => [l, `${siteUrl}/${l}${path}`]),
   );
 
   return routing.locales.map((locale) => ({
-    url: `${SITE_URL}/${locale}${path}`,
+    url: `${siteUrl}/${locale}${path}`,
     lastModified: lastModified ?? new Date(),
     changeFrequency: "weekly" as const,
     priority,
@@ -58,17 +54,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entries.push(...localizedEntries(`/services/${slug}`, 0.7));
   }
 
-  // Artikel diambil dari API. serverFetch mengembalikan null bila backend
-  // tidak bisa dihubungi — sitemap tetap terbit dengan halaman statis
-  // daripada gagal sepenuhnya.
-  const articles = await serverFetch<Article[]>("/articles");
+  // serverFetch mengembalikan null bila backend tidak bisa dihubungi:
+  // sitemap tetap terbit dengan halaman statis daripada gagal sepenuhnya.
+  const [articles, team] = await Promise.all([
+    serverFetch<Article[]>("/articles"),
+    serverFetch<TeamMember[]>("/team"),
+  ]);
+
   if (articles) {
     for (const article of articles) {
       if (article.status !== "published") continue;
-      const lastMod = article.updated_at
-        ? new Date(article.updated_at)
-        : undefined;
+      const lastMod = article.updated_at ? new Date(article.updated_at) : undefined;
       entries.push(...localizedEntries(`/articles/${article.slug}`, 0.6, lastMod));
+    }
+  }
+
+  // Endpoint /team hanya mengembalikan anggota yang ditampilkan.
+  if (team) {
+    for (const member of team) {
+      const lastMod = member.updated_at ? new Date(member.updated_at) : undefined;
+      entries.push(...localizedEntries(`/our-team/${member.slug}`, 0.5, lastMod));
     }
   }
 

@@ -1,3 +1,6 @@
+import { serverFetch } from "@/utils/helpers/serverFetch";
+
+
 export interface PageSection {
   id: string;
   section_key: string;
@@ -10,20 +13,10 @@ export interface CmsPageData {
 }
 
 export async function fetchCmsPage(slug: string): Promise<CmsPageData | null> {
-  try {
-    const base = process.env.API_INTERNAL_URL ?? "http://localhost:8080";
-    const ver = process.env.NEXT_PUBLIC_VERSION_API ?? "v1";
-    const res = await fetch(`${base}/${ver}/cms/pages/${slug}`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    const json = await res.json();
-    return (json.data as CmsPageData) ?? null;
-  } catch {
-    return null;
-  }
+  return serverFetch<CmsPageData>(`/cms/pages/${slug}`, undefined, {
+    tags: ["cms", `cms:${slug}`],
+  });
 }
-
 export function getSectionContent(
   sections: PageSection[] | undefined,
   key: string

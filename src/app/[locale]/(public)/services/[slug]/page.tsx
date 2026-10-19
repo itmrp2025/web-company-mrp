@@ -5,17 +5,13 @@ import { PageHero } from "@/components/public/layout/PageHero";
 import { Button } from "@/components/custom-ui/Button";
 import { ArrowLeft, ArrowRight, CheckCircle2, Phone } from "lucide-react";
 import { buildMetadata } from "@/utils/helpers/seo";
+import { SERVICE_SLUGS, isServiceSlug, type ServiceSlug } from "@/utils/constants/services.const";
 
-const validSlugs = [
-  "litigation", "corporate", "regulatory", "professional",
-  "ecommerce", "property", "family",
-  "employment", "intellectual", "immigration", "environmental", "criminal",
-] as const;
 
-type Slug = typeof validSlugs[number];
+type Slug = ServiceSlug;
 
 export async function generateStaticParams() {
-  return validSlugs.map((slug) => ({ slug }));
+  return SERVICE_SLUGS.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -24,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  if (!validSlugs.includes(slug as Slug)) return { title: "MRP Law Office" };
+  if (!isServiceSlug(slug)) return { title: "MRP Law Office" };
 
   const t = await getTranslations({ locale, namespace: "services" });
   const s = slug as Slug;
@@ -48,7 +44,7 @@ export default async function ServiceDetailPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  if (!validSlugs.includes(slug as Slug)) notFound();
+  if (!isServiceSlug(slug)) notFound();
 
   const t = await getTranslations({ locale, namespace: "services" });
   const sd = await getTranslations({ locale, namespace: "serviceDetail" });
