@@ -6,6 +6,7 @@ import { ArrowRight, Scale, Building2, ShieldCheck, Gavel, ShoppingBag, Home, Us
 import { Link } from "@/i18n/navigation";
 import { fetchCmsPage, getSectionContent, cms } from "@/utils/helpers/fetchCmsPage";
 import { buildMetadata } from "@/utils/helpers/seo";
+import { SERVICE_SLUGS } from "@/utils/constants/services.const";
 
 export async function generateMetadata({
   params,
@@ -27,11 +28,7 @@ const iconMap: Record<string, React.ElementType> = {
   intellectual: FileText, immigration: Plane, environmental: Leaf, criminal: Scale,
 };
 
-const serviceKeys = [
-  "litigation", "corporate", "regulatory", "professional",
-  "ecommerce", "property", "family",
-  "employment", "intellectual", "immigration", "environmental", "criminal",
-] as const;
+const serviceKeys = SERVICE_SLUGS;
 
 export default async function ServicesPage({
   params,
