@@ -5,6 +5,8 @@ import { getSiteUrl } from "@/utils/helpers/siteUrl";
 import { SERVICE_SLUGS } from "@/utils/constants/services.const";
 import type { Article, TeamMember } from "@/interface/admin.interface";
 
+export const dynamic = "force-dynamic";
+
 /** Halaman statis beserta bobot prioritasnya. */
 const STATIC_PAGES: { path: string; priority: number }[] = [
   { path: "", priority: 1.0 },
