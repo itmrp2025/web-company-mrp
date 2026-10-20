@@ -15,26 +15,28 @@ import {
 import { serverFetch } from "@/utils/helpers/serverFetch";
 import { buildMetadata } from "@/utils/helpers/seo";
 import type { TeamMember } from "@/interface/admin.interface";
+import { fetchCmsPage, getSectionContent, cms } from "@/utils/helpers/fetchCmsPage";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+const DEFAULT_COVER = "/gedung.webp";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const members = (await serverFetch<TeamMember[]>("/team")) ?? [];
+    const [membersData, cmsData] = await Promise.all([
+    serverFetch<TeamMember[]>("/team"),
+    fetchCmsPage("team"),
+  ]);
+  const members = membersData ?? [];
   const member = members.find((m) => m.slug === slug);
-  if (!member) {
-    return buildMetadata({
-      slug: "team",
-      locale,
-      path: "/our-team",
-      fallback: {
-        title: "Our Team - MRP Law Office",
-        description: "MRP Law Office Team",
-      },
-    });
-  }
+
+  if (!member) notFound();
+
+  const hero = getSectionContent(cmsData?.sections, "hero");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const coverUrl = cms(hero, "profile_cover_url", DEFAULT_COVER);
 
   const name =
     locale === "id" ? member.content.name_id : member.content.name_en;
@@ -69,6 +71,10 @@ export default async function LawyerProfilePage({ params }: Props) {
   const specializations = member.content.specializations ?? [];
   const isFounder = member.role_type === "founder";
 
+  const cmsData = await fetchCmsPage("team");
+  const hero = getSectionContent(cmsData?.sections, "hero");
+  const coverUrl = cms(hero, "profile_cover_url", DEFAULT_COVER);
+
   const roleBadge = isFounder
     ? t("founder_badge")
     : member.role_type.charAt(0).toUpperCase() + member.role_type.slice(1);
@@ -76,9 +82,18 @@ export default async function LawyerProfilePage({ params }: Props) {
   return (
     <>
       {/* Unified Hero Section (Dark Background) */}
-      <section className="relative bg-neutral-950 text-white py-14 sm:py-18 lg:py-20 border-b border-neutral-800 overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-br from-neutral-900 via-neutral-950 to-neutral-900/90 pointer-events-none" />
-
+     <section className="relative bg-neutral-950 text-white py-14 sm:py-18 lg:py-20 border-b border-neutral-800 overflow-hidden">
+        <Image
+        src={coverUrl}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        unoptimized={coverUrl !== DEFAULT_COVER}
+        className="object-cover object-center"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-neutral-950/75 pointer-events-none" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Foto KIRI */}

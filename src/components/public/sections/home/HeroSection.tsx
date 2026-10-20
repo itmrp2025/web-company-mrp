@@ -27,7 +27,7 @@ export function HeroSection({ content = {}, locale = "id" }: Props) {
   const ctaSecondary = cms(content, `cta_secondary_${lang}`, t("cta_secondary"));
 
   return (
-    <section className="relative flex min-h-[580px] items-center bg-neutral-950 text-white sm:min-h-[640px] lg:min-h-[700px]">
+    <section className="relative flex min-h-145 items-center bg-neutral-950 text-white sm:min-h-160 lg:min-h-175">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -36,7 +36,7 @@ export function HeroSection({ content = {}, locale = "id" }: Props) {
       <div className="absolute inset-0 bg-neutral-950/72" />
 
       {/* Left edge accent */}
-      <div className="absolute inset-y-0 left-0 w-[3px] bg-gradient-to-b from-transparent via-primary-400/60 to-transparent" />
+      <div className="absolute inset-y-0 left-0 w-0.75 bg-linear-to-b from-transparent via-primary-400/60 to-transparent" />
 
       {/* Content */}
       <div className="relative w-full">
@@ -82,7 +82,7 @@ export function HeroSection({ content = {}, locale = "id" }: Props) {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-neutral-950/40 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-neutral-950/40 to-transparent" />
     </section>
   );
 }
