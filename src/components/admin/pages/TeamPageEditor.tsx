@@ -19,7 +19,16 @@ const SCHEMAS: SectionSchema[] = [
       { type: "divider", label: "Subheading" },
       { key: "subheading_id", label: "Subheading (Indonesia)", type: "textarea", span: "full" },
       { key: "subheading_en", label: "Subheading (English)", type: "textarea", span: "full" },
+      { type: "divider", label: "Halaman Profil Anggota" },
+      {
+        key: "profile_cover_url",
+        label: "Foto Latar Halaman Profil (berlaku untuk semua anggota)",
+        type: "image",
+        folder: "pages",
+      },
     ],
+
+    
   },
   {
     key: "labels",
