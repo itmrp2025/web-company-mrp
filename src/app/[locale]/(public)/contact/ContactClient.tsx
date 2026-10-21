@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { TextField } from "@/components/custom-ui/TextField";
 import { Button } from "@/components/custom-ui/Button";
-import { MapPin, Phone, Mail, Clock, MessageSquare } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { axiosInterceptor } from "@/config/axios.config";
 import { getApi } from "@/utils/helpers/getApi";
 import { toast } from "sonner";
@@ -17,7 +17,6 @@ const serviceOptionKeys = [
 interface Props {
   locale: string;
   phone: string;
-  whatsapp: string;
   email: string;
   address: string;
   hoursWeekday: string;
@@ -28,7 +27,6 @@ interface Props {
 export function ContactClient({
   locale,
   phone,
-  whatsapp,
   email,
   address,
   hoursWeekday,
@@ -110,7 +108,6 @@ export function ContactClient({
                   { Icon: MapPin, label: t("address"), value: address, href: undefined },
                   { Icon: Phone, label: t("phone_label"), value: phone, href: `tel:${phone.replace(/[\s()+-]/g, "")}` },
                   { Icon: Mail, label: t("email_label"), value: email, href: `mailto:${email}` },
-                  { Icon: MessageSquare, label: t("whatsapp"), value: whatsapp, href: `https://wa.me/${whatsapp.replace(/[\s()+-]/g, "")}` },
                 ].map(({ Icon, label, value, href }) => (
                   <div key={label} className="flex items-start gap-3">
                     <Icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -132,14 +129,11 @@ export function ContactClient({
                 <Clock className="h-4 w-4 text-primary" />
                 <p className="section-label">{t("office_hours")}</p>
               </div>
-              <div className="space-y-2 text-sm">
-                {[
-                  { schedule: hoursWeekday, muted: false },
-                  { schedule: hoursSaturday, muted: false },
-                  { schedule: hoursSunday, muted: true },
-                ].map(({ schedule, muted }, i) => {
+                <div className="space-y-2 text-sm">
+                {[hoursWeekday, hoursSaturday, hoursSunday].map((schedule, i) => {
                   const [day, ...rest] = schedule.split(", ");
                   const hours = rest.join(", ");
+                  const muted = /^(tutup|closed)$/i.test(hours.trim());
                   return (
                     <div key={i} className="flex justify-between">
                       <span className={muted ? "text-neutral-400" : "text-neutral-600"}>{day}</span>

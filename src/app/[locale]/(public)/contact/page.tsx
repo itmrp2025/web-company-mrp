@@ -25,7 +25,8 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const sections = cmsData?.sections;
   const hero = getSectionContent(sections, "hero");
   const info = getSectionContent(sections, "contact_info");
-
+  const reviewSection = sections?.find((s) => s.section_key === "review_form");
+  const showReviewForm = reviewSection?.is_visible !== false;
   // CMS values dengan fallback ke i18n/hardcoded
   const cms = (c: Record<string, string>, k: string, fb: string) => c[k] || fb;
 
@@ -40,14 +41,13 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       <ContactClient
         locale={locale}
         phone={cms(info, "phone", "(+62) 21 50300825")}
-        whatsapp={cms(info, "whatsapp", "+62 812 3456 7890")}
         email={cms(info, "email", "info@mrplawoffice.com")}
         address={cms(info, `address_${lang}`, t("address_value"))}
-        hoursWeekday={cms(info, `hours_weekday_${lang}`, lang === "id" ? "Senin – Jumat, 08:00 – 17:00" : "Monday – Friday, 08:00 – 17:00")}
-        hoursSaturday={cms(info, `hours_saturday_${lang}`, lang === "id" ? "Sabtu, 09:00 – 13:00" : "Saturday, 09:00 – 13:00")}
+        hoursWeekday={cms(info, `hours_weekday_${lang}`, lang === "id" ? "Senin – Jumat, 09:00 – 17:00" : "Monday – Friday, 09:00 – 17:00")}
+        hoursSaturday={cms(info, `hours_saturday_${lang}`, lang === "id" ? "Sabtu, Tutup" : "Saturday, Closed")}
         hoursSunday={cms(info, `hours_sunday_${lang}`, lang === "id" ? "Minggu, Tutup" : "Sunday, Closed")}
       />
-      <ReviewForm />
-    </>
+      {showReviewForm && <ReviewForm />}
+      </>
   );
 }
