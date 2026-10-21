@@ -6,7 +6,7 @@ import { axiosInterceptor } from "@/config/axios.config";
 import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
 import { toast } from "sonner";
-import { Save, ChevronDown, ChevronUp } from "lucide-react";
+import { Save, ChevronDown, ChevronUp, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/custom-ui/Button";
 import { TextField } from "@/components/custom-ui/TextField";
 import { ImageUpload } from "@/components/admin/shared/ImageUpload";
@@ -23,6 +23,8 @@ export interface SectionSchema {
   key: string;
   label: string;
   description: string;
+  /** Tampilkan tombol sembunyikan/tampilkan. Hanya untuk section yang dicek halaman publiknya. */
+  toggleable?: boolean;
   fields: FieldDef[];
 }
 
@@ -34,10 +36,11 @@ interface SectionCardProps {
   pageSlug: string;
   onSave: (sectionKey: string, sectionId: string | null, content: Record<string, string>) => Promise<void>;
   saving: boolean;
+    onToggle?: (sectionKey: string, sectionId: string | null, currentlyVisible: boolean) => Promise<void>;
+  toggling?: boolean;
 }
 
-export function SectionCard({ schema, section, pageSlug: _pageSlug, onSave, saving }: SectionCardProps) {
-  const [open, setOpen] = useState(false);
+export function SectionCard({ schema, section, pageSlug: _pageSlug, onSave, saving, onToggle, toggling }: SectionCardProps) {  const [open, setOpen] = useState(false);
   const [values, setValues] = useState<Record<string, string>>(() => {
     const stored = (section?.content ?? {}) as Record<string, string>;
     const defaults: Record<string, string> = {};
@@ -47,6 +50,10 @@ export function SectionCard({ schema, section, pageSlug: _pageSlug, onSave, savi
     return defaults;
   });
   const [dirty, setDirty] = useState(false);
+
+  const visible = section?.is_visible !== false;
+  const canToggle = Boolean(schema.toggleable && onToggle);
+  const hasFields = schema.fields.some((f) => f.type !== "divider");
 
   useEffect(() => {
     const stored = (section?.content ?? {}) as Record<string, string>;
@@ -70,11 +77,16 @@ export function SectionCard({ schema, section, pageSlug: _pageSlug, onSave, savi
 
   return (
     <div className="rounded-lg border border-neutral-100 bg-white">
-      {/* Header row */}
+            {/* Header row */}
       <div className="flex items-center gap-3 px-5 py-4">
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <p className="text-sm font-semibold text-neutral-900">{schema.label}</p>
+            {canToggle && !visible && (
+              <span className="rounded bg-neutral-100 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500">
+                Tersembunyi
+              </span>
+            )}
             {dirty && (
               <span className="text-[10px] font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">
                 Belum disimpan
@@ -93,13 +105,27 @@ export function SectionCard({ schema, section, pageSlug: _pageSlug, onSave, savi
             {saving ? "Menyimpan..." : "Simpan"}
           </Button>
         )}
-        <button
-          type="button"
-          onClick={() => setOpen((o) => !o)}
-          className="rounded p-1 text-neutral-400 hover:text-neutral-700"
-        >
-          {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </button>
+        {canToggle && (
+          <button
+            type="button"
+            onClick={() => onToggle?.(schema.key, section?.id ?? null, visible)}
+            disabled={toggling || dirty}
+            className="rounded p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700 disabled:cursor-not-allowed disabled:opacity-40"
+            aria-label={visible ? "Sembunyikan section" : "Tampilkan section"}
+            title={dirty ? "Simpan perubahan dulu" : visible ? "Sembunyikan" : "Tampilkan"}
+          >
+            {visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+          </button>
+        )}
+        {hasFields && (
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            className="rounded p-1 text-neutral-400 hover:text-neutral-700"
+          >
+            {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </button>
+        )}
       </div>
 
       {/* Fields */}
@@ -188,6 +214,7 @@ interface PageSchemaEditorProps {
 export function PageSchemaEditor({ pageSlug, schemas }: PageSchemaEditorProps) {
   const qc = useQueryClient();
   const [savingKey, setSavingKey] = useState<string | null>(null);
+  const [togglingKey, setTogglingKey] = useState<string | null>(null);
 
   const { data: sections, isLoading } = useQuery({
     queryKey: ["admin-page-sections", pageSlug],
@@ -227,6 +254,62 @@ export function PageSchemaEditor({ pageSlug, schemas }: PageSchemaEditorProps) {
     onError: () => toast.error("Gagal menyimpan section"),
   });
 
+    const toggleMutation = useMutation({
+    mutationFn: async ({
+      sectionKey,
+      sectionId,
+      currentlyVisible,
+    }: {
+      sectionKey: string;
+      sectionId: string | null;
+      currentlyVisible: boolean;
+    }) => {
+      let id = sectionId;
+
+      if (!id) {
+        // Section belum ada di database: buat dulu dengan konten kosong, lalu baca id-nya.
+        await axiosInterceptor.put(
+          getApi(`/admin/cms/pages/${pageSlug}/sections/${sectionKey}`),
+          { content: {} },
+          { skipErrorToast: true }
+        );
+        const res = await axiosInterceptor.get<ApiResponse<{ sections: PageSection[] }>>(
+          getApi(endpoints.cms.adminPageSections(pageSlug))
+        );
+        const created = res.data.data?.sections?.find((s) => s.section_key === sectionKey);
+        if (!created) throw new Error("Section gagal dibuat");
+        id = created.id;
+        // Kalau baris baru sudah sesuai tujuan, tidak perlu di-toggle lagi.
+        if (created.is_visible === !currentlyVisible) return;
+      }
+
+      return axiosInterceptor.patch(
+        getApi(`/admin/cms/sections/${id}/toggle`),
+        undefined,
+        { skipErrorToast: true }
+      );
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin-page-sections", pageSlug] });
+      toast.success("Tampilan section diperbarui");
+    },
+    onError: () => toast.error("Gagal mengubah tampilan section"),
+  });
+
+  const handleToggle = useCallback(
+    async (sectionKey: string, sectionId: string | null, currentlyVisible: boolean) => {
+      setTogglingKey(sectionKey);
+      try {
+        await toggleMutation.mutateAsync({ sectionKey, sectionId, currentlyVisible });
+      } catch {
+        // pesan error sudah ditampilkan di onError
+      } finally {
+        setTogglingKey(null);
+      }
+    },
+    [toggleMutation]
+  );
+
   const handleSave = useCallback(
     async (sectionKey: string, sectionId: string | null, content: Record<string, string>) => {
       setSavingKey(sectionKey);
@@ -257,6 +340,8 @@ export function PageSchemaEditor({ pageSlug, schemas }: PageSchemaEditorProps) {
           pageSlug={pageSlug}
           onSave={handleSave}
           saving={savingKey === schema.key}
+          onToggle={handleToggle}
+          toggling={togglingKey === schema.key}
         />
       ))}
     </div>

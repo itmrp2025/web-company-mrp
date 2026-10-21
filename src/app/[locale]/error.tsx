@@ -49,7 +49,7 @@ export default function Error({
             </span>
           </div>
 
-          <div className="mx-auto mb-8 h-px w-16 bg-gradient-to-r from-transparent via-red-300 to-transparent" />
+          <div className="mx-auto mb-8 h-px w-16 bg-linear-to-r from-transparent via-red-300 to-transparent" />
 
           <p className="section-label mb-3">
             {locale === "id" ? "Kesalahan Server" : "Server Error"}

@@ -22,11 +22,10 @@ const SCHEMAS: SectionSchema[] = [
   {
     key: "contact_info",
     label: "Informasi Kontak",
-    description: "Alamat, telepon, email, WhatsApp, dan jam operasional",
+    description: "Alamat, telepon, email, dan jam operasional",
     fields: [
       { type: "divider", label: "Kontak Utama" },
       { key: "phone", label: "Nomor Telepon", type: "text", span: "full" },
-      { key: "whatsapp", label: "WhatsApp", type: "text", span: "full" },
       { key: "email", label: "Email", type: "text", span: "full" },
       { type: "divider", label: "Alamat" },
       { key: "address_id", label: "Alamat (Indonesia)", type: "textarea", span: "full" },
@@ -39,6 +38,13 @@ const SCHEMAS: SectionSchema[] = [
       { key: "hours_sunday_id", label: "Minggu (Indonesia)", type: "text", span: "full" },
       { key: "hours_sunday_en", label: "Sunday Hours (English)", type: "text", span: "full" },
     ],
+  },
+   {
+    key: "review_form",
+    label: "Form Ulasan Klien",
+    description: "Bagian ulasan di bawah form kontak. Klik ikon mata untuk menampilkan atau menyembunyikannya.",
+    toggleable: true,
+    fields: [],
   },
 ];
 
