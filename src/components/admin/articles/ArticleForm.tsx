@@ -15,6 +15,7 @@ import { ImageUpload } from "@/components/admin/shared/ImageUpload";
 import { RichTextEditor } from "@/components/admin/shared/RichTextEditor";
 import { CategorySelect } from "@/components/admin/articles/CategorySelect";
 import type { Article, ArticlePayload } from "@/interface/admin.interface";
+import { isAxiosError } from "axios";
 
 const schema = z.object({
   slug: z.string().min(1, "Slug wajib diisi"),
@@ -45,6 +46,7 @@ export function ArticleForm({ article, onSuccess }: Props) {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -93,6 +95,20 @@ export function ArticleForm({ article, onSuccess }: Props) {
       toast.success(isEdit ? "Artikel diperbarui" : "Artikel dibuat");
       onSuccess();
     },
+           onError: (error) => {
+      if (isAxiosError(error)) {
+        if (error.response?.status === 422) {
+          toast.error("Maksimal 3 artikel unggulan, lepas satu dulu");
+          setValue("is_featured", false);
+          return;
+        }
+        if (error.response?.status === 409) {
+          toast.error("Slug sudah dipakai. Gunakan slug lain.");
+          return;
+        }
+      }
+      toast.error("Gagal menyimpan artikel");
+    },
   });
 
   const onSubmit = handleSubmit((values) => mutation.mutate(values));
@@ -105,10 +121,12 @@ export function ArticleForm({ article, onSuccess }: Props) {
           Informasi Dasar
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <TextField
+           <TextField
             label="Slug URL"
             {...register("slug")}
+            readOnly={isEdit && article?.status === "published"}
             onChange={(e) => {
+              if (isEdit && article?.status === "published") return;
               const transformed = e.target.value
                 .toLowerCase()
                 .replace(/[\s\W_]+/g, "-")

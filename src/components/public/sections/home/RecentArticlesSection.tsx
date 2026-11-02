@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@/components/custom-ui/Button";
-import { ArrowRight, Clock, Newspaper } from "lucide-react";
+import { ArrowRight, Clock, Newspaper, Star } from "lucide-react";
 import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
 import { cms } from "@/utils/helpers/fetchCmsPage";
@@ -56,7 +56,7 @@ export function RecentArticlesSection({ content = {} }: Props) {
   };
 
   useEffect(() => {
-    fetch(getApi(`${endpoints.articles.list}?status=published&limit=3`))
+        fetch(getApi(`${endpoints.articles.list}?status=published&limit=3&featured_first=true`))
       .then((r) => (r.ok ? r.json() : null))
       .then((data: ApiResponse<Article[]> | null) => {
         if (data?.data) setArticles(data.data.slice(0, 3));
@@ -128,8 +128,15 @@ export function RecentArticlesSection({ content = {} }: Props) {
                     className="group flex w-[85%] shrink-0 flex-col border border-neutral-100 hover:border-neutral-200 transition-colors snap-center sm:w-auto sm:snap-align-none"
                   >
                     {/* Image */}
-                    <div className="aspect-video overflow-hidden bg-neutral-100">
+                    <div className="relative aspect-video overflow-hidden bg-neutral-100">
+                      {article.is_featured && (
+                        <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1 bg-primary px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white">
+                          <Star className="h-3 w-3 fill-current" />
+                          {cms(content, `featured_${lang}`, t("featuredBadge"))}
+                        </span>
+                      )}
                       {article.featured_image ? (
+                        // ...isi gambar yang sekarang, tidak berubah...
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={article.featured_image}
