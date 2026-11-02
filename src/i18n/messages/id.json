@@ -338,6 +338,9 @@
     "share_copied": "Link berhasil disalin",
     "view_image": "Lihat gambar",
     "close": "Tutup",
+    "featured_title": "Artikel Unggulan",   
+    "featured_badge": "Unggulan",           
+    "all_title": "Semua Artikel",           
     "categories": {
       "corporate": "Hukum Korporasi",
       "litigation": "Litigasi",
@@ -749,7 +752,8 @@
     "subheading": "Pemikiran dan analisis hukum terbaru dari para pengacara kami.",
     "readMore": "Baca Artikel",
     "viewAll": "Lihat Semua Artikel",
-    "minRead": "menit baca"
+    "minRead": "menit baca",
+    "featuredBadge": "Unggulan" 
   },
   "meetLeaders": {
     "badge": "Pemimpin Firma",

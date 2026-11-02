@@ -6,7 +6,7 @@ import { axiosInterceptor } from "@/config/axios.config";
 import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, Settings2, List } from "lucide-react";
+import { Plus, Pencil, Trash2, Settings2, List, Star } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/custom-ui/Button";
 import { ArticlesPageEditor } from "@/components/admin/pages/ArticlesPageEditor";
@@ -58,7 +58,11 @@ export default function AdminArticlesPage() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold text-neutral-900">Artikel</h1>
-          <p className="mt-0.5 text-sm text-neutral-500">{data?.length ?? 0} artikel</p>
+                    <p className="mt-0.5 text-sm text-neutral-500">
+            {data?.length ?? 0} artikel
+            {" · "}
+            {data?.filter((a) => a.is_featured).length ?? 0}/3 unggulan
+          </p>
         </div>
         {tab === "list" && (
           <Button href="/admin/articles/new" startIcon={<Plus className="h-4 w-4" />} size="sm">
@@ -130,9 +134,15 @@ export default function AdminArticlesPage() {
               <tbody className="divide-y divide-neutral-50">
                 {data.map((article) => (
                   <tr key={article.id} className="group hover:bg-neutral-50/50">
-                    <td className="px-5 py-4">
-                      <p className="font-medium text-neutral-900 line-clamp-1">
-                        {article.content.title_id}
+                                        <td className="px-5 py-4">
+                      <p className="flex items-center gap-1.5 font-medium text-neutral-900">
+                        {article.is_featured && (
+                          <Star
+                            className="h-3.5 w-3.5 shrink-0 fill-amber-400 text-amber-400"
+                            aria-label="Artikel unggulan"
+                          />
+                        )}
+                        <span className="line-clamp-1">{article.content.title_id}</span>
                       </p>
                       <p className="mt-0.5 text-xs text-neutral-400 line-clamp-1">
                         {article.content.excerpt_id}

@@ -337,6 +337,9 @@
     "share_copy": "Copy link",
     "share_copied": "Link copied",
     "view_image": "View image",
+    "featured_title": "Featured Articles",
+    "featured_badge": "Featured",
+    "all_title": "All Articles",
     "close": "Close",
     "categories": {
       "corporate": "Corporate Law",
@@ -749,7 +752,8 @@
     "subheading": "Latest legal thinking and analysis from our attorneys.",
     "readMore": "Read Article",
     "viewAll": "View All Articles",
-    "minRead": "min read"
+    "minRead": "min read",
+    "featuredBadge":"Featured"
   },
   "meetLeaders": {
     "badge": "Firm Leadership",

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "@/i18n/navigation";
-import { Calendar, Clock, Tag, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Clock, Tag, ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { getApi } from "@/utils/helpers/getApi";
 import { endpoints } from "@/utils/constants/endpoints.const";
 import { readingTimeMinutes } from "@/utils/helpers/readingTime";
@@ -81,11 +81,110 @@ function Pagination({
   );
 }
 
+type FeaturedVariant = "large" | "small" | "wide";
+
+function FeaturedCard({
+  article,
+  lang,
+  locale,
+  variant,
+  badgeLabel,
+  readTimeLabel,
+}: {
+  article: Article;
+  lang: "id" | "en";
+  locale: string;
+  variant: FeaturedVariant;
+  badgeLabel: string;
+  readTimeLabel: string;
+}) {
+  const title = lang === "id" ? article.content.title_id : article.content.title_en;
+  const excerpt = lang === "id" ? article.content.excerpt_id : article.content.excerpt_en;
+  const body = lang === "id" ? article.content.body_id : article.content.body_en;
+  const catName = article.category
+    ? lang === "id"
+      ? article.category.content.id.name
+      : article.category.content.en.name
+    : "";
+  const isSmall = variant === "small";
+
+  const wrapperCls = {
+    large: "flex-col",
+    wide: "flex-col lg:flex-row",
+    small: "flex-col sm:flex-row flex-1",
+  }[variant];
+
+  const imageCls = {
+    large: "aspect-video",
+    wide: "aspect-video lg:aspect-auto lg:min-h-[320px] lg:w-1/2 lg:shrink-0",
+    small: "h-44 sm:h-auto sm:min-h-[9rem] sm:w-2/5 sm:shrink-0",
+  }[variant];
+
+  return (
+    <Link
+      href={`/articles/${article.slug}`}
+      className={`group flex overflow-hidden border border-neutral-100 bg-white transition-colors hover:border-primary/20 ${wrapperCls}`}
+    >
+      <div className={`relative overflow-hidden bg-neutral-100 ${imageCls}`}>
+        <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1 bg-primary px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white">
+          <Star className="h-3 w-3 fill-current" />
+          {badgeLabel}
+        </span>
+        {article.featured_image ? (
+          <Image
+            src={article.featured_image}
+            alt={title}
+            fill
+            unoptimized
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <Tag className="h-10 w-10 text-neutral-300" />
+          </div>
+        )}
+      </div>
+
+      <div className={`flex flex-1 flex-col ${isSmall ? "p-5" : "p-6 lg:p-8"}`}>
+        {catName && <span className="section-label mb-3">{catName}</span>}
+        <h3
+          className={`mb-3 font-sans font-semibold text-neutral-900 transition-colors group-hover:text-primary ${
+            isSmall ? "text-base line-clamp-3" : "text-xl lg:text-2xl line-clamp-3"
+          }`}
+        >
+          {title}
+        </h3>
+        {!isSmall && excerpt && (
+          <p className="mb-5 flex-1 text-sm leading-relaxed text-neutral-500 line-clamp-3">
+            {excerpt}
+          </p>
+        )}
+        <div className="mt-auto flex items-center justify-between border-t border-neutral-50 pt-4 text-xs text-neutral-400">
+          {article.published_at && (
+            <div className="flex items-center gap-1.5">
+              <Calendar className="h-3.5 w-3.5" />
+              <span>{formatDate(article.published_at, locale)}</span>
+            </div>
+          )}
+          <div className="flex items-center gap-1.5">
+            <Clock className="h-3.5 w-3.5" />
+            <span>
+              {readingTimeMinutes(body)} {readTimeLabel}
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export function ArticlesClient({ locale }: { locale: string }) {
   const t = useTranslations("articles");
   const lang = locale as "id" | "en";
 
   const [articles, setArticles] = useState<Article[]>([]);
+  const [featured, setFeatured] = useState<Article[]>([]);
   const [categories, setCategories] = useState<ArticleCategory[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("all"); // slug, bukan id
   const [page, setPage] = useState(1);
@@ -104,38 +203,53 @@ export function ArticlesClient({ locale }: { locale: string }) {
       .catch(() => {});
   }, []);
 
-  const fetchArticles = useCallback(async (targetPage: number, category: string) => {
-  const id = ++requestId.current;
-  setLoading(true);
-  setError(false);
-  try {
-    const params = new URLSearchParams({
-      page: String(targetPage),
-      per_page: String(PER_PAGE),
-    });
-    if (category !== "all") params.set("category", category);
+  // Artikel unggulan juga cukup di-fetch sekali
+  useEffect(() => {
+    fetch(getApi(`${endpoints.articles.list}?featured=true&per_page=3`))
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: ApiResponse<Article[]> | null) => {
+        setFeatured((data?.data ?? []).slice(0, 3));
+      })
+      .catch(() => {});
+  }, []);
 
-    const res = await fetch(getApi(`${endpoints.articles.list}?${params.toString()}`));
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data: ApiResponse<Article[]> = await res.json();
-    if (id !== requestId.current) return; // sudah ada request yang lebih baru
-    setArticles(data.data ?? []);
-    setTotalPages(data.meta?.total_pages ?? 1);
-  } catch {
-    if (id !== requestId.current) return;
-    setArticles([]);
-    setTotalPages(1);
-    setError(true);
-  } finally {
-    if (id === requestId.current) setLoading(false);
-  }
-}, []);
+  const fetchArticles = useCallback(async (targetPage: number, category: string) => {
+    const id = ++requestId.current;
+    setLoading(true);
+    setError(false);
+    try {
+      const params = new URLSearchParams({
+        page: String(targetPage),
+        per_page: String(PER_PAGE),
+      });
+      if (category !== "all") {
+        params.set("category", category);
+      } else {
+        // Tanpa filter kategori, artikel unggulan sudah tampil di section atas
+        params.set("featured", "false");
+      }
+
+      const res = await fetch(getApi(`${endpoints.articles.list}?${params.toString()}`));
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data: ApiResponse<Article[]> = await res.json();
+      if (id !== requestId.current) return; // sudah ada request yang lebih baru
+      setArticles(data.data ?? []);
+      setTotalPages(data.meta?.total_pages ?? 1);
+    } catch {
+      if (id !== requestId.current) return;
+      setArticles([]);
+      setTotalPages(1);
+      setError(true);
+    } finally {
+      if (id === requestId.current) setLoading(false);
+    }
+  }, []);
 
   // Fetch awal
   useEffect(() => {
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  fetchArticles(1, "all");
-}, [fetchArticles]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchArticles(1, "all");
+  }, [fetchArticles]);
 
   const handleCategoryChange = (slug: string) => {
     if (slug === activeCategory) return;
@@ -150,6 +264,7 @@ export function ArticlesClient({ locale }: { locale: string }) {
     fetchArticles(p, activeCategory);
   };
 
+  const showFeatured = activeCategory === "all" && page === 1 && featured.length > 0;
 
   return (
     <>
@@ -184,9 +299,53 @@ export function ArticlesClient({ locale }: { locale: string }) {
         </div>
       </div>
 
+      {/* Artikel Unggulan */}
+      {showFeatured && (
+        <section className="bg-white pt-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 className="mb-8 text-neutral-900">{t("featured_title")}</h2>
+            {featured.length > 1 ? (
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <FeaturedCard
+                  article={featured[0]}
+                  lang={lang}
+                  locale={locale}
+                  variant="large"
+                  badgeLabel={t("featured_badge")}
+                  readTimeLabel={t("read_time")}
+                />
+                <div className="flex flex-col gap-8">
+                  {featured.slice(1).map((a) => (
+                    <FeaturedCard
+                      key={a.id}
+                      article={a}
+                      lang={lang}
+                      locale={locale}
+                      variant="small"
+                      badgeLabel={t("featured_badge")}
+                      readTimeLabel={t("read_time")}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <FeaturedCard
+                article={featured[0]}
+                lang={lang}
+                locale={locale}
+                variant="wide"
+                badgeLabel={t("featured_badge")}
+                readTimeLabel={t("read_time")}
+              />
+            )}
+          </div>
+        </section>
+      )}
 
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {showFeatured && <h2 className="mb-8 text-neutral-900">{t("all_title")}</h2>}
+
           {loading ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: PER_PAGE }).map((_, i) => (
@@ -197,14 +356,16 @@ export function ArticlesClient({ locale }: { locale: string }) {
                     <div className="h-5 bg-neutral-100 rounded" />
                     <div className="h-5 w-4/5 bg-neutral-100 rounded" />
                   </div>
-                  
                 </div>
               ))}
             </div>
           ) : error ? (
             <p className="py-20 text-center text-neutral-400">{t("load_error")}</p>
           ) : articles.length === 0 ? (
-            <p className="py-20 text-center text-neutral-400">{t("no_results")}</p>
+            // Kalau semua artikel ternyata unggulan, section di atas sudah cukup
+            showFeatured ? null : (
+              <p className="py-20 text-center text-neutral-400">{t("no_results")}</p>
+            )
           ) : (
             <>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -221,6 +382,13 @@ export function ArticlesClient({ locale }: { locale: string }) {
                       className="group flex flex-col border border-neutral-100 bg-white transition-colors hover:border-primary/20 overflow-hidden"
                     >
                       <div className="relative h-48 bg-neutral-100 overflow-hidden">
+                        {/* Di hasil filter kategori, artikel unggulan ikut muncul dan diberi lencana */}
+                        {article.is_featured && (
+                          <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1 bg-primary px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white">
+                            <Star className="h-3 w-3 fill-current" />
+                            {t("featured_badge")}
+                          </span>
+                        )}
                         {article.featured_image ? (
                           <Image
                             src={article.featured_image}
